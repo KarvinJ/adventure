@@ -99,7 +99,7 @@ public class TileMapHelper {
             isDebugCamera = !isDebugCamera;
 
         if (!isDebugCamera && player.getPixelPosition().x > 145)
-            camera.position.set(player.getWorldPosition().x, 5.2f, 0);
+            camera.position.set(player.getWorldPosition().x, 7, 0);
 
         camera.update();
     }

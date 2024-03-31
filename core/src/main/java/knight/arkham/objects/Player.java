@@ -50,7 +50,7 @@ public class Player extends GameObject {
     protected Body createObjectBody() {
 
         return createBody(
-            new Box2DBody(actualBounds, 5, actualWorld, this)
+            new Box2DBody(actualBounds, 10, actualWorld, this)
         );
     }
 
@@ -64,7 +64,7 @@ public class Player extends GameObject {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && body.getLinearVelocity().y == 0) {
 
-            applyLinealImpulse(new Vector2(0, 140));
+            applyLinealImpulse(new Vector2(0, 200));
             jumpSound.play();
         }
     }

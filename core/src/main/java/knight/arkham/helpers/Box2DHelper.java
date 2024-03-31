@@ -38,7 +38,7 @@ public class Box2DHelper {
 
     private static Body createBox2DBodyByType(Box2DBody box2DBody) {
 
-        BodyDef bodyDef = new BodyDef();
+        var bodyDef = new BodyDef();
 
         bodyDef.type = box2DBody.bodyType;
 
@@ -49,6 +49,19 @@ public class Box2DHelper {
         return box2DBody.world.createBody(bodyDef);
     }
 
+    private static FixtureDef createPlayerBoxFixtureDef(Box2DBody box2DBody, PolygonShape shape) {
+
+        //Since I want that my player has a bound width of 32, but I want that his collisions fixture to be of 16,
+        // I got to create a new method just for my player.
+        shape.setAsBox(16f / 2 / PIXELS_PER_METER, box2DBody.bounds.height / 2 / PIXELS_PER_METER);
+
+        var fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = box2DBody.density;
+
+        return fixtureDef;
+    }
+
     public static Body createBody(Box2DBody box2DBody) {
 
         PolygonShape shape = new PolygonShape();
@@ -57,8 +70,11 @@ public class Box2DHelper {
 
         Body body = createBox2DBodyByType(box2DBody);
 
-        if (box2DBody.userData instanceof Player)
-            createPlayerBody(box2DBody, fixtureDef, body);
+        if (box2DBody.userData instanceof Player) {
+
+            var playerFixtureDef = createPlayerBoxFixtureDef(box2DBody, shape);
+            createPlayerBody(box2DBody, playerFixtureDef, body);
+        }
 
         else if (box2DBody.userData instanceof Enemy)
             createEnemyBody(box2DBody, fixtureDef, body);
