@@ -94,10 +94,6 @@ public class Player extends GameObject {
             spawnToPreviousCheckpoint();
     }
 
-    public Vector2 getPixelPosition() {
-        return body.getPosition().scl(PIXELS_PER_METER);
-    }
-
 
     private void spawnToPreviousCheckpoint() {
 
@@ -174,6 +170,7 @@ public class Player extends GameObject {
     }
 
     public Vector2 getWorldPosition() {return body.getPosition();}
+    public Vector2 getPixelPosition() {return body.getPosition().scl(PIXELS_PER_METER);}
 
     public void hitByEnemy() {
         isDead = true;

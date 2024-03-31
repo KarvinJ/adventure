@@ -19,8 +19,7 @@ import com.badlogic.gdx.utils.Array;
 import knight.arkham.objects.*;
 
 import static knight.arkham.helpers.CameraController.controlCameraPosition;
-import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
-import static knight.arkham.helpers.Constants.TIME_STEP;
+import static knight.arkham.helpers.Constants.*;
 import static knight.arkham.helpers.GameDataHelper.saveGameData;
 
 public class TileMapHelper {
@@ -43,7 +42,7 @@ public class TileMapHelper {
         world = new World(new Vector2(0, -40), true);
         world.setContactListener(new GameContactListener());
 
-        player = new Player(new Rectangle(20, 65, 32, 16), world, atlas);
+        player = new Player(new Rectangle(150, 40, 32, 16), world, atlas);
 
         saveGameData(new GameData("first", player.getWorldPosition()));
 
@@ -99,7 +98,7 @@ public class TileMapHelper {
         if (Gdx.input.isKeyJustPressed(Input.Keys.F5))
             isDebugCamera = !isDebugCamera;
 
-        if (!isDebugCamera)
+        if (!isDebugCamera && player.getPixelPosition().x > 145)
             camera.position.set(player.getWorldPosition().x, 5.2f, 0);
 
         camera.update();
