@@ -30,8 +30,8 @@ public class Player extends GameObject {
     private float deadTimer;
     private boolean isMovingRight;
     private boolean isDead;
-    private final Sound jumpSound = loadSound("magic.wav");
-    private final Sound deathSound = loadSound("fall.wav");
+    private final Sound jumpSound = loadSound("coin.wav");
+    private final Sound deathSound = loadSound("mariodie.wav");
 
     public Player(Rectangle bounds, World world, TextureAtlas atlas) {
         super(

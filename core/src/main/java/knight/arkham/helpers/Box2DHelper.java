@@ -3,27 +3,21 @@ package knight.arkham.helpers;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import knight.arkham.objects.Animal;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
-import knight.arkham.objects.structures.Checkpoint;
 import knight.arkham.objects.structures.Door;
 
 import static knight.arkham.helpers.Constants.*;
 
 public class Box2DHelper {
 
-    public static Fixture createFixture(Box2DBody box2DBody){
+    public static void createFixture(Box2DBody box2DBody){
 
         PolygonShape shape = new PolygonShape();
 
         FixtureDef fixtureDef = createBoxFixtureDef(box2DBody, shape);
 
-        if (box2DBody.userData instanceof Checkpoint)
-            fixtureDef.filter.categoryBits = CHECKPOINT_BIT;
-
-        else
-            fixtureDef.filter.categoryBits = STOP_ENEMY_BIT;
+        fixtureDef.filter.categoryBits = STOP_ENEMY_BIT;
 
         Body body = createBox2DBodyByType(box2DBody);
 
@@ -33,7 +27,6 @@ public class Box2DHelper {
 
         shape.dispose();
 
-        return fixture;
     }
 
     private static Body createBox2DBodyByType(Box2DBody box2DBody) {
@@ -78,12 +71,6 @@ public class Box2DHelper {
 
         else if (box2DBody.userData instanceof Enemy)
             createEnemyBody(box2DBody, fixtureDef, body);
-
-        else if (box2DBody.userData instanceof Animal) {
-
-            fixtureDef.filter.categoryBits = ANIMAL_BIT;
-            body.createFixture(fixtureDef);
-        }
 
         else if (box2DBody.userData instanceof Door) {
 

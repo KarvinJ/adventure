@@ -32,7 +32,7 @@ public class Enemy extends GameObject {
 
         movingAnimation = null;
 
-        hitSound = loadSound("drop.wav");
+        hitSound = loadSound("stomp.wav");
     }
 
     @Override
