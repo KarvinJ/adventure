@@ -37,17 +37,17 @@ public class Player extends GameObject {
     public Player(Rectangle bounds, World world, TextureAtlas atlas) {
         super(
             bounds, world,
-            new TextureRegion(atlas.findRegion("idle"), 0, 0, 64, 50)
+            new TextureRegion(atlas.findRegion("little-mario"), 0, 0, 32, 17)
         );
 
         previousState = AnimationState.STANDING;
         actualState = AnimationState.STANDING;
 
-        jumpAnimation = makeAnimation(atlas.findRegion("jump"), 64, 64, 15, 0.1f);
-        idleAnimation = makeAnimation(atlas.findRegion("idle"), 64, 50, 4, 0.1f);
-        runningAnimation = makeAnimation(atlas.findRegion("run"), 80, 50, 8, 0.1f);
-        dyingAnimation = makeAnimation(atlas.findRegion("dead"), 80, 55, 8, 0.1f);
-        attackingAnimation = makeAnimation(atlas.findRegion("attack"), 96, 80, 8, 0.1f);
+        jumpAnimation = makeAnimation(atlas.findRegion("little-mario"), 32, 17, 1, 0.1f);
+        idleAnimation = makeAnimation(atlas.findRegion("little-mario"), 32, 17, 1, 0.1f);
+        runningAnimation = makeAnimation(atlas.findRegion("little-mario"), 32, 17, 1, 0.1f);
+        dyingAnimation = makeAnimation(atlas.findRegion("little-mario"), 32, 17, 1, 0.1f);
+        attackingAnimation = makeAnimation(atlas.findRegion("little-mario"), 32, 17, 1, 0.1f);
 
         jumpSound = loadSound("magic.wav");
         deathSound = loadSound("fall.wav");

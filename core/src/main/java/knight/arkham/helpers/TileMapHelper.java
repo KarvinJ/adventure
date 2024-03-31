@@ -43,7 +43,7 @@ public class TileMapHelper {
         world = new World(new Vector2(0, -40), true);
         world.setContactListener(new GameContactListener());
 
-        player = new Player(new Rectangle(20, 65, 16, 16), world, atlas);
+        player = new Player(new Rectangle(20, 65, 32, 16), world, atlas);
 
         saveGameData(new GameData("first", player.getWorldPosition()));
 

@@ -1,13 +1,5 @@
 character.png
-size:2048,256
+size:512,32
 repeat:none
-attack
-bounds:2,54,768,80
-dead
-bounds:964,145,640,55
-idle
-bounds:1606,149,256,51
-jump
-bounds:2,136,960,64
-run
-bounds:2,2,640,50
+little-mario
+bounds:2,2,256,17
