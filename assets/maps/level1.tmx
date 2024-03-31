@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="200" height="26" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="22">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="200" height="26" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="25">
  <tileset firstgid="1" source="tileset/OverWorld.tsx"/>
  <tileset firstgid="65" source="tileset/Nature_environment_01.tsx"/>
  <objectgroup id="7" name="Blocks">
   <object id="8" name="question" x="336.5" y="320" width="15" height="15.5"/>
   <object id="12" name="question" x="432.5" y="255.5" width="15" height="16"/>
-  <object id="13" x="400.5" y="320" width="15" height="16"/>
-  <object id="14" x="464" y="321" width="16" height="14.5"/>
-  <object id="16" name="question" x="416.75" y="320" width="14.75" height="15.25"/>
-  <object id="17" x="432" y="319.75" width="16" height="15"/>
-  <object id="18" name="question" x="449.25" y="320.25" width="14" height="14.75"/>
+  <object id="13" x="400.5" y="322.25" width="15" height="12.875"/>
+  <object id="14" x="464" y="321.875" width="16" height="13.625"/>
+  <object id="16" name="question" x="416.75" y="322.75" width="14.75" height="12.5"/>
+  <object id="17" x="432" y="321.75" width="16" height="13"/>
+  <object id="18" name="question" x="449.25" y="322" width="14" height="13"/>
  </objectgroup>
  <objectgroup id="2" name="Collisions">
   <object id="1" x="0.666667" y="384.667" width="1324.67" height="30.8333"/>
   <object id="2" x="531.333" y="353.667" width="25.1667" height="29.3333"/>
   <object id="7" x="691.667" y="337" width="26.3333" height="46.5"/>
   <object id="21" x="820" y="321" width="25" height="62"/>
+  <object id="23" x="400.125" y="320.25" width="80" height="2"/>
  </objectgroup>
  <layer id="3" name="Background" width="200" height="26">
   <data encoding="csv">
