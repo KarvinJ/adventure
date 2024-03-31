@@ -20,19 +20,18 @@ import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public class Player extends GameObject {
     private enum AnimationState {FALLING, JUMPING, STANDING, RUNNING, DYING, ATTACKING}
-    private AnimationState actualState;
-    private AnimationState previousState;
+    private AnimationState actualState = AnimationState.STANDING;
+    private AnimationState previousState = AnimationState.STANDING;
     private final Animation<TextureRegion> idleAnimation;
-    private final Animation<TextureRegion> attackingAnimation;
-    private final Animation<TextureRegion> jumpAnimation;
+    private final TextureRegion jumpAnimation;
+    private final TextureRegion dyingAnimation;
     private final Animation<TextureRegion> runningAnimation;
-    private final Animation<TextureRegion> dyingAnimation;
     private float animationTimer;
     private float deadTimer;
     private boolean isMovingRight;
     private boolean isDead;
-    private final Sound jumpSound;
-    private final Sound deathSound;
+    private final Sound jumpSound = loadSound("magic.wav");
+    private final Sound deathSound = loadSound("fall.wav");
 
     public Player(Rectangle bounds, World world, TextureAtlas atlas) {
         super(
@@ -40,17 +39,10 @@ public class Player extends GameObject {
             new TextureRegion(atlas.findRegion("little-mario"), 0, 0, 32, 17)
         );
 
-        previousState = AnimationState.STANDING;
-        actualState = AnimationState.STANDING;
-
-        jumpAnimation = makeAnimation(atlas.findRegion("little-mario"), 32, 17, 1, 0.1f);
-        idleAnimation = makeAnimation(atlas.findRegion("little-mario"), 32, 17, 1, 0.1f);
-        runningAnimation = makeAnimation(atlas.findRegion("little-mario"), 32, 17, 1, 0.1f);
-        dyingAnimation = makeAnimation(atlas.findRegion("little-mario"), 32, 17, 1, 0.1f);
-        attackingAnimation = makeAnimation(atlas.findRegion("little-mario"), 32, 17, 1, 0.1f);
-
-        jumpSound = loadSound("magic.wav");
-        deathSound = loadSound("fall.wav");
+        jumpAnimation = new TextureRegion(atlas.findRegion("little-mario"), 32 * 5, 0, 32, 17);
+        dyingAnimation = new TextureRegion(atlas.findRegion("little-mario"), 32 * 6, 0, 32, 17);
+        idleAnimation = makeAnimation(atlas.findRegion("little-mario"), 32, 17, 1, 0.1f, 0);
+        runningAnimation = makeAnimation(atlas.findRegion("little-mario"), 32, 17, 4, 0.1f, 1);
     }
 
     @Override
@@ -63,15 +55,15 @@ public class Player extends GameObject {
 
     private void movement() {
 
-        if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 6)
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 12)
             applyLinealImpulse(new Vector2(6, 0));
 
-        else if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -6)
+        else if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -12)
             applyLinealImpulse(new Vector2(-6, 0));
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && body.getLinearVelocity().y == 0) {
 
-            applyLinealImpulse(new Vector2(0, 60));
+            applyLinealImpulse(new Vector2(0, 140));
             jumpSound.play();
         }
     }
@@ -123,7 +115,7 @@ public class Player extends GameObject {
         else if (body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == AnimationState.JUMPING))
             return AnimationState.JUMPING;
 
-        else if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.D))
+        else if (body.getLinearVelocity().x < 0 || body.getLinearVelocity().x > 0)
             return AnimationState.RUNNING;
 
         else if (Gdx.input.isKeyPressed(Input.Keys.F))
@@ -143,7 +135,7 @@ public class Player extends GameObject {
         switch (actualState) {
 
             case JUMPING:
-                actualRegion = jumpAnimation.getKeyFrame(animationTimer, false);
+                actualRegion = jumpAnimation;
                 break;
 
             case RUNNING:
@@ -151,11 +143,7 @@ public class Player extends GameObject {
                 break;
 
             case DYING:
-                actualRegion = dyingAnimation.getKeyFrame(animationTimer, false);
-                break;
-
-            case ATTACKING:
-                actualRegion = attackingAnimation.getKeyFrame(animationTimer, false);
+                actualRegion = dyingAnimation;
                 break;
 
             case FALLING:
