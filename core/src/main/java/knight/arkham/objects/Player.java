@@ -22,9 +22,9 @@ public class Player extends GameObject {
     private enum AnimationState {FALLING, JUMPING, STANDING, RUNNING, DYING, ATTACKING}
     private AnimationState actualState = AnimationState.STANDING;
     private AnimationState previousState = AnimationState.STANDING;
-    private final Animation<TextureRegion> idleAnimation;
-    private final TextureRegion jumpAnimation;
-    private final TextureRegion dyingAnimation;
+    private final TextureRegion idleRegion;
+    private final TextureRegion jumpRegion;
+    private final TextureRegion dyingRegion;
     private final Animation<TextureRegion> runningAnimation;
     private float animationTimer;
     private float deadTimer;
@@ -39,9 +39,10 @@ public class Player extends GameObject {
             new TextureRegion(atlas.findRegion("little-mario"), 0, 0, 32, 17)
         );
 
-        jumpAnimation = new TextureRegion(atlas.findRegion("little-mario"), 32 * 5, 0, 32, 17);
-        dyingAnimation = new TextureRegion(atlas.findRegion("little-mario"), 32 * 6, 0, 32, 17);
-        idleAnimation = makeAnimation(atlas.findRegion("little-mario"), 32, 17, 1, 0.1f, 0);
+        idleRegion = new TextureRegion(atlas.findRegion("little-mario"), 0, 0, 32, 17);
+        jumpRegion = new TextureRegion(atlas.findRegion("little-mario"), 32 * 5, 0, 32, 17);
+        dyingRegion = new TextureRegion(atlas.findRegion("little-mario"), 32 * 6, 0, 32, 17);
+
         runningAnimation = makeAnimation(atlas.findRegion("little-mario"), 32, 17, 4, 0.1f, 1);
     }
 
@@ -135,7 +136,7 @@ public class Player extends GameObject {
         switch (actualState) {
 
             case JUMPING:
-                actualRegion = jumpAnimation;
+                actualRegion = jumpRegion;
                 break;
 
             case RUNNING:
@@ -143,13 +144,13 @@ public class Player extends GameObject {
                 break;
 
             case DYING:
-                actualRegion = dyingAnimation;
+                actualRegion = dyingRegion;
                 break;
 
             case FALLING:
             case STANDING:
             default:
-                actualRegion = idleAnimation.getKeyFrame(animationTimer, true);
+                actualRegion = idleRegion;
         }
 
         flipRegionOnXAxis(actualRegion);

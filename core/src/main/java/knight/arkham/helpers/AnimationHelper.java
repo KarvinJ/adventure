@@ -10,7 +10,7 @@ public class AnimationHelper {
 
         Array<TextureRegion> animationFrames = new Array<>();
 
-        for (int i = 0; i < totalFrames; i++)
+        for (int i = firstFramePosition; i < totalFrames; i++)
             animationFrames.add(new TextureRegion(region, i * frameWidth, 0, frameWidth, frameHeight));
 
         return new Animation<>(frameDuration, animationFrames);
