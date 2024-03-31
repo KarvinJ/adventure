@@ -32,11 +32,11 @@ public class Adventure extends Game {
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
 
-        viewport = new FitViewport(screenWidth / 32f, screenHeight / 32f, camera);
+        viewport = new FitViewport(screenWidth / 16f, screenHeight / 16f, camera);
 
-        camera.zoom -= 0.8f;
+        camera.zoom -= 0.7f;
 
-        camera.position.set(screenWidth / 2f / 32f, screenHeight / 2f / 32f, 0);
+        camera.position.set(screenWidth / 2f / 16f, screenHeight / 2f / 16f, 0);
 
         uiSkin = new AssetDescriptor<>("ui/uiskin.json", Skin.class, new SkinLoader.SkinParameter("ui/uiskin.atlas"));
 

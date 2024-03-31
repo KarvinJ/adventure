@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import knight.arkham.objects.*;
 
+import static knight.arkham.helpers.CameraController.controlCameraPosition;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 import static knight.arkham.helpers.Constants.TIME_STEP;
 import static knight.arkham.helpers.GameDataHelper.saveGameData;
@@ -32,6 +33,7 @@ public class TileMapHelper {
     private final Array<GameObject> gameObjects;
     private float accumulator;
     private boolean isDebugCamera;
+    private boolean isDebugRendererActive;
 
     public TileMapHelper(String mapFilePath, String atlasFilePath) {
 
@@ -41,7 +43,7 @@ public class TileMapHelper {
         world = new World(new Vector2(0, -40), true);
         world.setContactListener(new GameContactListener());
 
-        player = new Player(new Rectangle(20, 65, 32, 32), world, atlas);
+        player = new Player(new Rectangle(20, 65, 16, 16), world, atlas);
 
         saveGameData(new GameData("first", player.getWorldPosition()));
 
@@ -92,29 +94,13 @@ public class TileMapHelper {
 
     public void updateCameraPosition(OrthographicCamera camera) {
 
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-            camera.position.x += 0.1f;
-
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
-            camera.position.x -= 0.1f;
-
-        if (Gdx.input.isKeyPressed(Input.Keys.UP))
-            camera.position.y += 0.1f;
-
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
-            camera.position.y -= 0.1f;
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F3))
-            camera.zoom += 0.1f;
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F4))
-            camera.zoom -= 0.1f;
+        controlCameraPosition(camera);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F5))
             isDebugCamera = !isDebugCamera;
 
         if (!isDebugCamera)
-            camera.position.set(player.getWorldPosition().x, 3.4f, 0);
+            camera.position.set(player.getWorldPosition().x, 5.2f, 0);
 
         camera.update();
     }
@@ -147,20 +133,26 @@ public class TileMapHelper {
 
         mapRenderer.setView(camera);
 
-        mapRenderer.render();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
+            isDebugRendererActive = !isDebugRendererActive;
 
-        mapRenderer.getBatch().setProjectionMatrix(camera.combined);
+        if (!isDebugRendererActive) {
+            mapRenderer.render();
 
-        mapRenderer.getBatch().begin();
+            mapRenderer.getBatch().setProjectionMatrix(camera.combined);
 
-        player.draw(mapRenderer.getBatch());
+            mapRenderer.getBatch().begin();
 
-        for (GameObject gameObject : gameObjects)
-            gameObject.draw(mapRenderer.getBatch());
+            player.draw(mapRenderer.getBatch());
 
-        mapRenderer.getBatch().end();
+            for (GameObject gameObject : gameObjects)
+                gameObject.draw(mapRenderer.getBatch());
 
-//        debugRenderer.render(world, camera.combined);
+            mapRenderer.getBatch().end();
+        }
+
+        else
+            debugRenderer.render(world, camera.combined);
     }
 
     public void dispose(){
