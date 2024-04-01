@@ -44,8 +44,8 @@ public class Box2DHelper {
 
     private static FixtureDef createPlayerBoxFixtureDef(Box2DBody box2DBody, PolygonShape shape) {
 
-        //Since I want that my player has a bound width of 32, but I want that his collisions fixture to be of 16,
-        // I got to create a new method just for my player.
+        //Since I want that my player to be rendered with a 32 px width, but I want that his collisions fixture to be of 16,
+        // I got to create a new method just for my player or any other object with this case.
         shape.setAsBox(16f / 2 / PIXELS_PER_METER, box2DBody.bounds.height / 2 / PIXELS_PER_METER);
 
         var fixtureDef = new FixtureDef();
