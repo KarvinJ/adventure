@@ -69,11 +69,11 @@ public class TileMapHelper {
             switch (objectsName) {
 
                 case "Enemies":
+
                     if (mapObject.getName().equals("goomba"))
                         gameObjects.add(new Enemy(mapRectangle, world, atlas.findRegion("goomba"), 3));
                     else
                         gameObjects.add(new Enemy(mapRectangle, world, atlas.findRegion("turtle"), 4));
-
                     break;
 
                 case "Enemy-Stopper":
@@ -140,6 +140,7 @@ public class TileMapHelper {
             isDebugRendererActive = !isDebugRendererActive;
 
         if (!isDebugRendererActive) {
+
             mapRenderer.render();
 
             mapRenderer.getBatch().setProjectionMatrix(camera.combined);
