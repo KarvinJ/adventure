@@ -110,7 +110,7 @@ public class Box2DHelper {
 
         fixtureDef.filter.categoryBits = PLAYER_BIT;
 
-        fixtureDef.filter.maskBits = (short) (GROUND_BIT | DOOR_BIT | BOX_BIT | CHECKPOINT_BIT |
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | DOOR_BIT | CHECKPOINT_BIT |
             FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT);
 
         fixtureDef.friction = 1;
