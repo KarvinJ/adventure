@@ -42,7 +42,7 @@ public class Box2DHelper {
         return box2DBody.world.createBody(bodyDef);
     }
 
-    private static FixtureDef createPlayerBoxFixtureDef(Box2DBody box2DBody, PolygonShape shape) {
+    private static FixtureDef createCharactersBoxFixtureDef(Box2DBody box2DBody, PolygonShape shape) {
 
         //Since I want that my player to be rendered with a 32 px width, but I want that his collisions fixture to be of 16,
         // I got to create a new method just for my player or any other object with this case.
@@ -65,13 +65,15 @@ public class Box2DHelper {
 
         if (box2DBody.userData instanceof Player) {
 
-            var playerFixtureDef = createPlayerBoxFixtureDef(box2DBody, shape);
+            var playerFixtureDef = createCharactersBoxFixtureDef(box2DBody, shape);
             createPlayerBody(box2DBody, playerFixtureDef, body);
         }
 
-        else if (box2DBody.userData instanceof Enemy)
-            createEnemyBody(box2DBody, fixtureDef, body);
+        else if (box2DBody.userData instanceof Enemy) {
 
+            var enemyFixtureDef = createCharactersBoxFixtureDef(box2DBody, shape);
+            createEnemyBody(box2DBody, enemyFixtureDef, body);
+        }
         else if (box2DBody.userData instanceof Door) {
 
             fixtureDef.filter.categoryBits = DOOR_BIT;
@@ -163,10 +165,10 @@ public class Box2DHelper {
 
         Vector2[] vertices = new Vector2[4];
 
-        vertices[0] = new Vector2(-8, 15).scl(1 / PIXELS_PER_METER);
-        vertices[1] = new Vector2(8, 15).scl(1 / PIXELS_PER_METER);
-        vertices[2] = new Vector2(-8, 12).scl(1 / PIXELS_PER_METER);
-        vertices[3] = new Vector2(8, 12).scl(1 / PIXELS_PER_METER);
+        vertices[0] = new Vector2(-8, 12).scl(1 / PIXELS_PER_METER);
+        vertices[1] = new Vector2(8, 12).scl(1 / PIXELS_PER_METER);
+        vertices[2] = new Vector2(-8, 10).scl(1 / PIXELS_PER_METER);
+        vertices[3] = new Vector2(8, 10).scl(1 / PIXELS_PER_METER);
 
         head.set(vertices);
 

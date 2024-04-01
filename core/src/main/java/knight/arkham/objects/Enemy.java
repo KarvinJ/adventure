@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
 
+import static knight.arkham.helpers.AnimationHelper.makeAnimation;
 import static knight.arkham.helpers.AssetsHelper.loadSound;
 import static knight.arkham.helpers.Box2DHelper.createBody;
 
@@ -30,7 +31,9 @@ public class Enemy extends GameObject {
             )
         );
 
-        movingAnimation = null;
+        var frameWidth = region.getRegionWidth() / totalFrames;
+
+        movingAnimation = makeAnimation(region, frameWidth, region.getRegionHeight(), totalFrames - 1, 0.1f, 0);
 
         hitSound = loadSound("stomp.wav");
     }

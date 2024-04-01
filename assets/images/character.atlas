@@ -1,5 +1,9 @@
 character.png
 size:512,32
 repeat:none
+goomba
+bounds:390,10,96,17
 little-mario
-bounds:2,2,256,17
+bounds:2,10,256,17
+turtle
+bounds:260,2,128,25
