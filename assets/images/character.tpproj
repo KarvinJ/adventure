@@ -34,7 +34,7 @@ prettyPrint=false
 legacyOutput=false
 
 scaleFactors=[{suffix:"",factor:1,resampling:bicubic}]
-inputFiles=[{path:Characters/little-mario.png,type:Input,regionName:null},{path:Characters/goomba.png,type:Input,regionName:null},{path:Characters/turtle.png,type:Input,regionName:null}]
+inputFiles=[{path:Characters/little-mario.png,type:Input,regionName:null},{path:Characters/turtle.png,type:Input,regionName:null},{path:Characters/goomba.png,type:Input,regionName:null}]
 keepInputFileExtensions=false
 
 
