@@ -23,9 +23,9 @@ public class GameScreen extends ScreenAdapter {
 
         mapHelper = new TileMapHelper("maps/level1.tmx", "images/character.atlas");
 
-        music.play();
-        music.setVolume(0.2f);
-        music.setLooping(true);
+//        music.play();
+//        music.setVolume(0.2f);
+//        music.setLooping(true);
     }
 
     @Override

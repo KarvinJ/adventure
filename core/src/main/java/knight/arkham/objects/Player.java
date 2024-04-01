@@ -33,17 +33,21 @@ public class Player extends GameObject {
     private final Sound jumpSound = loadSound("coin.wav");
     private final Sound deathSound = loadSound("mariodie.wav");
 
-    public Player(Rectangle bounds, World world, TextureAtlas atlas) {
+    public Player(Rectangle bounds, World world, TextureAtlas atlas, int totalFrames) {
         super(
             bounds, world,
-            new TextureRegion(atlas.findRegion("little-mario"), 0, 0, 32, 17)
+            new TextureRegion(
+                atlas.findRegion("little-mario"), 0, 0,
+                atlas.findRegion("little-mario").getRegionWidth() / totalFrames,
+                atlas.findRegion("little-mario").getRegionHeight()
+            )
         );
 
-        idleRegion = new TextureRegion(atlas.findRegion("little-mario"), 0, 0, 32, 17);
-        jumpRegion = new TextureRegion(atlas.findRegion("little-mario"), 32 * 5, 0, 32, 17);
-        dyingRegion = new TextureRegion(atlas.findRegion("little-mario"), 32 * 6, 0, 32, 17);
+        idleRegion = new TextureRegion(atlas.findRegion("little-mario"), 0, 0,  framesWidth, framesHeight);
+        jumpRegion = new TextureRegion(atlas.findRegion("little-mario"), framesWidth * 5, 0, framesWidth, framesHeight);
+        dyingRegion = new TextureRegion(atlas.findRegion("little-mario"), framesWidth * 6, 0, framesWidth, framesHeight);
 
-        runningAnimation = makeAnimation(atlas.findRegion("little-mario"), 32, 17, 4, 0.1f, 1);
+        runningAnimation = makeAnimation(atlas.findRegion("little-mario"), framesWidth, framesHeight, 4, 0.1f, 1);
     }
 
     @Override

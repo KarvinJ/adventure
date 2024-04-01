@@ -21,7 +21,7 @@ public class Enemy extends GameObject {
     public boolean isMovingRight;
     private boolean setToDestroy;
     private boolean isDestroyed;
-    private final Sound hitSound;
+    private final Sound hitSound = loadSound("stomp.wav");
 
     public Enemy(Rectangle bounds, World world, TextureAtlas.AtlasRegion region, int totalFrames) {
         super(
@@ -31,14 +31,10 @@ public class Enemy extends GameObject {
             )
         );
 
-        var frameWidth = region.getRegionWidth() / totalFrames;
-
         if (region.name.equals("goomba"))
-            movingAnimation = makeAnimation(region, frameWidth, region.getRegionHeight(), totalFrames - 1, 0.2f, 0);
+            movingAnimation = makeAnimation(region, framesWidth, framesHeight, totalFrames - 1, 0.2f, 0);
         else
-            movingAnimation = makeAnimation(region, frameWidth, region.getRegionHeight(), totalFrames - 2, 0.2f, 0);
-
-        hitSound = loadSound("stomp.wav");
+            movingAnimation = makeAnimation(region, framesWidth, framesHeight, totalFrames - 2, 0.2f, 0);
     }
 
     @Override
