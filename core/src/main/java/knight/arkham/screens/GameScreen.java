@@ -15,7 +15,6 @@ public class GameScreen extends ScreenAdapter {
     private final TileMapHelper mapHelper;
     private final Music music = loadMusic("mario_music.ogg");
 
-
     public GameScreen() {
 
         game = Adventure.INSTANCE;

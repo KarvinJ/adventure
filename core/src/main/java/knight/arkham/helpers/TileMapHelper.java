@@ -69,7 +69,11 @@ public class TileMapHelper {
             switch (objectsName) {
 
                 case "Enemies":
-                    gameObjects.add(new Enemy(mapRectangle, world, atlas.findRegion("goomba"), 3));
+                    if (mapObject.getName().equals("goomba"))
+                        gameObjects.add(new Enemy(mapRectangle, world, atlas.findRegion("goomba"), 3));
+                    else
+                        gameObjects.add(new Enemy(mapRectangle, world, atlas.findRegion("turtle"), 4));
+
                     break;
 
                 case "Enemy-Stopper":

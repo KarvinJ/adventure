@@ -33,7 +33,10 @@ public class Enemy extends GameObject {
 
         var frameWidth = region.getRegionWidth() / totalFrames;
 
-        movingAnimation = makeAnimation(region, frameWidth, region.getRegionHeight(), totalFrames - 1, 0.1f, 0);
+        if (region.name.equals("goomba"))
+            movingAnimation = makeAnimation(region, frameWidth, region.getRegionHeight(), totalFrames - 1, 0.2f, 0);
+        else
+            movingAnimation = makeAnimation(region, frameWidth, region.getRegionHeight(), totalFrames - 2, 0.2f, 0);
 
         hitSound = loadSound("stomp.wav");
     }
@@ -68,10 +71,10 @@ public class Enemy extends GameObject {
             flipRegionOnXAxis(actualRegion);
 
             if (isMovingRight && body.getLinearVelocity().x <= 4)
-                applyLinealImpulse(new Vector2(2, 0));
+                applyLinealImpulse(new Vector2(4, 0));
 
             else if (!isMovingRight && body.getLinearVelocity().x >= -4)
-                applyLinealImpulse(new Vector2(-2, 0));
+                applyLinealImpulse(new Vector2(-4, 0));
         }
     }
 
