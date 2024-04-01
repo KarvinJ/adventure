@@ -165,10 +165,10 @@ public class Box2DHelper {
 
         Vector2[] vertices = new Vector2[4];
 
-        vertices[0] = new Vector2(-8, 12).scl(1 / PIXELS_PER_METER);
-        vertices[1] = new Vector2(8, 12).scl(1 / PIXELS_PER_METER);
-        vertices[2] = new Vector2(-8, 10).scl(1 / PIXELS_PER_METER);
-        vertices[3] = new Vector2(8, 10).scl(1 / PIXELS_PER_METER);
+        vertices[0] = new Vector2(-8, 13).scl(1 / PIXELS_PER_METER);
+        vertices[1] = new Vector2(8, 13).scl(1 / PIXELS_PER_METER);
+        vertices[2] = new Vector2(-8, 11).scl(1 / PIXELS_PER_METER);
+        vertices[3] = new Vector2(8, 11).scl(1 / PIXELS_PER_METER);
 
         head.set(vertices);
 

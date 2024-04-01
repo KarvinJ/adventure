@@ -17,6 +17,7 @@ import static knight.arkham.helpers.Box2DHelper.createBody;
 
 public class Enemy extends GameObject {
     private final Animation<TextureRegion> movingAnimation;
+    private final TextureRegion hitRegion;
     private float animationTimer;
     public boolean isMovingRight;
     private boolean setToDestroy;
@@ -31,10 +32,16 @@ public class Enemy extends GameObject {
             )
         );
 
-        if (region.name.equals("goomba"))
+        if (region.name.equals("goomba")) {
+
             movingAnimation = makeAnimation(region, framesWidth, framesHeight, totalFrames - 1, 0.2f, 0);
-        else
+            hitRegion = new TextureRegion(region, framesWidth * 2, 0,  framesWidth, framesHeight);
+        }
+        else {
+
             movingAnimation = makeAnimation(region, framesWidth, framesHeight, totalFrames - 2, 0.2f, 0);
+            hitRegion = new TextureRegion(region, framesWidth * 3, 0,  framesWidth, framesHeight);
+        }
     }
 
     @Override
@@ -50,6 +57,10 @@ public class Enemy extends GameObject {
 
         actualWorld.destroyBody(body);
         isDestroyed = true;
+
+        actualRegion = hitRegion;
+
+        animationTimer = 0;
     }
 
     @Override
@@ -76,7 +87,7 @@ public class Enemy extends GameObject {
 
     @Override
     public void draw(Batch batch) {
-        if (!isDestroyed)
+        if (!isDestroyed || animationTimer < 1)
             super.draw(batch);
     }
 
