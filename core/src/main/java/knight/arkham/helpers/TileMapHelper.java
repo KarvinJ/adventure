@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import knight.arkham.objects.*;
 import knight.arkham.objects.structures.Brick;
+import knight.arkham.objects.structures.QuestionBlock;
 
 import static knight.arkham.helpers.CameraController.controlCameraPosition;
 import static knight.arkham.helpers.Constants.*;
@@ -78,7 +79,10 @@ public class TileMapHelper {
                     break;
 
                 case "Blocks":
-                    new Brick(mapRectangle, world, tiledMap);
+                    if (mapObject.getName().equals("question"))
+                        new QuestionBlock(mapRectangle, world, tiledMap);
+                    else
+                        new Brick(mapRectangle, world, tiledMap);
                     break;
 
                 case "Enemy-Stopper":

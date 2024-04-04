@@ -16,7 +16,7 @@ public abstract class InteractiveStructure {
     protected final Fixture fixture;
     protected final Body body;
     private final TiledMap tiledMap;
-    private final Sound collisionSound;
+    protected final Sound collisionSound;
 
     public InteractiveStructure(Rectangle rectangle, World world, TiledMap map, String soundPath) {
 
@@ -49,6 +49,7 @@ public abstract class InteractiveStructure {
         int positionX = (int) (body.getPosition().x * PIXELS_PER_METER / 16);
         int positionY = (int) (body.getPosition().y * PIXELS_PER_METER / 16);
 
+//        Here I search for the cell by position.
         return mapLayer.getCell(positionX, positionY);
     }
 }

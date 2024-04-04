@@ -7,6 +7,7 @@ import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
 import knight.arkham.objects.structures.Brick;
 import knight.arkham.objects.structures.Door;
+import knight.arkham.objects.structures.QuestionBlock;
 
 import static knight.arkham.helpers.Constants.*;
 
@@ -20,6 +21,10 @@ public class Box2DHelper {
 
         if (box2DBody.userData instanceof Brick)
             fixtureDef.filter.categoryBits = BRICK_BIT;
+
+        else if (box2DBody.userData instanceof QuestionBlock)
+            fixtureDef.filter.categoryBits = QUESTION_BLOCK_BIT;
+
         else
             fixtureDef.filter.categoryBits = STOP_ENEMY_BIT;
 
@@ -115,7 +120,7 @@ public class Box2DHelper {
 
         fixtureDef.filter.categoryBits = PLAYER_BIT;
 
-        fixtureDef.filter.maskBits = (short) (GROUND_BIT | BRICK_BIT |  CHECKPOINT_BIT |
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | BRICK_BIT | QUESTION_BLOCK_BIT |
             FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT);
 
         fixtureDef.friction = 1;
