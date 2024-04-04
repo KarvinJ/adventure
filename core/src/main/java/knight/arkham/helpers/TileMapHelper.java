@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import knight.arkham.objects.*;
+import knight.arkham.objects.structures.Brick;
 
 import static knight.arkham.helpers.CameraController.controlCameraPosition;
 import static knight.arkham.helpers.Constants.*;
@@ -76,8 +77,12 @@ public class TileMapHelper {
                         gameObjects.add(new Enemy(mapRectangle, world, atlas.findRegion("turtle"), 4));
                     break;
 
+                case "Blocks":
+                    new Brick(mapRectangle, world, tiledMap);
+                    break;
+
                 case "Enemy-Stopper":
-                    Box2DHelper.createFixture(new Box2DBody(mapRectangle, world, null));
+                    Box2DHelper.createStaticFixture(new Box2DBody(mapRectangle, world, null));
                     break;
 
                 default:

@@ -5,19 +5,23 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
+import knight.arkham.objects.structures.Brick;
 import knight.arkham.objects.structures.Door;
 
 import static knight.arkham.helpers.Constants.*;
 
 public class Box2DHelper {
 
-    public static void createFixture(Box2DBody box2DBody){
+    public static Fixture createStaticFixture(Box2DBody box2DBody){
 
         PolygonShape shape = new PolygonShape();
 
         FixtureDef fixtureDef = createBoxFixtureDef(box2DBody, shape);
 
-        fixtureDef.filter.categoryBits = STOP_ENEMY_BIT;
+        if (box2DBody.userData instanceof Brick)
+            fixtureDef.filter.categoryBits = BRICK_BIT;
+        else
+            fixtureDef.filter.categoryBits = STOP_ENEMY_BIT;
 
         Body body = createBox2DBodyByType(box2DBody);
 
@@ -27,6 +31,7 @@ public class Box2DHelper {
 
         shape.dispose();
 
+        return fixture;
     }
 
     private static Body createBox2DBodyByType(Box2DBody box2DBody) {
@@ -110,7 +115,7 @@ public class Box2DHelper {
 
         fixtureDef.filter.categoryBits = PLAYER_BIT;
 
-        fixtureDef.filter.maskBits = (short) (GROUND_BIT | DOOR_BIT | CHECKPOINT_BIT |
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | BRICK_BIT |  CHECKPOINT_BIT |
             FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT);
 
         fixtureDef.friction = 1;
