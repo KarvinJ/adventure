@@ -17,6 +17,8 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import knight.arkham.objects.*;
+import knight.arkham.objects.items.ItemDefinition;
+import knight.arkham.objects.items.Mushroom;
 import knight.arkham.objects.structures.Brick;
 import knight.arkham.objects.structures.QuestionBlock;
 
@@ -25,13 +27,15 @@ import static knight.arkham.helpers.Constants.*;
 import static knight.arkham.helpers.GameDataHelper.saveGameData;
 
 public class TileMapHelper {
-    private final TiledMap tiledMap;
+    public final TiledMap tiledMap;
     private final TextureAtlas atlas;
-    private final World world;
+    public final World world;
     private final Box2DDebugRenderer debugRenderer;
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final Player player;
     private final Array<GameObject> gameObjects;
+    private final Array<ItemDefinition> itemsToSpawn;
+    private final Array<Mushroom> mushrooms;
     private float accumulator;
     private boolean isDebugCamera;
     private boolean isDebugRendererActive;
@@ -49,12 +53,31 @@ public class TileMapHelper {
         saveGameData(new GameData("first", player.getWorldPosition()));
 
         gameObjects = new Array<>();
+        itemsToSpawn = new Array<>();
+        mushrooms = new Array<>();
 
         mapRenderer = setupMap();
         debugRenderer = new Box2DDebugRenderer();
     }
 
-    public OrthogonalTiledMapRenderer setupMap() {
+    public void spawnItems(ItemDefinition itemDefinition) {
+
+        itemsToSpawn.add(itemDefinition);
+    }
+
+    private void startItems() {
+
+        for (ItemDefinition item :itemsToSpawn) {
+
+            if (item.classType == Mushroom.class) {
+                mushrooms.add(new Mushroom(item.bounds, world));
+
+                itemsToSpawn.clear();
+            }
+        }
+    }
+
+    private OrthogonalTiledMapRenderer setupMap() {
 
         for (MapLayer mapLayer : tiledMap.getLayers())
             parseMapObjectsToBox2DBodies(mapLayer.getObjects(), mapLayer.getName());
@@ -79,18 +102,9 @@ public class TileMapHelper {
                     break;
 
                 case "Blocks":
-                    if (mapObject.getName().equals("question")) {
 
-                        new QuestionBlock(mapRectangle, world, tiledMap, mapObject);
-
-                        if (mapObject.getProperties().containsKey("mushroom")) {
-
-                            //Find another way to implement items in the game.
-                            var actualBounds = new Rectangle(mapRectangle.x, mapRectangle.y +16, mapRectangle.width, mapRectangle.height);
-
-                            gameObjects.add(new Mushroom(actualBounds, world));
-                        }
-                    }
+                    if (mapObject.getName().equals("question"))
+                        new QuestionBlock(mapRectangle, mapObject, this);
                     else
                         new Brick(mapRectangle, world, tiledMap);
                     break;
@@ -136,6 +150,11 @@ public class TileMapHelper {
         for (GameObject gameObject : gameObjects)
             gameObject.update(deltaTime);
 
+        for (Mushroom gameObject : mushrooms)
+            gameObject.update(deltaTime);
+
+        startItems();
+
         doPhysicsTimeStep(deltaTime);
     }
 
@@ -169,6 +188,9 @@ public class TileMapHelper {
             player.draw(mapRenderer.getBatch());
 
             for (GameObject gameObject : gameObjects)
+                gameObject.draw(mapRenderer.getBatch());
+
+            for (Mushroom gameObject : mushrooms)
                 gameObject.draw(mapRenderer.getBatch());
 
             mapRenderer.getBatch().end();
