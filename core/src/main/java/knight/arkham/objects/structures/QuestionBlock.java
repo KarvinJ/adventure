@@ -50,11 +50,12 @@ public class QuestionBlock extends InteractiveStructure {
         else {
 
             if (mapObject.getProperties().containsKey("mushroom")) {
+
                 spawnItemSound.play();
 
                 var itemBounds = new Rectangle(initialBounds.x, initialBounds.y + 16, initialBounds.width, initialBounds.height);
 
-                mapHelper.spawnItems(new ItemDefinition(itemBounds, Mushroom.class));
+                mapHelper.setItemToSpawn(new ItemDefinition(itemBounds, Mushroom.class));
             }
             else
                 collisionSound.play();

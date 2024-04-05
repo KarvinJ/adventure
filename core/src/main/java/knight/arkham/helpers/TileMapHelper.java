@@ -35,7 +35,6 @@ public class TileMapHelper {
     private final Player player;
     private final Array<GameObject> gameObjects;
     private final Array<ItemDefinition> itemsToSpawn;
-    private final Array<Mushroom> mushrooms;
     private float accumulator;
     private boolean isDebugCamera;
     private boolean isDebugRendererActive;
@@ -54,27 +53,9 @@ public class TileMapHelper {
 
         gameObjects = new Array<>();
         itemsToSpawn = new Array<>();
-        mushrooms = new Array<>();
 
         mapRenderer = setupMap();
         debugRenderer = new Box2DDebugRenderer();
-    }
-
-    public void spawnItems(ItemDefinition itemDefinition) {
-
-        itemsToSpawn.add(itemDefinition);
-    }
-
-    private void startItems() {
-
-        for (ItemDefinition item :itemsToSpawn) {
-
-            if (item.classType == Mushroom.class) {
-                mushrooms.add(new Mushroom(item.bounds, world, atlas.findRegion("items")));
-
-                itemsToSpawn.clear();
-            }
-        }
     }
 
     private OrthogonalTiledMapRenderer setupMap() {
@@ -150,10 +131,7 @@ public class TileMapHelper {
         for (GameObject gameObject : gameObjects)
             gameObject.update(deltaTime);
 
-        for (Mushroom gameObject : mushrooms)
-            gameObject.update(deltaTime);
-
-        startItems();
+        initializeItems();
 
         doPhysicsTimeStep(deltaTime);
     }
@@ -167,6 +145,18 @@ public class TileMapHelper {
         while(accumulator >= TIME_STEP) {
             world.step(TIME_STEP, 6,2);
             accumulator -= TIME_STEP;
+        }
+    }
+
+    private void initializeItems() {
+
+        for (ItemDefinition item : itemsToSpawn) {
+
+            if (item.classType == Mushroom.class) {
+                gameObjects.add(new Mushroom(item.bounds, world, atlas.findRegion("items")));
+
+                itemsToSpawn.clear();
+            }
         }
     }
 
@@ -190,14 +180,15 @@ public class TileMapHelper {
             for (GameObject gameObject : gameObjects)
                 gameObject.draw(mapRenderer.getBatch());
 
-            for (Mushroom gameObject : mushrooms)
-                gameObject.draw(mapRenderer.getBatch());
-
             mapRenderer.getBatch().end();
         }
-
         else
             debugRenderer.render(world, camera.combined);
+    }
+
+    public void setItemToSpawn(ItemDefinition itemDefinition) {
+
+        itemsToSpawn.add(itemDefinition);
     }
 
     public void dispose(){
