@@ -70,7 +70,7 @@ public class TileMapHelper {
         for (ItemDefinition item :itemsToSpawn) {
 
             if (item.classType == Mushroom.class) {
-                mushrooms.add(new Mushroom(item.bounds, world));
+                mushrooms.add(new Mushroom(item.bounds, world, atlas.findRegion("items")));
 
                 itemsToSpawn.clear();
             }

@@ -3,6 +3,7 @@ package knight.arkham.helpers;
 import com.badlogic.gdx.physics.box2d.*;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
+import knight.arkham.objects.items.Mushroom;
 import knight.arkham.objects.structures.Brick;
 import knight.arkham.objects.structures.QuestionBlock;
 
@@ -66,6 +67,22 @@ public class GameContactListener implements ContactListener {
                     ((Enemy) fixtureA.getUserData()).changeDirection();
                 else
                     ((Enemy) fixtureB.getUserData()).changeDirection();
+                break;
+
+            case MUSHROOM_BIT | STOP_ENEMY_BIT:
+
+                if (fixtureA.getFilterData().categoryBits == MUSHROOM_BIT)
+                    ((Mushroom) fixtureA.getUserData()).changeDirection();
+                else
+                    ((Mushroom) fixtureB.getUserData()).changeDirection();
+                break;
+
+            case MUSHROOM_BIT | PLAYER_BIT:
+
+                if (fixtureA.getFilterData().categoryBits == MUSHROOM_BIT)
+                    ((Mushroom) fixtureA.getUserData()).growUpPlayer(((Player) fixtureB.getUserData()));
+                else
+                    ((Mushroom) fixtureB.getUserData()).growUpPlayer(((Player) fixtureA.getUserData()));
                 break;
         }
     }

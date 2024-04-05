@@ -44,7 +44,7 @@ public abstract class GameObject {
         batch.draw(actualRegion, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
     }
 
-    protected void applyLinealImpulse(Vector2 impulseDirection) {
+    protected void applyLinearImpulse(Vector2 impulseDirection) {
         body.applyLinearImpulse(impulseDirection, body.getWorldCenter(), true);
     }
 

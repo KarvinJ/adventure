@@ -78,10 +78,10 @@ public class Enemy extends GameObject {
             flipRegionOnXAxis(actualRegion);
 
             if (isMovingRight && body.getLinearVelocity().x <= 4)
-                applyLinealImpulse(new Vector2(4, 0));
+                applyLinearImpulse(new Vector2(4, 0));
 
             else if (!isMovingRight && body.getLinearVelocity().x >= -4)
-                applyLinealImpulse(new Vector2(-4, 0));
+                applyLinearImpulse(new Vector2(-4, 0));
         }
     }
 

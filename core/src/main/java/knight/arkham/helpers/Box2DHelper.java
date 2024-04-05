@@ -87,7 +87,7 @@ public class Box2DHelper {
         else if (box2DBody.userData instanceof Mushroom) {
 
             fixtureDef.filter.categoryBits = MUSHROOM_BIT;
-            body.createFixture(fixtureDef);
+            body.createFixture(fixtureDef).setUserData(box2DBody.userData);
         }
 
         else {
