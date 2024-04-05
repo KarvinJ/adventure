@@ -32,7 +32,7 @@ public abstract class InteractiveStructure {
 
     protected abstract Fixture createFixture();
 
-    protected void collisionWithPlayer() {
+    protected void setDestroyBit() {
 
         Filter filter = new Filter();
 

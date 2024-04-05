@@ -79,8 +79,18 @@ public class TileMapHelper {
                     break;
 
                 case "Blocks":
-                    if (mapObject.getName().equals("question"))
-                        new QuestionBlock(mapRectangle, world, tiledMap);
+                    if (mapObject.getName().equals("question")) {
+
+                        new QuestionBlock(mapRectangle, world, tiledMap, mapObject);
+
+                        if (mapObject.getProperties().containsKey("mushroom")) {
+
+                            //Find another way to implement items in the game.
+                            var actualBounds = new Rectangle(mapRectangle.x, mapRectangle.y +16, mapRectangle.width, mapRectangle.height);
+
+                            gameObjects.add(new Mushroom(actualBounds, world));
+                        }
+                    }
                     else
                         new Brick(mapRectangle, world, tiledMap);
                     break;

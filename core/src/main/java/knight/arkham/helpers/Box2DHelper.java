@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
 import knight.arkham.objects.structures.Brick;
-import knight.arkham.objects.structures.Door;
+import knight.arkham.objects.Mushroom;
 import knight.arkham.objects.structures.QuestionBlock;
 
 import static knight.arkham.helpers.Constants.*;
@@ -84,18 +84,15 @@ public class Box2DHelper {
             var enemyFixtureDef = createCharactersBoxFixtureDef(box2DBody, shape);
             createEnemyBody(box2DBody, enemyFixtureDef, body);
         }
-        else if (box2DBody.userData instanceof Door) {
+        else if (box2DBody.userData instanceof Mushroom) {
 
-            fixtureDef.filter.categoryBits = DOOR_BIT;
-            fixtureDef.isSensor = true;
-
+            fixtureDef.filter.categoryBits = MUSHROOM_BIT;
             body.createFixture(fixtureDef);
         }
 
         else {
 
             fixtureDef.filter.categoryBits = GROUND_BIT;
-
             body.createFixture(fixtureDef);
         }
 
@@ -121,7 +118,7 @@ public class Box2DHelper {
         fixtureDef.filter.categoryBits = PLAYER_BIT;
 
         fixtureDef.filter.maskBits = (short) (GROUND_BIT | BRICK_BIT | QUESTION_BLOCK_BIT |
-            FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT);
+            FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT | MUSHROOM_BIT);
 
         fixtureDef.friction = 1;
 

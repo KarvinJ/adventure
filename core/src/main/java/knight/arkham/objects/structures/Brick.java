@@ -23,7 +23,7 @@ public class Brick extends InteractiveStructure {
 
     public void hitByPlayer() {
 
-        collisionWithPlayer();
+        setDestroyBit();
 
         getObjectCellInTheTileMap().setTile(null);
     }
