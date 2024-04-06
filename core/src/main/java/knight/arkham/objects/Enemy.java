@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
+import knight.arkham.scenes.Hud;
 
 import static knight.arkham.helpers.AnimationHelper.makeAnimation;
 import static knight.arkham.helpers.AssetsHelper.loadSound;
@@ -109,8 +110,11 @@ public class Enemy extends GameObject {
     }
 
     public void hitByPlayer() {
+
         hitSound.play();
         setToDestroy = true;
+
+        Hud.addScore(200);
     }
 
     @Override

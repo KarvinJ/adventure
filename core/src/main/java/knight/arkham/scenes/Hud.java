@@ -1,0 +1,74 @@
+package knight.arkham.scenes;
+
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+
+public class Hud {
+    public final Stage stage;
+    private static Label scoreLabel;
+    private float timeCount;
+    private final Label countDownLabel;
+    private int worldTimer = 300;
+    private static int score;
+
+    public Hud() {
+
+        Viewport viewport = new FitViewport(400, 400);
+
+        stage = new Stage(viewport);
+
+        Table table = new Table();
+
+        table.top();
+
+        table.setFillParent(true);
+
+        countDownLabel = new Label(String.format("%03d", worldTimer),new Label.LabelStyle(new BitmapFont(),Color.WHITE));
+        scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        Label timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        Label levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        Label worldLabel = new Label("World", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        Label marioLabel = new Label("MARIO", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
+        table.add(marioLabel).expandX().padTop(10);
+        table.add(worldLabel).expandX().padTop(10);
+        table.add(timeLabel).expandX().padTop(10);
+
+        table.row();
+
+        table.add(scoreLabel).expandX();
+        table.add(levelLabel).expandX();
+        table.add(countDownLabel).expandX();
+
+        stage.addActor(table);
+    }
+
+    public void update(float deltaTime) {
+
+        timeCount += deltaTime;
+
+        while (timeCount >= 1) {
+
+            worldTimer--;
+            timeCount -= 1;
+        }
+
+        countDownLabel.setText(String.format("%03d", worldTimer));
+    }
+
+    public static void addScore(int value) {
+
+        score += value;
+
+        scoreLabel.setText(String.format("%06d", score));
+    }
+
+    public void dispose(){
+        stage.dispose();
+    }
+}

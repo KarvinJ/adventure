@@ -10,6 +10,7 @@ import knight.arkham.helpers.Box2DHelper;
 import knight.arkham.helpers.TileMapHelper;
 import knight.arkham.objects.items.ItemDefinition;
 import knight.arkham.objects.items.Mushroom;
+import knight.arkham.scenes.Hud;
 
 import static knight.arkham.helpers.AssetsHelper.loadSound;
 
@@ -57,8 +58,11 @@ public class QuestionBlock extends InteractiveStructure {
 
                 mapHelper.setItemToSpawn(new ItemDefinition(itemBounds, Mushroom.class));
             }
-            else
+            else {
+
+                Hud.addScore(200);
                 collisionSound.play();
+            }
 
             actualCell.setTile(tileSet.getTile(BLANK_COIN));
         }

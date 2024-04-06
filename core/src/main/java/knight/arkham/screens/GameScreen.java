@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
 import knight.arkham.Adventure;
 import knight.arkham.helpers.TileMapHelper;
+import knight.arkham.scenes.Hud;
 
 import static knight.arkham.helpers.AssetsHelper.loadMusic;
 
@@ -13,6 +14,7 @@ public class GameScreen extends ScreenAdapter {
     private final Adventure game;
     private final OrthographicCamera camera;
     private final TileMapHelper mapHelper;
+    private final Hud hud;
     private final Music music = loadMusic("mario_music.ogg");
 
     public GameScreen() {
@@ -22,6 +24,8 @@ public class GameScreen extends ScreenAdapter {
         camera = game.camera;
 
         mapHelper = new TileMapHelper("maps/level1.tmx", "images/character.atlas");
+
+        hud = new Hud();
 
 //        music.play();
 //        music.setVolume(0.2f);
@@ -41,6 +45,9 @@ public class GameScreen extends ScreenAdapter {
         mapHelper.update(deltaTime, camera);
 
         mapHelper.draw(camera);
+
+        hud.update(deltaTime);
+        hud.stage.draw();
     }
 
     @Override
@@ -51,6 +58,7 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void dispose() {
         mapHelper.dispose();
+        hud.dispose();
         music.dispose();
     }
 }
