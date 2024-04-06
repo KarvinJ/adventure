@@ -114,7 +114,7 @@ public class Enemy extends GameObject {
         hitSound.play();
         setToDestroy = true;
 
-        Hud.addScore(200);
+        Hud.addScore(100);
     }
 
     @Override

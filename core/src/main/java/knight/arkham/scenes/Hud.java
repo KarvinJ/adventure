@@ -11,14 +11,16 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class Hud {
     public final Stage stage;
     private static Label scoreLabel;
+    private static Label coinLabel;
     private float timeCount;
     private final Label countDownLabel;
-    private int worldTimer = 300;
+    private int worldTimer = 400;
     private static int score;
+    private static int coins;
 
     public Hud() {
 
-        Viewport viewport = new FitViewport(400, 400);
+        Viewport viewport = new FitViewport(300, 300);
 
         stage = new Stage(viewport);
 
@@ -28,20 +30,24 @@ public class Hud {
 
         table.setFillParent(true);
 
-        countDownLabel = new Label("300", new Label.LabelStyle(new BitmapFont(),Color.WHITE));
+        countDownLabel = new Label("400", new Label.LabelStyle(new BitmapFont(),Color.WHITE));
         scoreLabel = new Label("0", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        coinLabel = new Label("x 0", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         Label timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         Label levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         Label worldLabel = new Label("World", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        Label emptyLabel = new Label("", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         Label marioLabel = new Label("MARIO", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         table.add(marioLabel).expandX().padTop(10);
+        table.add(emptyLabel).expandX().padTop(10);
         table.add(worldLabel).expandX().padTop(10);
         table.add(timeLabel).expandX().padTop(10);
 
         table.row();
 
         table.add(scoreLabel).expandX();
+        table.add(coinLabel).expandX();
         table.add(levelLabel).expandX();
         table.add(countDownLabel).expandX();
 
@@ -66,6 +72,13 @@ public class Hud {
         score += value;
 
         scoreLabel.setText(score);
+    }
+
+    public static void addCoin(int value) {
+
+        coins += value;
+
+        coinLabel.setText("x "+coins);
     }
 
     public void dispose(){

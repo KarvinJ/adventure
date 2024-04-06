@@ -61,6 +61,8 @@ public class QuestionBlock extends InteractiveStructure {
             else {
 
                 Hud.addScore(200);
+                Hud.addCoin(1);
+
                 collisionSound.play();
             }
 
