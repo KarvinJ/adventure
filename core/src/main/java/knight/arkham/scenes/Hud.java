@@ -28,8 +28,8 @@ public class Hud {
 
         table.setFillParent(true);
 
-        countDownLabel = new Label(String.format("%03d", worldTimer),new Label.LabelStyle(new BitmapFont(),Color.WHITE));
-        scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        countDownLabel = new Label("300", new Label.LabelStyle(new BitmapFont(),Color.WHITE));
+        scoreLabel = new Label("0", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         Label timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         Label levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         Label worldLabel = new Label("World", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
@@ -58,14 +58,14 @@ public class Hud {
             timeCount -= 1;
         }
 
-        countDownLabel.setText(String.format("%03d", worldTimer));
+        countDownLabel.setText(worldTimer);
     }
 
     public static void addScore(int value) {
 
         score += value;
 
-        scoreLabel.setText(String.format("%06d", score));
+        scoreLabel.setText(score);
     }
 
     public void dispose(){
