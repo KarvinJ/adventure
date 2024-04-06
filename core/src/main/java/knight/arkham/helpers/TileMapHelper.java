@@ -24,7 +24,7 @@ import knight.arkham.objects.structures.QuestionBlock;
 
 import static knight.arkham.helpers.CameraController.controlCameraPosition;
 import static knight.arkham.helpers.Constants.*;
-import static knight.arkham.helpers.GameDataHelper.saveGameData;
+import static knight.arkham.helpers.GameDataHelper.savePosition;
 
 public class TileMapHelper {
     public final TiledMap tiledMap;
@@ -49,7 +49,7 @@ public class TileMapHelper {
 
         player = new Player(new Rectangle(150, 40, 32, 16), world, atlas, 8);
 
-        saveGameData(new GameData("first", player.getWorldPosition()));
+        savePosition(player.getWorldPosition());
 
         gameObjects = new Array<>();
         itemsToSpawn = new Array<>();

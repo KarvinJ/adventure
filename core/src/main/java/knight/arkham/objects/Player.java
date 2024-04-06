@@ -102,10 +102,7 @@ public class Player extends GameObject {
     private void spawnToPreviousCheckpoint() {
 
         body.setLinearVelocity(0, 0);
-
-        Vector2 savedPosition = GameDataHelper.loadGameData().position;
-
-        body.setTransform(savedPosition, 0);
+        body.setTransform(GameDataHelper.loadPosition(), 0);
     }
 
     private AnimationState getCurrentAnimationState() {

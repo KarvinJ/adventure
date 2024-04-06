@@ -7,27 +7,23 @@ import com.badlogic.gdx.math.Vector2;
 public class GameDataHelper {
     private static final String dataFilename = "Adventure";
 
-    public static void saveGameData(GameData gameData) {
+    public static void savePosition(Vector2 position) {
 
         Preferences preferences = Gdx.app.getPreferences(dataFilename);
 
-        preferences.putString("screenName", gameData.screenName);
-
-        preferences.putFloat("positionX", gameData.position.x);
-        preferences.putFloat("positionY", gameData.position.y);
+        preferences.putFloat("positionX", position.x);
+        preferences.putFloat("positionY", position.y);
 
         preferences.flush();
     }
 
-    public static GameData loadGameData() {
+    public static Vector2 loadPosition() {
 
         Preferences preferences = Gdx.app.getPreferences(dataFilename);
 
         float positionX = preferences.getFloat("positionX");
         float positionY = preferences.getFloat("positionY");
 
-        String screenName = preferences.getString("screenName");
-
-        return new GameData(screenName, new Vector2(positionX, positionY));
+        return new Vector2(positionX, positionY);
     }
 }
