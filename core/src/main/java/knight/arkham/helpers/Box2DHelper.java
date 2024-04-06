@@ -136,8 +136,8 @@ public class Box2DHelper {
         EdgeShape headCollider = new EdgeShape();
 
         headCollider.set(
-            new Vector2(-8 / PIXELS_PER_METER, 10 / PIXELS_PER_METER),
-            new Vector2(8 / PIXELS_PER_METER, 10 / PIXELS_PER_METER)
+            new Vector2(-6 / PIXELS_PER_METER, 10 / PIXELS_PER_METER),
+            new Vector2(6 / PIXELS_PER_METER, 10 / PIXELS_PER_METER)
         );
 
         fixtureDef.shape = headCollider;

@@ -52,7 +52,6 @@ public class Enemy extends GameObject {
         );
     }
 
-
     private void destroyBody() {
 
         actualWorld.destroyBody(body);
@@ -93,6 +92,7 @@ public class Enemy extends GameObject {
 
     private void flipRegionOnXAxis(TextureRegion region) {
 
+        //With this code most of the time if my enemy stop with a collision it will change direction automatically.
         if ((body.getLinearVelocity().x < 0 || !isMovingRight) && region.isFlipX()) {
 
             region.flip(true, false);

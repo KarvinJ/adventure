@@ -41,24 +41,24 @@ public class TileMapHelper {
 
     public TileMapHelper(String mapFilePath, String atlasFilePath) {
 
-        tiledMap = new TmxMapLoader().load(mapFilePath);
-        atlas = new TextureAtlas(atlasFilePath);
-
         world = new World(new Vector2(0, -40), true);
         world.setContactListener(new GameContactListener());
 
-        player = new Player(new Rectangle(150, 40, 32, 16), world, atlas, 8);
+        atlas = new TextureAtlas(atlasFilePath);
 
+        player = new Player(new Rectangle(150, 40, 32, 16), world, atlas, 8);
         savePosition(player.getWorldPosition());
 
         gameObjects = new Array<>();
         itemsToSpawn = new Array<>();
 
-        mapRenderer = setupMap();
+        tiledMap = new TmxMapLoader().load(mapFilePath);
+        mapRenderer = setupMap(tiledMap);
+
         debugRenderer = new Box2DDebugRenderer();
     }
 
-    private OrthogonalTiledMapRenderer setupMap() {
+    private OrthogonalTiledMapRenderer setupMap(TiledMap tiledMap) {
 
         for (MapLayer mapLayer : tiledMap.getLayers())
             parseMapObjectsToBox2DBodies(mapLayer.getObjects(), mapLayer.getName());
