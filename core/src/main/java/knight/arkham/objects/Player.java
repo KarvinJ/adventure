@@ -36,7 +36,7 @@ public class Player extends GameObject {
     private float deadTimer;
     private boolean isMovingRight;
     private boolean isDead;
-    public boolean isMarioBig;
+    public static boolean isMarioBig;
     private boolean shouldStartGrowingAnimation;
     private boolean isTimeToDefineBigMarioBody;
     private boolean isTimeToDefineLittleMarioBody;

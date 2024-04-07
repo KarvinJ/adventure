@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 
 import static knight.arkham.helpers.AssetsHelper.loadSound;
-import static knight.arkham.helpers.Constants.DESTROYED_BIT;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public abstract class InteractiveStructure {
@@ -31,16 +30,6 @@ public abstract class InteractiveStructure {
     }
 
     protected abstract Fixture createFixture();
-
-    protected void setDestroyBit() {
-
-        Filter filter = new Filter();
-
-        filter.categoryBits = DESTROYED_BIT;
-        fixture.setFilterData(filter);
-
-        collisionSound.play();
-    }
 
     protected TiledMapTileLayer.Cell getObjectCellInTheTileMap() {
 

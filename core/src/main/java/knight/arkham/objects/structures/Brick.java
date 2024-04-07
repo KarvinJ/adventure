@@ -1,16 +1,23 @@
 package knight.arkham.objects.structures;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
+import knight.arkham.objects.Player;
+
+import static knight.arkham.helpers.AssetsHelper.loadSound;
+import static knight.arkham.helpers.Constants.DESTROYED_BIT;
 
 public class Brick extends InteractiveStructure {
+    private final Sound breakBlockSound = loadSound("breakBlock.wav");
 
     public Brick(Rectangle rectangle, World world, TiledMap tiledMap) {
-        super(rectangle, world, tiledMap, "breakBlock.wav");
+        super(rectangle, world, tiledMap, "bump.wav");
     }
 
     @Override
@@ -21,10 +28,25 @@ public class Brick extends InteractiveStructure {
         );
     }
 
+    private void setDestroyBit() {
+
+        Filter filter = new Filter();
+
+        filter.categoryBits = DESTROYED_BIT;
+        fixture.setFilterData(filter);
+    }
+
     public void hitByPlayer() {
 
-        setDestroyBit();
+        if (Player.isMarioBig) {
 
-        getObjectCellInTheTileMap().setTile(null);
+            setDestroyBit();
+
+            getObjectCellInTheTileMap().setTile(null);
+
+            breakBlockSound.play();
+        }
+        else
+            collisionSound.play();
     }
 }
