@@ -185,8 +185,8 @@ public class Box2DHelper {
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
 
-// I'm going to create another fixture -14 px down to have two for the whole body of my player.
-        circleShape.setPosition(new Vector2(0, -14 / PIXELS_PER_METER));
+// I'm going to create another fixture -8.5 px down to have two for the whole body of my player.
+        circleShape.setPosition(new Vector2(0, -8.5f / PIXELS_PER_METER));
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
 

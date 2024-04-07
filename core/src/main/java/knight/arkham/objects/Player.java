@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 import knight.arkham.helpers.GameDataHelper;
@@ -19,19 +20,24 @@ import static knight.arkham.helpers.AssetsHelper.loadSound;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public class Player extends GameObject {
-    private enum AnimationState {FALLING, JUMPING, STANDING, RUNNING, DYING}
+    private enum AnimationState {FALLING, JUMPING, STANDING, RUNNING, DYING, GROWING}
     private AnimationState actualState = AnimationState.STANDING;
     private AnimationState previousState = AnimationState.STANDING;
     private final TextureRegion idleRegion;
+    private final TextureRegion bigPlayerIdleRegion;
     private final TextureRegion jumpRegion;
+    private final TextureRegion bigPlayerJumpRegion;
     private final TextureRegion dyingRegion;
     private final Animation<TextureRegion> runningAnimation;
+    private final Animation<TextureRegion> bigPlayerRunningAnimation;
+    private final Animation<TextureRegion> growingAnimation;
+
     private float animationTimer;
     private float deadTimer;
     private boolean isMovingRight;
     private boolean isDead;
     public boolean isMarioBig;
-    private boolean shouldStartGrowAnimation;
+    private boolean shouldStartGrowingAnimation;
     private boolean isTimeToDefineBigMarioBody;
     private boolean isTimeToDefineLittleMarioBody;
     private final Sound jumpSound = loadSound("coin.wav");
@@ -54,6 +60,24 @@ public class Player extends GameObject {
         dyingRegion = new TextureRegion(atlas.findRegion("little-mario"), framesWidth * 6, 0, framesWidth, framesHeight);
 
         runningAnimation = makeAnimation(atlas.findRegion("little-mario"), framesWidth, framesHeight, 4, 0.1f, 1);
+
+        Array<TextureRegion> growingFrames = new Array<>();
+
+        bigPlayerIdleRegion = new TextureRegion(atlas.findRegion("big-mario"), 0, 0,  framesWidth, 32);
+
+        growingFrames.add(bigPlayerIdleRegion);
+        growingFrames.add(new TextureRegion(atlas.findRegion("big-mario"), framesWidth * 8, 0,  framesWidth, 32));
+        growingFrames.add(bigPlayerIdleRegion);
+        growingFrames.add(new TextureRegion(atlas.findRegion("big-mario"), framesWidth * 8, 0,  framesWidth, 32));
+
+        growingAnimation = new Animation<>(0.2f, growingFrames);
+
+        growingFrames.clear();
+
+        bigPlayerRunningAnimation = makeAnimation(atlas.findRegion("big-mario"), framesWidth, 32, 4, 0.1f, 1);
+
+        bigPlayerJumpRegion = new TextureRegion(atlas.findRegion("big-mario"), framesWidth * 5, 0, framesWidth, 32);
+
     }
 
     @Override
@@ -85,6 +109,8 @@ public class Player extends GameObject {
         actualWorld.destroyBody(body);
 
         var actualPosition = getPixelPosition();
+
+        actualBounds.height = actualBounds.height * 2;
         var currentBounds = new Rectangle(actualPosition.x, actualPosition.y, actualBounds.width, actualBounds.height);
 
         body = Box2DHelper.createBigPlayerBody(
@@ -99,6 +125,8 @@ public class Player extends GameObject {
         actualWorld.destroyBody(body);
 
         var actualPosition = getPixelPosition();
+
+        actualBounds.height = actualBounds.height / 2;
         var currentBounds = new Rectangle(actualPosition.x, actualPosition.y, actualBounds.width, actualBounds.height);
 
         body = Box2DHelper.createBody(
@@ -151,6 +179,9 @@ public class Player extends GameObject {
         if (isDead)
             return AnimationState.DYING;
 
+        else if (shouldStartGrowingAnimation)
+            return AnimationState.GROWING;
+
         else if (body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == AnimationState.JUMPING))
             return AnimationState.JUMPING;
 
@@ -171,11 +202,20 @@ public class Player extends GameObject {
         switch (actualState) {
 
             case JUMPING:
-                actualRegion = jumpRegion;
+                actualRegion = isMarioBig ? bigPlayerJumpRegion : jumpRegion;
+                break;
+
+            case GROWING:
+
+                actualRegion = growingAnimation.getKeyFrame(animationTimer);
+//When the animation is finished change the value to false.
+                if (growingAnimation.isAnimationFinished(animationTimer))
+                    shouldStartGrowingAnimation = false;
                 break;
 
             case RUNNING:
-                actualRegion = runningAnimation.getKeyFrame(animationTimer, true);
+                actualRegion = isMarioBig ? bigPlayerRunningAnimation.getKeyFrame(animationTimer, true) :
+                    runningAnimation.getKeyFrame(animationTimer, true);
                 break;
 
             case DYING:
@@ -185,7 +225,7 @@ public class Player extends GameObject {
             case FALLING:
             case STANDING:
             default:
-                actualRegion = idleRegion;
+                actualRegion = isMarioBig ? bigPlayerIdleRegion : idleRegion;
         }
 
         flipRegionOnXAxis(actualRegion);
@@ -228,7 +268,7 @@ public class Player extends GameObject {
 
     public void growPlayer() {
 
-        shouldStartGrowAnimation = true;
+        shouldStartGrowingAnimation = true;
         isMarioBig = true;
         isTimeToDefineBigMarioBody = true;
 
