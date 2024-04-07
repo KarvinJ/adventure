@@ -86,8 +86,9 @@ public class Box2DHelper {
         }
         else if (box2DBody.userData instanceof Mushroom) {
 
-            fixtureDef.filter.categoryBits = MUSHROOM_BIT;
-            body.createFixture(fixtureDef).setUserData(box2DBody.userData);
+            var circleFixtureDef = createCircleFixtureDef(box2DBody);
+            circleFixtureDef.filter.categoryBits = MUSHROOM_BIT;
+            body.createFixture(circleFixtureDef).setUserData(box2DBody.userData);
         }
 
         else {
@@ -104,6 +105,20 @@ public class Box2DHelper {
     private static FixtureDef createBoxFixtureDef(Box2DBody box2DBody, PolygonShape shape) {
 
         shape.setAsBox(box2DBody.bounds.width / 2 / PIXELS_PER_METER, box2DBody.bounds.height / 2 / PIXELS_PER_METER);
+
+        FixtureDef fixtureDef = new FixtureDef();
+
+        fixtureDef.shape = shape;
+        fixtureDef.density = box2DBody.density;
+
+        return fixtureDef;
+    }
+
+    private static FixtureDef createCircleFixtureDef(Box2DBody box2DBody) {
+
+        CircleShape shape = new CircleShape();
+
+        shape.setRadius(8 / PIXELS_PER_METER);
 
         FixtureDef fixtureDef = new FixtureDef();
 
