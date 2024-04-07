@@ -11,15 +11,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
+import knight.arkham.helpers.Box2DHelper;
 import knight.arkham.helpers.GameDataHelper;
 
 import static knight.arkham.helpers.AnimationHelper.makeAnimation;
 import static knight.arkham.helpers.AssetsHelper.loadSound;
-import static knight.arkham.helpers.Box2DHelper.createBody;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public class Player extends GameObject {
-    private enum AnimationState {FALLING, JUMPING, STANDING, RUNNING, DYING, ATTACKING}
+    private enum AnimationState {FALLING, JUMPING, STANDING, RUNNING, DYING}
     private AnimationState actualState = AnimationState.STANDING;
     private AnimationState previousState = AnimationState.STANDING;
     private final TextureRegion idleRegion;
@@ -30,8 +30,14 @@ public class Player extends GameObject {
     private float deadTimer;
     private boolean isMovingRight;
     private boolean isDead;
+    public boolean isMarioBig;
+    private boolean shouldStartGrowAnimation;
+    private boolean isTimeToDefineBigMarioBody;
+    private boolean isTimeToDefineLittleMarioBody;
     private final Sound jumpSound = loadSound("coin.wav");
     private final Sound deathSound = loadSound("mariodie.wav");
+    private final Sound powerUpSound = loadSound("powerup.wav");
+    private final Sound powerDownSound = loadSound("powerdown.wav");
 
     public Player(Rectangle bounds, World world, TextureAtlas atlas, int totalFrames) {
         super(
@@ -53,10 +59,11 @@ public class Player extends GameObject {
     @Override
     protected Body createObjectBody() {
 
-        return createBody(
+        return Box2DHelper.createBody(
             new Box2DBody(actualBounds, 10, actualWorld, this)
         );
     }
+
 
     private void movement() {
 
@@ -71,6 +78,34 @@ public class Player extends GameObject {
             applyLinearImpulse(new Vector2(0, 144));
 //            jumpSound.play();
         }
+    }
+
+    private void createBigMarioBody() {
+
+        actualWorld.destroyBody(body);
+
+        var actualPosition = getPixelPosition();
+        var currentBounds = new Rectangle(actualPosition.x, actualPosition.y, actualBounds.width, actualBounds.height);
+
+        body = Box2DHelper.createBigPlayerBody(
+            new Box2DBody(currentBounds, 10, actualWorld, this)
+        );
+
+        isTimeToDefineBigMarioBody = false;
+    }
+
+    private void createLittleMarioBody() {
+
+        actualWorld.destroyBody(body);
+
+        var actualPosition = getPixelPosition();
+        var currentBounds = new Rectangle(actualPosition.x, actualPosition.y, actualBounds.width, actualBounds.height);
+
+        body = Box2DHelper.createBody(
+            new Box2DBody(currentBounds, 10, actualWorld, this)
+        );
+
+        isTimeToDefineLittleMarioBody = false;
     }
 
     protected void childUpdate(float deltaTime) {
@@ -96,6 +131,12 @@ public class Player extends GameObject {
 
         if (getPixelPosition().y < -100)
             spawnToPreviousCheckpoint();
+
+        if (isTimeToDefineBigMarioBody)
+            createBigMarioBody();
+
+        if (isTimeToDefineLittleMarioBody)
+            createLittleMarioBody();
     }
 
 
@@ -113,11 +154,8 @@ public class Player extends GameObject {
         else if (body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == AnimationState.JUMPING))
             return AnimationState.JUMPING;
 
-        else if (body.getLinearVelocity().x < 0 || body.getLinearVelocity().x > 0)
+        else if (body.getLinearVelocity().x != 0)
             return AnimationState.RUNNING;
-
-        else if (Gdx.input.isKeyPressed(Input.Keys.F))
-            return AnimationState.ATTACKING;
 
         else if (body.getLinearVelocity().y < 0)
             return AnimationState.FALLING;
@@ -174,13 +212,34 @@ public class Player extends GameObject {
     public Vector2 getPixelPosition() {return body.getPosition().scl(PIXELS_PER_METER);}
 
     public void hitByEnemy() {
-        isDead = true;
-        deathSound.play();
+
+        if (isMarioBig) {
+
+           isTimeToDefineLittleMarioBody = true;
+           powerDownSound.play();
+           isMarioBig = false;
+        }
+        else {
+
+            isDead = true;
+            deathSound.play();
+        }
+    }
+
+    public void growPlayer() {
+
+        shouldStartGrowAnimation = true;
+        isMarioBig = true;
+        isTimeToDefineBigMarioBody = true;
+
+        powerUpSound.play();
     }
 
     @Override
     public void dispose() {
         jumpSound.dispose();
+        powerUpSound.dispose();
+        deathSound.dispose();
         super.dispose();
     }
 }

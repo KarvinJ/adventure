@@ -1,6 +1,5 @@
 package knight.arkham.objects.items;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -13,14 +12,12 @@ import knight.arkham.objects.GameObject;
 import knight.arkham.objects.Player;
 import knight.arkham.scenes.Hud;
 
-import static knight.arkham.helpers.AssetsHelper.loadSound;
 import static knight.arkham.helpers.Box2DHelper.createBody;
 
 public class Mushroom extends GameObject {
     private boolean isMovingRight = true;
     private boolean setToDestroy;
     private boolean isDestroyed;
-    private final Sound powerUpSound = loadSound("powerup.wav");
 
     public Mushroom(Rectangle bounds, World world, TextureAtlas.AtlasRegion region) {
         super(
@@ -68,7 +65,8 @@ public class Mushroom extends GameObject {
     public void growUpPlayer(Player player) {
 
         setToDestroy = true;
-        powerUpSound.play();
+
+        player.growPlayer();
 
         Hud.addScore(500);
     }

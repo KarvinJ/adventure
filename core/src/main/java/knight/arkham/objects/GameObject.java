@@ -15,7 +15,7 @@ public abstract class GameObject {
     protected TextureRegion actualRegion;
     protected final int framesWidth;
     protected final int framesHeight;
-    protected final Body body;
+    protected Body body;
 
     protected GameObject(Rectangle bounds, World world, TextureRegion region) {
 

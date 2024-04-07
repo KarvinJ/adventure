@@ -151,8 +151,8 @@ public class Box2DHelper {
         EdgeShape headCollider = new EdgeShape();
 
         headCollider.set(
-            new Vector2(-6 / PIXELS_PER_METER, 10 / PIXELS_PER_METER),
-            new Vector2(6 / PIXELS_PER_METER, 10 / PIXELS_PER_METER)
+            new Vector2(-4 / PIXELS_PER_METER, 8 / PIXELS_PER_METER),
+            new Vector2(4 / PIXELS_PER_METER, 8 / PIXELS_PER_METER)
         );
 
         fixtureDef.shape = headCollider;
@@ -162,11 +162,51 @@ public class Box2DHelper {
         return headCollider;
     }
 
+    public static Body createBigPlayerBody(Box2DBody box2DBody){
+
+        Body body = createBox2DBodyByType(box2DBody);
+
+        CircleShape circleShape = new CircleShape();
+
+        FixtureDef fixtureDef = new FixtureDef();
+
+        circleShape.setRadius(8 / PIXELS_PER_METER);
+
+        fixtureDef.shape = circleShape;
+
+//  because big mario will have two bodies it will weigh more, so I'm going to reduce the density in half, to have a consistent weigh.
+        fixtureDef.density = box2DBody.density / 2;
+        fixtureDef.friction = 1;
+
+        fixtureDef.filter.categoryBits = PLAYER_BIT;
+
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | BRICK_BIT | QUESTION_BLOCK_BIT |
+            FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT | MUSHROOM_BIT);
+
+        body.createFixture(fixtureDef).setUserData(box2DBody.userData);
+
+// I'm going to create another fixture -14 px down to have two for the whole body of my player.
+        circleShape.setPosition(new Vector2(0, -14 / PIXELS_PER_METER));
+
+        body.createFixture(fixtureDef).setUserData(box2DBody.userData);
+
+        circleShape.dispose();
+
+        EdgeShape headCollider = getPlayerHeadCollider(fixtureDef);
+
+        body.createFixture(fixtureDef).setUserData(box2DBody.userData);
+
+        headCollider.dispose();
+
+        return body;
+    }
+
+
     private static void createEnemyBody(Box2DBody box2DBody, FixtureDef fixtureDef, Body body) {
 
         fixtureDef.filter.categoryBits = ENEMY_BIT;
 
-        fixtureDef.filter.maskBits = (short) (GROUND_BIT | STOP_ENEMY_BIT | ENEMY_BIT | PLAYER_BIT);
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | ENEMY_BIT | PLAYER_BIT);
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
 
