@@ -52,7 +52,7 @@ public class Box2DHelper {
         return box2DBody.world.createBody(bodyDef);
     }
 
-    private static FixtureDef createCharactersBoxFixtureDef(Box2DBody box2DBody, PolygonShape shape) {
+    private static FixtureDef createEnemyBoxFixtureDef(Box2DBody box2DBody, PolygonShape shape) {
 
         //Since I want that my player to be rendered with a 32 px width, but I want that his collisions fixture to be of 16,
         // I got to create a new method just for my player or any other object with this case.
@@ -75,13 +75,13 @@ public class Box2DHelper {
 
         if (box2DBody.userData instanceof Player) {
 
-            var playerFixtureDef = createCharactersBoxFixtureDef(box2DBody, shape);
+            var playerFixtureDef = createCircleFixtureDef(box2DBody);
             createPlayerBody(box2DBody, playerFixtureDef, body);
         }
 
         else if (box2DBody.userData instanceof Enemy) {
 
-            var enemyFixtureDef = createCharactersBoxFixtureDef(box2DBody, shape);
+            var enemyFixtureDef = createEnemyBoxFixtureDef(box2DBody, shape);
             createEnemyBody(box2DBody, enemyFixtureDef, body);
         }
         else if (box2DBody.userData instanceof Mushroom) {
