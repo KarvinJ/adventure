@@ -128,8 +128,20 @@ public class TileMapHelper {
 
         updateCameraPosition(camera);
 
-        for (GameObject gameObject : gameObjects)
-            gameObject.update(deltaTime);
+        for (GameObject gameObject : gameObjects) {
+
+            var isGameObjectActive = gameObject.body.isActive();
+
+            if (isGameObjectActive)
+                gameObject.update(deltaTime);
+            else {
+
+                var distanceBetweenPlayerAndObject = player.getPixelPosition().dst(gameObject.getPixelPosition());
+
+                if (distanceBetweenPlayerAndObject < 200)
+                    gameObject.body.setActive(true);
+            }
+        }
 
         initializeItems();
 

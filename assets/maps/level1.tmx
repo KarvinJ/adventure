@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="240" height="26" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="100">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="240" height="26" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="138">
  <tileset firstgid="1" source="tileset/OverWorld.tsx"/>
  <tileset firstgid="65" source="tileset/Nature_environment_01.tsx"/>
  <tileset firstgid="1765" source="tileset/Castle.tsx"/>
@@ -18,7 +18,11 @@
   <object id="79" name="question" x="1089" y="304.667" width="14.6667" height="15"/>
   <object id="88" name="brick" x="1296" y="320" width="17.2121" height="15.8788"/>
   <object id="90" name="brick" x="1327.67" y="320" width="16" height="15.8788"/>
-  <object id="91" name="question" x="1312.67" y="320" width="14.5455" height="15.7576"/>
+  <object id="91" name="question" x="1312.67" y="320" width="14.5455" height="15.7576">
+   <properties>
+    <property name="mushroom" value=""/>
+   </properties>
+  </object>
   <object id="92" name="brick" x="1343.99" y="256" width="17.9185" height="15.9674"/>
   <object id="93" name="brick" x="1360.11" y="256" width="17.2663" height="15.6739"/>
   <object id="94" name="brick" x="1376.5" y="256" width="16.5" height="15.625"/>
@@ -27,6 +31,35 @@
   <object id="97" name="brick" x="1423.5" y="256" width="17.75" height="15.875"/>
   <object id="98" name="brick" x="1439.75" y="256" width="17.75" height="15.375"/>
   <object id="99" name="brick" x="1456" y="256" width="15.875" height="15.875"/>
+  <object id="100" name="brick" x="1520" y="256" width="15.875" height="15.875"/>
+  <object id="104" name="brick" x="1568.33" y="320" width="15.875" height="15.875"/>
+  <object id="105" name="brick" x="1663.67" y="320" width="15.875" height="15.875"/>
+  <object id="106" name="brick" x="1680.33" y="320" width="15.875" height="15.875"/>
+  <object id="107" name="question" x="1760" y="320" width="15.875" height="15.875"/>
+  <object id="108" name="question" x="1808" y="320" width="15.875" height="15.875"/>
+  <object id="110" name="question" x="1808.67" y="256" width="15.875" height="15.875"/>
+  <object id="109" name="question" x="1856" y="320" width="15.875" height="15.875"/>
+  <object id="111" name="brick" x="1952.67" y="320" width="15.875" height="15.875"/>
+  <object id="114" name="brick" x="1999.67" y="256" width="15.875" height="15.875"/>
+  <object id="115" name="brick" x="2016" y="256" width="15.875" height="15.875"/>
+  <object id="116" name="brick" x="2032.67" y="256" width="15.875" height="15.875"/>
+  <object id="117" name="brick" x="2112.33" y="256" width="15.875" height="15.875"/>
+  <object id="119" name="question" x="2128" y="256" width="15.875" height="15.875"/>
+  <object id="120" name="question" x="2144.13" y="256" width="15.875" height="15.875"/>
+  <object id="118" name="brick" x="2160" y="256" width="15.875" height="15.875"/>
+  <object id="121" name="brick" x="2752" y="320" width="15.875" height="15.875"/>
+  <object id="122" name="brick" x="2768.67" y="320" width="15.875" height="15.875"/>
+  <object id="124" name="question" x="2784.33" y="320" width="15.875" height="15.875">
+   <properties>
+    <property name="mushroom" value=""/>
+   </properties>
+  </object>
+  <object id="123" name="brick" x="2800" y="320" width="15.875" height="15.875"/>
+  <object id="112" name="brick" x="2128" y="320" width="15.875" height="15.875"/>
+  <object id="113" name="brick" x="2144" y="320" width="15.875" height="15.875"/>
+  <object id="101" name="brick" x="1536.67" y="256" width="15.875" height="15.875"/>
+  <object id="102" name="brick" x="1552" y="256" width="15.875" height="15.875"/>
+  <object id="103" name="question" x="1568" y="256" width="15.875" height="15.875"/>
  </objectgroup>
  <objectgroup id="2" name="Collisions">
   <object id="1" x="0.666667" y="384.667" width="1167.17" height="30.8333"/>
@@ -72,10 +105,20 @@
  </objectgroup>
  <objectgroup id="8" name="Enemies">
   <object id="25" name="goomba" x="433.333" y="367.957" width="32" height="16"/>
-  <object id="38" name="turtle" x="611.94" y="361.409" width="32" height="23"/>
+  <object id="38" name="turtle" x="1813.61" y="360.742" width="32" height="23"/>
   <object id="28" name="goomba" x="750" y="367.667" width="32" height="16"/>
   <object id="35" name="goomba" x="911.705" y="368.167" width="32" height="16"/>
   <object id="37" name="goomba" x="946.372" y="367.712" width="32" height="16"/>
+  <object id="128" name="goomba" x="1435.53" y="239.473" width="32" height="16"/>
+  <object id="130" name="goomba" x="2872.37" y="366.818" width="32" height="16"/>
+  <object id="132" name="goomba" x="2812.04" y="367.818" width="32" height="16"/>
+  <object id="131" name="goomba" x="1624.37" y="367.212" width="32" height="16"/>
+  <object id="133" name="goomba" x="1928.71" y="366.879" width="32" height="16"/>
+  <object id="134" name="goomba" x="2033.04" y="367.545" width="32" height="16"/>
+  <object id="135" name="goomba" x="2080.37" y="367.212" width="32" height="16"/>
+  <object id="136" name="goomba" x="2129.04" y="367.212" width="32" height="16"/>
+  <object id="137" name="goomba" x="2176.04" y="367.545" width="32" height="16"/>
+  <object id="129" name="goomba" x="1376.28" y="239.712" width="32" height="16"/>
  </objectgroup>
  <layer id="3" name="Background" width="240" height="26">
   <data encoding="csv">

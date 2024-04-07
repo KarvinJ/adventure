@@ -17,7 +17,6 @@ import knight.arkham.helpers.GameDataHelper;
 
 import static knight.arkham.helpers.AnimationHelper.makeAnimation;
 import static knight.arkham.helpers.AssetsHelper.loadSound;
-import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public class Player extends GameObject {
     private enum AnimationState {FALLING, JUMPING, STANDING, RUNNING, DYING, GROWING}
@@ -249,7 +248,6 @@ public class Player extends GameObject {
     }
 
     public Vector2 getWorldPosition() {return body.getPosition();}
-    public Vector2 getPixelPosition() {return body.getPosition().scl(PIXELS_PER_METER);}
 
     public void hitByEnemy() {
 

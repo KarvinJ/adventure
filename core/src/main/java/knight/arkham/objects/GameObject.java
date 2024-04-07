@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 
 import static knight.arkham.helpers.Box2DHelper.getDrawBounds;
+import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public abstract class GameObject {
     protected final Rectangle actualBounds;
@@ -15,7 +16,7 @@ public abstract class GameObject {
     protected TextureRegion actualRegion;
     protected final int framesWidth;
     protected final int framesHeight;
-    protected Body body;
+    public Body body;
 
     protected GameObject(Rectangle bounds, World world, TextureRegion region) {
 
@@ -43,6 +44,8 @@ public abstract class GameObject {
 
         batch.draw(actualRegion, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
     }
+
+    public Vector2 getPixelPosition() {return body.getPosition().scl(PIXELS_PER_METER);}
 
     protected void applyLinearImpulse(Vector2 impulseDirection) {
         body.applyLinearImpulse(impulseDirection, body.getWorldCenter(), true);

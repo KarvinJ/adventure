@@ -33,6 +33,8 @@ public class Enemy extends GameObject {
             )
         );
 
+        body.setActive(false);
+
         if (region.name.equals("goomba")) {
 
             movingAnimation = makeAnimation(region, framesWidth, framesHeight, totalFrames - 1, 0.2f, 0);
@@ -83,6 +85,9 @@ public class Enemy extends GameObject {
             else if (!isMovingRight && body.getLinearVelocity().x >= -4)
                 applyLinearImpulse(new Vector2(-4, 0));
         }
+
+        if (getPixelPosition().y < 0)
+            setToDestroy = true;
     }
 
     @Override
