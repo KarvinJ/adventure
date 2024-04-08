@@ -66,7 +66,8 @@ public class Mushroom extends GameObject {
 
         setToDestroy = true;
 
-        player.growPlayer();
+        if (!Player.isMarioBig)
+            player.growPlayer();
 
         Hud.addScore(500);
     }
