@@ -1,6 +1,5 @@
 package knight.arkham.helpers;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import knight.arkham.objects.Enemy;
@@ -69,8 +68,6 @@ public class Box2DHelper {
 
         PolygonShape shape = new PolygonShape();
 
-        FixtureDef fixtureDef = createBoxFixtureDef(box2DBody, shape);
-
         Body body = createBox2DBodyByType(box2DBody);
 
         if (box2DBody.userData instanceof Player) {
@@ -84,6 +81,7 @@ public class Box2DHelper {
             var enemyFixtureDef = createEnemyBoxFixtureDef(box2DBody, shape);
             createEnemyBody(box2DBody, enemyFixtureDef, body);
         }
+
         else if (box2DBody.userData instanceof Mushroom) {
 
             var circleFixtureDef = createCircleFixtureDef(box2DBody);
@@ -92,6 +90,8 @@ public class Box2DHelper {
         }
 
         else {
+
+            FixtureDef fixtureDef = createBoxFixtureDef(box2DBody, shape);
 
             fixtureDef.filter.categoryBits = GROUND_BIT;
             body.createFixture(fixtureDef);
@@ -235,15 +235,5 @@ public class Box2DHelper {
         head.set(vertices);
 
         return head;
-    }
-
-    public static Rectangle getDrawBounds(Body body, Rectangle bounds) {
-
-        return new Rectangle(
-            body.getPosition().x - (bounds.width / 2 / PIXELS_PER_METER),
-            body.getPosition().y - (bounds.height / 2 / PIXELS_PER_METER),
-            bounds.width / PIXELS_PER_METER,
-            bounds.height / PIXELS_PER_METER
-        );
     }
 }
