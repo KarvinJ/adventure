@@ -69,4 +69,12 @@ public class QuestionBlock extends InteractiveStructure {
             actualCell.setTile(tileSet.getTile(BLANK_COIN));
         }
     }
+
+    @Override
+    public void dispose() {
+
+        bumpSound.dispose();
+        spawnItemSound.dispose();
+        super.dispose();
+    }
 }

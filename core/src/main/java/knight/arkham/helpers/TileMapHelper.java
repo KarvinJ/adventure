@@ -20,6 +20,7 @@ import knight.arkham.objects.*;
 import knight.arkham.objects.items.ItemDefinition;
 import knight.arkham.objects.items.Mushroom;
 import knight.arkham.objects.structures.Brick;
+import knight.arkham.objects.structures.InteractiveStructure;
 import knight.arkham.objects.structures.QuestionBlock;
 
 import static knight.arkham.helpers.CameraController.controlCameraPosition;
@@ -30,11 +31,12 @@ public class TileMapHelper {
     public final TiledMap tiledMap;
     private final TextureAtlas atlas;
     public final World world;
-    private final Box2DDebugRenderer debugRenderer;
+    private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final Player player;
-    private final Array<GameObject> gameObjects;
-    private final Array<ItemDefinition> itemsToSpawn;
+    private final Array<GameObject> gameObjects = new Array<>();
+    private final Array<InteractiveStructure> structures = new Array<>();
+    private final Array<ItemDefinition> itemsToSpawn = new Array<>();
     private float accumulator;
     private boolean isDebugCamera;
     private boolean isDebugRendererActive;
@@ -49,13 +51,8 @@ public class TileMapHelper {
         player = new Player(new Rectangle(150, 40, 32, 16), world, atlas, 8);
         savePosition(player.getWorldPosition());
 
-        gameObjects = new Array<>();
-        itemsToSpawn = new Array<>();
-
         tiledMap = new TmxMapLoader().load(mapFilePath);
         mapRenderer = setupMap(tiledMap);
-
-        debugRenderer = new Box2DDebugRenderer();
     }
 
     private OrthogonalTiledMapRenderer setupMap(TiledMap tiledMap) {
@@ -85,9 +82,9 @@ public class TileMapHelper {
                 case "Blocks":
 
                     if (mapObject.getName().equals("question"))
-                        new QuestionBlock(mapRectangle, mapObject, this);
+                        structures.add(new QuestionBlock(mapRectangle, mapObject, this));
                     else
-                        new Brick(mapRectangle, world, tiledMap);
+                        structures.add(new Brick(mapRectangle, world, tiledMap));
                     break;
 
                 case "Enemy-Stopper":
@@ -212,7 +209,11 @@ public class TileMapHelper {
         world.dispose();
         debugRenderer.dispose();
 
+        //Note these are the parent disposes, so there are still things that should be disposed on the children classes
         for (GameObject gameObject : gameObjects)
             gameObject.dispose();
+
+        for (InteractiveStructure structure : structures)
+            structure.dispose();
     }
 }

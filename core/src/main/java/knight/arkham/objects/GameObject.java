@@ -11,12 +11,12 @@ import static knight.arkham.helpers.Box2DHelper.getDrawBounds;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public abstract class GameObject {
+    public Body body;
     protected final Rectangle actualBounds;
     protected final World actualWorld;
     protected TextureRegion actualRegion;
     protected final int framesWidth;
     protected final int framesHeight;
-    public Body body;
 
     protected GameObject(Rectangle bounds, World world, TextureRegion region) {
 

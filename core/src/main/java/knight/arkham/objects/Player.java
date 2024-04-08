@@ -27,10 +27,9 @@ public class Player extends GameObject {
     private final TextureRegion jumpRegion;
     private final TextureRegion bigPlayerJumpRegion;
     private final TextureRegion dyingRegion;
+    private final Animation<TextureRegion> growingAnimation;
     private final Animation<TextureRegion> runningAnimation;
     private final Animation<TextureRegion> bigPlayerRunningAnimation;
-    private final Animation<TextureRegion> growingAnimation;
-
     private float animationTimer;
     private float deadTimer;
     private boolean isMovingRight;
@@ -76,7 +75,6 @@ public class Player extends GameObject {
         bigPlayerRunningAnimation = makeAnimation(atlas.findRegion("big-mario"), framesWidth, 32, 4, 0.1f, 1);
 
         bigPlayerJumpRegion = new TextureRegion(atlas.findRegion("big-mario"), framesWidth * 5, 0, framesWidth, 32);
-
     }
 
     @Override
@@ -165,7 +163,6 @@ public class Player extends GameObject {
         if (isTimeToDefineLittleMarioBody)
             createLittleMarioBody();
     }
-
 
     private void spawnToPreviousCheckpoint() {
 

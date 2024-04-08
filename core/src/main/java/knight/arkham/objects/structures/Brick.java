@@ -49,4 +49,11 @@ public class Brick extends InteractiveStructure {
         else
             collisionSound.play();
     }
+
+    @Override
+    public void dispose() {
+
+        breakBlockSound.dispose();
+        super.dispose();
+    }
 }

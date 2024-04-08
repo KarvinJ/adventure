@@ -41,4 +41,8 @@ public abstract class InteractiveStructure {
 //        Here I search for the cell by position.
         return mapLayer.getCell(positionX, positionY);
     }
+
+    public void dispose() {
+        collisionSound.dispose();
+    }
 }
