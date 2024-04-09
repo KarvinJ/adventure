@@ -196,7 +196,6 @@ public class TileMapHelper {
     }
 
     public void setItemToSpawn(ItemDefinition itemDefinition) {
-
         itemsToSpawn.add(itemDefinition);
     }
 

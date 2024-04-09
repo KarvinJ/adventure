@@ -6,13 +6,13 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import knight.arkham.helpers.Box2DBody;
-import knight.arkham.helpers.Box2DHelper;
 import knight.arkham.helpers.TileMapHelper;
 import knight.arkham.objects.items.ItemDefinition;
 import knight.arkham.objects.items.Mushroom;
 import knight.arkham.scenes.Hud;
 
 import static knight.arkham.helpers.AssetsHelper.loadSound;
+import static knight.arkham.helpers.Box2DHelper.createStaticFixture;
 
 public class QuestionBlock extends InteractiveStructure {
     private final TiledMapTileSet tileSet;
@@ -34,7 +34,7 @@ public class QuestionBlock extends InteractiveStructure {
     @Override
     protected Fixture createFixture() {
 
-        return Box2DHelper.createStaticFixture(
+        return createStaticFixture(
             new Box2DBody(actualBounds, actualWorld, this)
         );
     }

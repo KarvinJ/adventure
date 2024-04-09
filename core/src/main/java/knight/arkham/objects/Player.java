@@ -17,6 +17,7 @@ import knight.arkham.helpers.GameDataHelper;
 
 import static knight.arkham.helpers.AnimationHelper.makeAnimation;
 import static knight.arkham.helpers.AssetsHelper.loadSound;
+import static knight.arkham.helpers.Box2DHelper.createBody;
 
 public class Player extends GameObject {
     private enum AnimationState {FALLING, JUMPING, STANDING, RUNNING, DYING, GROWING}
@@ -80,7 +81,7 @@ public class Player extends GameObject {
     @Override
     protected Body createObjectBody() {
 
-        return Box2DHelper.createBody(
+        return createBody(
             new Box2DBody(actualBounds, 10, actualWorld, this)
         );
     }
@@ -126,7 +127,7 @@ public class Player extends GameObject {
         actualBounds.height = actualBounds.height / 2;
         var currentBounds = new Rectangle(actualPosition.x, actualPosition.y, actualBounds.width, actualBounds.height);
 
-        body = Box2DHelper.createBody(
+        body = createBody(
             new Box2DBody(currentBounds, 10, actualWorld, this)
         );
 

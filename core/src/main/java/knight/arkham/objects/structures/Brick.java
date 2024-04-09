@@ -7,10 +7,10 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
-import knight.arkham.helpers.Box2DHelper;
 import knight.arkham.objects.Player;
 
 import static knight.arkham.helpers.AssetsHelper.loadSound;
+import static knight.arkham.helpers.Box2DHelper.createStaticFixture;
 import static knight.arkham.helpers.Constants.DESTROYED_BIT;
 
 public class Brick extends InteractiveStructure {
@@ -23,7 +23,7 @@ public class Brick extends InteractiveStructure {
     @Override
     protected Fixture createFixture() {
 
-        return Box2DHelper.createStaticFixture(
+        return createStaticFixture(
             new Box2DBody(actualBounds, actualWorld, this)
         );
     }
