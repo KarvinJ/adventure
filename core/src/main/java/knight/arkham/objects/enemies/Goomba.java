@@ -31,7 +31,7 @@ public class Goomba extends Enemy {
         );
 
         movingAnimation = makeAnimation(region, framesWidth, framesHeight, 2, 0.2f, 0);
-        hitRegion = new TextureRegion(region, framesWidth * 3, 0,  framesWidth, framesHeight);
+        hitRegion = new TextureRegion(region, framesWidth * 2, 0,  framesWidth, framesHeight);
     }
 
     @Override
@@ -94,10 +94,6 @@ public class Goomba extends Enemy {
             region.flip(true, false);
             isMovingRight = true;
         }
-    }
-
-    public void changeDirection(){
-        isMovingRight = !isMovingRight;
     }
 
     public void hitByPlayer() {

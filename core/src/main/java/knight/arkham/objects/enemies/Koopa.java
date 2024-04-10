@@ -29,8 +29,8 @@ public class Koopa extends Enemy {
             )
         );
 
-        movingAnimation = makeAnimation(region, framesWidth, framesHeight, totalFrames - 2, 0.2f, 0);
-        hitRegion = new TextureRegion(region, framesWidth * 3, 0,  framesWidth, framesHeight);
+        movingAnimation = makeAnimation(region, framesWidth, framesHeight, 2, 0.2f, 0);
+        hitRegion = new TextureRegion(region, framesWidth * 2, 0,  framesWidth, framesHeight);
     }
 
     @Override
