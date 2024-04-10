@@ -1,6 +1,5 @@
-package knight.arkham.objects;
+package knight.arkham.objects.enemies;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -13,19 +12,17 @@ import knight.arkham.helpers.Box2DBody;
 import knight.arkham.scenes.Hud;
 
 import static knight.arkham.helpers.AnimationHelper.makeAnimation;
-import static knight.arkham.helpers.AssetsHelper.loadSound;
 import static knight.arkham.helpers.Box2DHelper.createBody;
 
-public class Enemy extends GameObject {
+public class Goomba extends Enemy {
     private final Animation<TextureRegion> movingAnimation;
     private final TextureRegion hitRegion;
     private float animationTimer;
     public boolean isMovingRight;
     private boolean setToDestroy;
     private boolean isDestroyed;
-    private final Sound hitSound = loadSound("stomp.wav");
 
-    public Enemy(Rectangle bounds, World world, TextureAtlas.AtlasRegion region, int totalFrames) {
+    public Goomba(Rectangle bounds, World world, TextureAtlas.AtlasRegion region, int totalFrames) {
         super(
             bounds, world,
             new TextureRegion(
@@ -33,18 +30,8 @@ public class Enemy extends GameObject {
             )
         );
 
-        body.setActive(false);
-
-        if (region.name.equals("goomba")) {
-
-            movingAnimation = makeAnimation(region, framesWidth, framesHeight, totalFrames - 1, 0.2f, 0);
-            hitRegion = new TextureRegion(region, framesWidth * 2, 0,  framesWidth, framesHeight);
-        }
-        else {
-
-            movingAnimation = makeAnimation(region, framesWidth, framesHeight, totalFrames - 2, 0.2f, 0);
-            hitRegion = new TextureRegion(region, framesWidth * 3, 0,  framesWidth, framesHeight);
-        }
+        movingAnimation = makeAnimation(region, framesWidth, framesHeight, 2, 0.2f, 0);
+        hitRegion = new TextureRegion(region, framesWidth * 3, 0,  framesWidth, framesHeight);
     }
 
     @Override
@@ -61,7 +48,6 @@ public class Enemy extends GameObject {
         isDestroyed = true;
 
         actualRegion = hitRegion;
-
         animationTimer = 0;
     }
 

@@ -17,6 +17,9 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import knight.arkham.objects.*;
+import knight.arkham.objects.enemies.Enemy;
+import knight.arkham.objects.enemies.Goomba;
+import knight.arkham.objects.enemies.Koopa;
 import knight.arkham.objects.items.ItemDefinition;
 import knight.arkham.objects.items.Mushroom;
 import knight.arkham.objects.structures.Brick;
@@ -35,6 +38,7 @@ public class TileMapHelper {
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final Player player;
     private final Array<GameObject> gameObjects = new Array<>();
+    private final Array<Enemy> enemies = new Array<>();
     private final Array<InteractiveStructure> structures = new Array<>();
     private final Array<ItemDefinition> itemsToSpawn = new Array<>();
     private float accumulator;
@@ -74,9 +78,9 @@ public class TileMapHelper {
                 case "Enemies":
 
                     if (mapObject.getName().equals("goomba"))
-                        gameObjects.add(new Enemy(mapRectangle, world, atlas.findRegion("goomba"), 3));
+                        enemies.add(new Goomba(mapRectangle, world, atlas.findRegion("goomba"), 3));
                     else
-                        gameObjects.add(new Enemy(mapRectangle, world, atlas.findRegion("turtle"), 4));
+                        enemies.add(new Koopa(mapRectangle, world, atlas.findRegion("turtle"), 4));
                     break;
 
                 case "Blocks":
@@ -125,18 +129,22 @@ public class TileMapHelper {
 
         updateCameraPosition(camera);
 
-        for (GameObject gameObject : gameObjects) {
+        for (GameObject gameObject : gameObjects)
+            gameObject.update(deltaTime);
 
-            var isGameObjectActive = gameObject.body.isActive();
+        for (Enemy enemy : enemies) {
 
-            if (isGameObjectActive)
-                gameObject.update(deltaTime);
+            var isEnemyActive = enemy.body.isActive();
+
+            if (isEnemyActive)
+                enemy.update(deltaTime);
+
             else {
 
-                var distanceBetweenPlayerAndObject = player.getPixelPosition().dst(gameObject.getPixelPosition());
+                var distanceBetweenPlayerAndObject = player.getPixelPosition().dst(enemy.getPixelPosition());
 
                 if (distanceBetweenPlayerAndObject < 200)
-                    gameObject.body.setActive(true);
+                    enemy.body.setActive(true);
             }
         }
 
@@ -189,6 +197,9 @@ public class TileMapHelper {
             for (GameObject gameObject : gameObjects)
                 gameObject.draw(mapRenderer.getBatch());
 
+            for (Enemy enemy : enemies)
+                enemy.draw(mapRenderer.getBatch());
+
             mapRenderer.getBatch().end();
         }
         else
@@ -214,5 +225,8 @@ public class TileMapHelper {
 
         for (InteractiveStructure structure : structures)
             structure.dispose();
+
+        for (Enemy enemy : enemies)
+            enemy.dispose();
     }
 }
