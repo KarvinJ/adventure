@@ -41,7 +41,8 @@ public abstract class Enemy {
 
     public void update(float deltaTime) {
 
-        childUpdate(deltaTime);
+        if (body.isActive())
+            childUpdate(deltaTime);
     }
 
     private Rectangle getDrawBounds() {

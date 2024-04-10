@@ -2,8 +2,9 @@ package knight.arkham.helpers;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import knight.arkham.objects.enemies.Enemy;
 import knight.arkham.objects.Player;
+import knight.arkham.objects.enemies.Goomba;
+import knight.arkham.objects.enemies.Koopa;
 import knight.arkham.objects.structures.Brick;
 import knight.arkham.objects.Mushroom;
 import knight.arkham.objects.structures.QuestionBlock;
@@ -76,7 +77,13 @@ public class Box2DHelper {
             createPlayerBody(box2DBody, playerFixtureDef, body);
         }
 
-        else if (box2DBody.userData instanceof Enemy) {
+        else if (box2DBody.userData instanceof Goomba) {
+
+            var enemyFixtureDef = createCircleFixtureDef(box2DBody);
+            createEnemyBody(box2DBody, enemyFixtureDef, body);
+        }
+
+        else if (box2DBody.userData instanceof Koopa) {
 
             var enemyFixtureDef = createEnemyBoxFixtureDef(box2DBody, shape);
             createEnemyBody(box2DBody, enemyFixtureDef, body);
@@ -124,6 +131,8 @@ public class Box2DHelper {
 
         fixtureDef.shape = shape;
         fixtureDef.density = box2DBody.density;
+
+        shape.dispose();
 
         return fixtureDef;
     }

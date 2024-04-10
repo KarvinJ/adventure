@@ -134,18 +134,12 @@ public class TileMapHelper {
 
         for (Enemy enemy : enemies) {
 
-            var isEnemyActive = enemy.body.isActive();
+            var distanceBetweenPlayerAndObject = player.getPixelPosition().dst(enemy.getPixelPosition());
 
-            if (isEnemyActive)
-                enemy.update(deltaTime);
+            if (distanceBetweenPlayerAndObject < 300)
+                enemy.body.setActive(true);
 
-            else {
-
-                var distanceBetweenPlayerAndObject = player.getPixelPosition().dst(enemy.getPixelPosition());
-
-                if (distanceBetweenPlayerAndObject < 200)
-                    enemy.body.setActive(true);
-            }
+            enemy.update(deltaTime);
         }
 
         initializeItems();
