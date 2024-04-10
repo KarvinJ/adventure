@@ -1,4 +1,4 @@
-package knight.arkham.objects.items;
+package knight.arkham.objects;
 
 import com.badlogic.gdx.math.Rectangle;
 

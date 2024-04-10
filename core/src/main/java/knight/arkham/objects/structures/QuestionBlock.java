@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.TileMapHelper;
-import knight.arkham.objects.items.ItemDefinition;
-import knight.arkham.objects.items.Mushroom;
+import knight.arkham.objects.ItemDefinition;
+import knight.arkham.objects.Mushroom;
 import knight.arkham.scenes.Hud;
 
 import static knight.arkham.helpers.AssetsHelper.loadSound;

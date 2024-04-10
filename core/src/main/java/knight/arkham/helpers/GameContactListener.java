@@ -3,7 +3,7 @@ package knight.arkham.helpers;
 import com.badlogic.gdx.physics.box2d.*;
 import knight.arkham.objects.enemies.Enemy;
 import knight.arkham.objects.Player;
-import knight.arkham.objects.items.Mushroom;
+import knight.arkham.objects.Mushroom;
 import knight.arkham.objects.structures.Brick;
 import knight.arkham.objects.structures.QuestionBlock;
 
