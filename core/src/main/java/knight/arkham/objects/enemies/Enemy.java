@@ -35,9 +35,9 @@ public abstract class Enemy {
 
     protected abstract Body createObjectBody();
 
-    protected abstract void childUpdate(float deltaTime);
-
     public abstract void hitByPlayer();
+
+    protected abstract void childUpdate(float deltaTime);
 
     public void update(float deltaTime) {
 

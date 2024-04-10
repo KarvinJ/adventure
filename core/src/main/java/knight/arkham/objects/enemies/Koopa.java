@@ -47,7 +47,6 @@ public class Koopa extends Enemy {
         isDestroyed = true;
 
         actualRegion = hitRegion;
-
         animationTimer = 0;
     }
 
@@ -102,11 +101,5 @@ public class Koopa extends Enemy {
         setToDestroy = true;
 
         Hud.addScore(100);
-    }
-
-    @Override
-    public void dispose() {
-        hitSound.dispose();
-        super.dispose();
     }
 }

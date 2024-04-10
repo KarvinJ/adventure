@@ -103,10 +103,4 @@ public class Goomba extends Enemy {
 
         Hud.addScore(100);
     }
-
-    @Override
-    public void dispose() {
-        hitSound.dispose();
-        super.dispose();
-    }
 }
