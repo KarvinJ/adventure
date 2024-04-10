@@ -102,4 +102,10 @@ public class Koopa extends Enemy {
 
         Hud.addScore(100);
     }
+
+    @Override
+    public void childDispose() {
+
+        hitRegion.getTexture().dispose();
+    }
 }

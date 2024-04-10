@@ -72,8 +72,12 @@ public abstract class Enemy {
         body.applyLinearImpulse(impulseDirection, body.getWorldCenter(), true);
     }
 
+    public abstract void childDispose();
+
     public void dispose() {
+
         actualRegion.getTexture().dispose();
         hitSound.dispose();
+        childDispose();
     }
 }

@@ -51,9 +51,7 @@ public class Brick extends InteractiveStructure {
     }
 
     @Override
-    public void dispose() {
-
+    public void childDispose() {
         breakBlockSound.dispose();
-        super.dispose();
     }
 }

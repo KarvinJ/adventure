@@ -71,10 +71,9 @@ public class QuestionBlock extends InteractiveStructure {
     }
 
     @Override
-    public void dispose() {
+    public void childDispose() {
 
         bumpSound.dispose();
         spawnItemSound.dispose();
-        super.dispose();
     }
 }

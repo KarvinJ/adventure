@@ -213,7 +213,6 @@ public class TileMapHelper {
         world.dispose();
         debugRenderer.dispose();
 
-        //Note these are the parent disposes, so there are still things that should be disposed on the children classes
         for (GameObject gameObject : gameObjects)
             gameObject.dispose();
 

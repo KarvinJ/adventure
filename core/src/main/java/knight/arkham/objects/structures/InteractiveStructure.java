@@ -31,6 +31,13 @@ public abstract class InteractiveStructure {
 
     protected abstract Fixture createFixture();
 
+    public abstract void childDispose();
+
+    public void dispose() {
+
+        childDispose();
+    }
+
     protected TiledMapTileLayer.Cell getObjectCellInTheTileMap() {
 
         TiledMapTileLayer mapLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Blocks-Layer");
@@ -40,9 +47,5 @@ public abstract class InteractiveStructure {
 
 //        Here I search for the cell by position.
         return mapLayer.getCell(positionX, positionY);
-    }
-
-    public void dispose() {
-        collisionSound.dispose();
     }
 }
