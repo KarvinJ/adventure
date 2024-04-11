@@ -23,7 +23,7 @@ public class GameScreen extends ScreenAdapter {
 
         camera = game.camera;
 
-        mapHelper = new TileMapHelper("maps/level1.tmx", "images/character.atlas");
+        mapHelper = new TileMapHelper("maps/level1.tmx");
 
         hud = new Hud();
 

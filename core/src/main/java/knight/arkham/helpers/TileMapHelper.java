@@ -36,7 +36,7 @@ public class TileMapHelper {
 
     private final Adventure game = Adventure.INSTANCE;
     public final TiledMap tiledMap;
-    private final TextureAtlas atlas;
+    private final TextureAtlas atlas = new TextureAtlas("images/character.atlas");
     public final World world;
     private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
     private final OrthogonalTiledMapRenderer mapRenderer;
@@ -48,13 +48,12 @@ public class TileMapHelper {
     private float accumulator;
     private boolean isDebugCamera;
     private boolean isDebugRendererActive;
+    private boolean isGameOver;
 
-    public TileMapHelper(String mapFilePath, String atlasFilePath) {
+    public TileMapHelper(String mapFilePath) {
 
         world = new World(new Vector2(0, -40), true);
         world.setContactListener(new GameContactListener());
-
-        atlas = new TextureAtlas(atlasFilePath);
 
         player = new Player(new Rectangle(150, 40, 32, 16), world, atlas, 8);
         savePosition(player.getWorldPosition());
@@ -130,28 +129,34 @@ public class TileMapHelper {
     public void update(float deltaTime, OrthographicCamera camera) {
 
         if (player.getActualState() == Player.AnimationState.DYING && player.getStateTimer() > 2.6f)
+            isGameOver = true;
+
+        if (isGameOver)
             game.setScreen(new GameOverScreen());
 
-        player.update(deltaTime);
+        else {
 
-        updateCameraPosition(camera);
+            player.update(deltaTime);
 
-        for (GameObject gameObject : gameObjects)
-            gameObject.update(deltaTime);
+            updateCameraPosition(camera);
 
-        for (Enemy enemy : enemies) {
+            for (GameObject gameObject : gameObjects)
+                gameObject.update(deltaTime);
 
-            var distanceBetweenPlayerAndObject = player.getPixelPosition().dst(enemy.getPixelPosition());
+            for (Enemy enemy : enemies) {
 
-            if (distanceBetweenPlayerAndObject < 300)
-                enemy.body.setActive(true);
+                var distanceBetweenPlayerAndObject = player.getPixelPosition().dst(enemy.getPixelPosition());
 
-            enemy.update(deltaTime);
+                if (distanceBetweenPlayerAndObject < 300)
+                    enemy.body.setActive(true);
+
+                enemy.update(deltaTime);
+            }
+
+            initializeItems();
+
+            doPhysicsTimeStep(deltaTime);
         }
-
-        initializeItems();
-
-        doPhysicsTimeStep(deltaTime);
     }
 
     private void doPhysicsTimeStep(float deltaTime) {
@@ -180,30 +185,35 @@ public class TileMapHelper {
 
     public void draw(OrthographicCamera camera) {
 
-        mapRenderer.setView(camera);
+        if (!isGameOver) {
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
-            isDebugRendererActive = !isDebugRendererActive;
+            mapRenderer.setView(camera);
 
-        if (!isDebugRendererActive) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
+                isDebugRendererActive = !isDebugRendererActive;
 
-            mapRenderer.render();
+            if (!isDebugRendererActive) {
 
-            mapRenderer.getBatch().setProjectionMatrix(camera.combined);
+                mapRenderer.render();
 
-            mapRenderer.getBatch().begin();
+                mapRenderer.getBatch().setProjectionMatrix(camera.combined);
 
-            player.draw(mapRenderer.getBatch());
+                mapRenderer.getBatch().begin();
 
-            for (GameObject gameObject : gameObjects)
-                gameObject.draw(mapRenderer.getBatch());
+                player.draw(mapRenderer.getBatch());
 
-            for (Enemy enemy : enemies)
-                enemy.draw(mapRenderer.getBatch());
+                for (GameObject gameObject : gameObjects)
+                    gameObject.draw(mapRenderer.getBatch());
 
-            mapRenderer.getBatch().end();
-        } else
-            debugRenderer.render(world, camera.combined);
+                for (Enemy enemy : enemies)
+                    enemy.draw(mapRenderer.getBatch());
+
+                mapRenderer.getBatch().end();
+            }
+            else
+                debugRenderer.render(world, camera.combined);
+        }
+
     }
 
     public void setItemToSpawn(ItemDefinition itemDefinition) {
@@ -214,10 +224,9 @@ public class TileMapHelper {
 
         atlas.dispose();
         tiledMap.dispose();
-//        mapRenderer.dispose();
-//        world.dispose();
+        mapRenderer.dispose();
+        world.dispose();
         debugRenderer.dispose();
-
         player.dispose();
 
         for (GameObject gameObject : gameObjects)
