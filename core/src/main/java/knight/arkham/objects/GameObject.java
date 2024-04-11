@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 
+import static knight.arkham.helpers.Box2DHelper.getDrawBounds;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public abstract class GameObject {
@@ -33,23 +34,12 @@ public abstract class GameObject {
     protected abstract void childUpdate(float deltaTime);
 
     public void update(float deltaTime) {
-
         childUpdate(deltaTime);
-    }
-
-    private Rectangle getDrawBounds() {
-
-        return new Rectangle(
-            body.getPosition().x - (actualBounds.width / 2 / PIXELS_PER_METER),
-            body.getPosition().y - (actualBounds.height / 2 / PIXELS_PER_METER),
-            actualBounds.width / PIXELS_PER_METER,
-            actualBounds.height / PIXELS_PER_METER
-        );
     }
 
     public void draw(Batch batch) {
 
-        Rectangle drawBounds = getDrawBounds();
+        Rectangle drawBounds = getDrawBounds(body.getPosition(), actualBounds);
 
         batch.draw(actualRegion, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
     }
