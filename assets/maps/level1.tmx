@@ -62,14 +62,14 @@
   <object id="103" name="question" x="1568" y="256" width="15.875" height="15.875"/>
  </objectgroup>
  <objectgroup id="2" name="Collisions">
-  <object id="1" x="0.666667" y="384.667" width="1167.17" height="30.8333"/>
+  <object id="1" x="0.666667" y="384.319" width="1167.17" height="31.1478"/>
   <object id="2" x="531.333" y="353.667" width="25.1667" height="29.3333"/>
   <object id="7" x="691.667" y="337" width="26.3333" height="46.5"/>
   <object id="21" x="820" y="321" width="25" height="62"/>
   <object id="36" x="977.455" y="320.364" width="28.1818" height="63.0909"/>
-  <object id="39" x="1200" y="384" width="239.5" height="31"/>
-  <object id="41" x="2544" y="385" width="1069.5" height="31"/>
-  <object id="40" x="1487.5" y="384.5" width="1022" height="31"/>
+  <object id="39" x="1200" y="384.636" width="239.5" height="30.1636"/>
+  <object id="41" x="2544" y="384.636" width="1069.5" height="31.3636"/>
+  <object id="40" x="1487.5" y="384.625" width="1024" height="30.675"/>
   <object id="42" x="2672.33" y="353" width="30.3333" height="30.3333"/>
   <object id="44" x="2912" y="352.333" width="30.6667" height="31"/>
   <object id="48" x="2256" y="320.333" width="15" height="62.3333"/>

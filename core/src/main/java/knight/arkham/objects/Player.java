@@ -31,6 +31,7 @@ public class Player extends GameObject {
     private final Animation<TextureRegion> runningAnimation;
     private final Animation<TextureRegion> bigPlayerRunningAnimation;
     private float stateTimer;
+    private float invincibilityTimer;
     private float deadTimer;
     private boolean isMovingRight;
     private boolean isDead;
@@ -136,6 +137,8 @@ public class Player extends GameObject {
     protected void childUpdate(float deltaTime) {
 
         getAnimationRegion(deltaTime);
+
+        invincibilityTimer += deltaTime;
 
         if (!isDead)
             movement();
@@ -253,8 +256,10 @@ public class Player extends GameObject {
            isTimeToDefineLittleMarioBody = true;
            powerDownSound.play();
            isMarioBig = false;
+           invincibilityTimer = 0;
         }
-        else {
+        //Don't know if this is the best option to manage the invincibility of my player. But it works well.
+        else if (invincibilityTimer > 1.5f){
 
             isDead = true;
             deathSound.play();

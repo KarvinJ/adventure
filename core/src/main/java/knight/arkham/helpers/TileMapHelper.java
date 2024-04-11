@@ -2,6 +2,7 @@ package knight.arkham.helpers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapLayer;
@@ -28,6 +29,7 @@ import knight.arkham.objects.structures.InteractiveStructure;
 import knight.arkham.objects.structures.QuestionBlock;
 import knight.arkham.screens.GameOverScreen;
 
+import static knight.arkham.helpers.AssetsHelper.loadMusic;
 import static knight.arkham.helpers.CameraController.controlCameraPosition;
 import static knight.arkham.helpers.Constants.*;
 import static knight.arkham.helpers.GameDataHelper.savePosition;
@@ -45,6 +47,7 @@ public class TileMapHelper {
     private final Array<Enemy> enemies = new Array<>();
     private final Array<InteractiveStructure> structures = new Array<>();
     private final Array<ItemDefinition> itemsToSpawn = new Array<>();
+    private final Music music = loadMusic("mario_music.ogg");
     private float accumulator;
     private boolean isDebugCamera;
     private boolean isDebugRendererActive;
@@ -60,6 +63,10 @@ public class TileMapHelper {
 
         tiledMap = new TmxMapLoader().load(mapFilePath);
         mapRenderer = setupMap(tiledMap);
+
+        music.play();
+        music.setVolume(0.2f);
+        music.setLooping(true);
     }
 
     private OrthogonalTiledMapRenderer setupMap(TiledMap tiledMap) {
@@ -127,6 +134,9 @@ public class TileMapHelper {
     }
 
     public void update(float deltaTime, OrthographicCamera camera) {
+
+        if (player.getActualState() == Player.AnimationState.DYING)
+            music.pause();
 
         if (player.getActualState() == Player.AnimationState.DYING && player.getStateTimer() > 2.6f)
             isGameOver = true;
@@ -227,6 +237,7 @@ public class TileMapHelper {
         mapRenderer.dispose();
         world.dispose();
         debugRenderer.dispose();
+        music.dispose();
         player.dispose();
 
         for (GameObject gameObject : gameObjects)
