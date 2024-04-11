@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import knight.arkham.Adventure;
 import knight.arkham.objects.*;
 import knight.arkham.objects.enemies.Enemy;
 import knight.arkham.objects.enemies.Goomba;
@@ -25,12 +26,15 @@ import knight.arkham.objects.Mushroom;
 import knight.arkham.objects.structures.Brick;
 import knight.arkham.objects.structures.InteractiveStructure;
 import knight.arkham.objects.structures.QuestionBlock;
+import knight.arkham.screens.GameOverScreen;
 
 import static knight.arkham.helpers.CameraController.controlCameraPosition;
 import static knight.arkham.helpers.Constants.*;
 import static knight.arkham.helpers.GameDataHelper.savePosition;
 
 public class TileMapHelper {
+
+    private final Adventure game = Adventure.INSTANCE;
     public final TiledMap tiledMap;
     private final TextureAtlas atlas;
     public final World world;
@@ -102,7 +106,7 @@ public class TileMapHelper {
         }
     }
 
-    private Rectangle getTileMapRectangle(Rectangle rectangle){
+    private Rectangle getTileMapRectangle(Rectangle rectangle) {
         return new Rectangle(
             rectangle.x + rectangle.width / 2,
             rectangle.y + rectangle.height / 2,
@@ -124,6 +128,9 @@ public class TileMapHelper {
     }
 
     public void update(float deltaTime, OrthographicCamera camera) {
+
+        if (player.getActualState() == Player.AnimationState.DYING && player.getStateTimer() > 2.6f)
+            game.setScreen(new GameOverScreen());
 
         player.update(deltaTime);
 
@@ -153,8 +160,8 @@ public class TileMapHelper {
 
         accumulator += frameTime;
 
-        while(accumulator >= TIME_STEP) {
-            world.step(TIME_STEP, 6,2);
+        while (accumulator >= TIME_STEP) {
+            world.step(TIME_STEP, 6, 2);
             accumulator -= TIME_STEP;
         }
     }
@@ -171,7 +178,7 @@ public class TileMapHelper {
         }
     }
 
-    public void draw(OrthographicCamera camera){
+    public void draw(OrthographicCamera camera) {
 
         mapRenderer.setView(camera);
 
@@ -195,8 +202,7 @@ public class TileMapHelper {
                 enemy.draw(mapRenderer.getBatch());
 
             mapRenderer.getBatch().end();
-        }
-        else
+        } else
             debugRenderer.render(world, camera.combined);
     }
 
@@ -204,14 +210,15 @@ public class TileMapHelper {
         itemsToSpawn.add(itemDefinition);
     }
 
-    public void dispose(){
+    public void dispose() {
+
+        atlas.dispose();
+        tiledMap.dispose();
+//        mapRenderer.dispose();
+//        world.dispose();
+        debugRenderer.dispose();
 
         player.dispose();
-        tiledMap.dispose();
-        atlas.dispose();
-        mapRenderer.dispose();
-        world.dispose();
-        debugRenderer.dispose();
 
         for (GameObject gameObject : gameObjects)
             gameObject.dispose();

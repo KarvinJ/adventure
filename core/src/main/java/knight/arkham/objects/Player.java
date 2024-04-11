@@ -8,19 +8,18 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
-import knight.arkham.helpers.GameDataHelper;
 
 import static knight.arkham.helpers.AnimationHelper.makeAnimation;
 import static knight.arkham.helpers.AssetsHelper.loadSound;
 import static knight.arkham.helpers.Box2DHelper.createBody;
+import static knight.arkham.helpers.Constants.NOTHING_BIT;
 
 public class Player extends GameObject {
-    private enum AnimationState {FALLING, JUMPING, STANDING, RUNNING, DYING, GROWING}
+    public enum AnimationState {FALLING, JUMPING, STANDING, RUNNING, DYING, GROWING}
     private AnimationState actualState = AnimationState.STANDING;
     private AnimationState previousState = AnimationState.STANDING;
     private final TextureRegion idleRegion;
@@ -31,7 +30,7 @@ public class Player extends GameObject {
     private final Animation<TextureRegion> growingAnimation;
     private final Animation<TextureRegion> runningAnimation;
     private final Animation<TextureRegion> bigPlayerRunningAnimation;
-    private float animationTimer;
+    private float stateTimer;
     private float deadTimer;
     private boolean isMovingRight;
     private boolean isDead;
@@ -168,7 +167,7 @@ public class Player extends GameObject {
     private void spawnToPreviousCheckpoint() {
 
         body.setLinearVelocity(0, 0);
-        body.setTransform(GameDataHelper.loadPosition(), 0);
+//        body.setTransform(GameDataHelper.loadPosition(), 0);
     }
 
     private AnimationState getCurrentAnimationState() {
@@ -204,15 +203,15 @@ public class Player extends GameObject {
 
             case GROWING:
 
-                actualRegion = growingAnimation.getKeyFrame(animationTimer);
+                actualRegion = growingAnimation.getKeyFrame(stateTimer);
 //When the animation is finished change the value to false.
-                if (growingAnimation.isAnimationFinished(animationTimer))
+                if (growingAnimation.isAnimationFinished(stateTimer))
                     shouldStartGrowingAnimation = false;
                 break;
 
             case RUNNING:
-                actualRegion = isMarioBig ? bigPlayerRunningAnimation.getKeyFrame(animationTimer, true) :
-                    runningAnimation.getKeyFrame(animationTimer, true);
+                actualRegion = isMarioBig ? bigPlayerRunningAnimation.getKeyFrame(stateTimer, true) :
+                    runningAnimation.getKeyFrame(stateTimer, true);
                 break;
 
             case DYING:
@@ -227,7 +226,7 @@ public class Player extends GameObject {
 
         flipRegionOnXAxis(actualRegion);
 
-        animationTimer = actualState == previousState ? animationTimer + deltaTime : 0;
+        stateTimer = actualState == previousState ? stateTimer + deltaTime : 0;
         previousState = actualState;
     }
 
@@ -259,6 +258,15 @@ public class Player extends GameObject {
 
             isDead = true;
             deathSound.play();
+
+            Filter filter = new Filter();
+
+            filter.maskBits = NOTHING_BIT;
+
+            for (Fixture fixture : body.getFixtureList())
+                fixture.setFilterData(filter);
+
+            applyLinearImpulse(new Vector2(0, 140));
         }
     }
 
@@ -267,8 +275,15 @@ public class Player extends GameObject {
         shouldStartGrowingAnimation = true;
         isMarioBig = true;
         isTimeToDefineBigMarioBody = true;
-
         powerUpSound.play();
+    }
+
+    public AnimationState getActualState() {
+        return actualState;
+    }
+
+    public float getStateTimer() {
+        return stateTimer;
     }
 
     @Override
