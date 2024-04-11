@@ -152,25 +152,17 @@ public class Player extends GameObject {
                 isDead = false;
                 deadTimer = 0;
                 actualState = AnimationState.STANDING;
-
-                spawnToPreviousCheckpoint();
             }
         }
 
-        if (getPixelPosition().y < -100)
-            spawnToPreviousCheckpoint();
+        if (getPixelPosition().y < -10)
+            isDead = true;
 
         if (isTimeToDefineBigMarioBody)
             createBigMarioBody();
 
         if (isTimeToDefineLittleMarioBody)
             createLittleMarioBody();
-    }
-
-    private void spawnToPreviousCheckpoint() {
-
-        body.setLinearVelocity(0, 0);
-//        body.setTransform(GameDataHelper.loadPosition(), 0);
     }
 
     private AnimationState getCurrentAnimationState() {
