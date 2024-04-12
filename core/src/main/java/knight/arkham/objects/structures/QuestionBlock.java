@@ -7,8 +7,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.TileMapHelper;
-import knight.arkham.objects.ItemDefinition;
-import knight.arkham.objects.Mushroom;
+import knight.arkham.objects.items.Flower;
+import knight.arkham.objects.items.ItemDefinition;
+import knight.arkham.objects.items.Mushroom;
+import knight.arkham.objects.Player;
 import knight.arkham.scenes.Hud;
 
 import static knight.arkham.helpers.AssetsHelper.loadSound;
@@ -50,13 +52,16 @@ public class QuestionBlock extends InteractiveStructure {
 
         else {
 
-            if (mapObject.getProperties().containsKey("mushroom")) {
+            if (mapObject.getProperties().containsKey("item")) {
 
                 spawnItemSound.play();
 
                 var itemBounds = new Rectangle(initialBounds.x, initialBounds.y + 16, initialBounds.width, initialBounds.height);
 
-                mapHelper.setItemToSpawn(new ItemDefinition(itemBounds, Mushroom.class));
+                if (Player.isMarioBig)
+                    mapHelper.setItemToSpawn(new ItemDefinition(itemBounds, Flower.class));
+                else
+                    mapHelper.setItemToSpawn(new ItemDefinition(itemBounds, Mushroom.class));
             }
             else {
 

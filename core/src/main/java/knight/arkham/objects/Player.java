@@ -275,6 +275,11 @@ public class Player extends GameObject {
         powerUpSound.play();
     }
 
+    public void firePlayer() {
+
+        powerUpSound.play();
+    }
+
     public AnimationState getActualState() {
         return actualState;
     }

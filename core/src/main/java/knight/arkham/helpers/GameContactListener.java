@@ -1,9 +1,10 @@
 package knight.arkham.helpers;
 
 import com.badlogic.gdx.physics.box2d.*;
+import knight.arkham.objects.items.Flower;
 import knight.arkham.objects.enemies.Enemy;
 import knight.arkham.objects.Player;
-import knight.arkham.objects.Mushroom;
+import knight.arkham.objects.items.Mushroom;
 import knight.arkham.objects.structures.Brick;
 import knight.arkham.objects.structures.QuestionBlock;
 
@@ -73,6 +74,14 @@ public class GameContactListener implements ContactListener {
                     ((Mushroom) fixtureA.getUserData()).growUpPlayer(((Player) fixtureB.getUserData()));
                 else
                     ((Mushroom) fixtureB.getUserData()).growUpPlayer(((Player) fixtureA.getUserData()));
+                break;
+
+            case FLOWER_BIT | PLAYER_BIT:
+
+                if (fixtureA.getFilterData().categoryBits == FLOWER_BIT)
+                    ((Flower) fixtureA.getUserData()).powerUpPlayer(((Player) fixtureB.getUserData()));
+                else
+                    ((Flower) fixtureB.getUserData()).powerUpPlayer(((Player) fixtureA.getUserData()));
                 break;
         }
     }

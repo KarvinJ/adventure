@@ -3,11 +3,12 @@ package knight.arkham.helpers;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import knight.arkham.objects.items.Flower;
 import knight.arkham.objects.Player;
 import knight.arkham.objects.enemies.Goomba;
 import knight.arkham.objects.enemies.Koopa;
 import knight.arkham.objects.structures.Brick;
-import knight.arkham.objects.Mushroom;
+import knight.arkham.objects.items.Mushroom;
 import knight.arkham.objects.structures.QuestionBlock;
 
 import static knight.arkham.helpers.Constants.*;
@@ -94,6 +95,13 @@ public class Box2DHelper {
 
             var circleFixtureDef = createCircleFixtureDef(box2DBody);
             circleFixtureDef.filter.categoryBits = MUSHROOM_BIT;
+            body.createFixture(circleFixtureDef).setUserData(box2DBody.userData);
+        }
+
+        else if (box2DBody.userData instanceof Flower) {
+
+            var circleFixtureDef = createCircleFixtureDef(box2DBody);
+            circleFixtureDef.filter.categoryBits = FLOWER_BIT;
             body.createFixture(circleFixtureDef).setUserData(box2DBody.userData);
         }
 
@@ -191,7 +199,7 @@ public class Box2DHelper {
         fixtureDef.filter.categoryBits = PLAYER_BIT;
 
         fixtureDef.filter.maskBits = (short) (GROUND_BIT | BRICK_BIT | QUESTION_BLOCK_BIT |
-            FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT | MUSHROOM_BIT);
+            FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT | MUSHROOM_BIT  | FLOWER_BIT);
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
 

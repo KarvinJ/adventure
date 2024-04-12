@@ -22,8 +22,9 @@ import knight.arkham.objects.*;
 import knight.arkham.objects.enemies.Enemy;
 import knight.arkham.objects.enemies.Goomba;
 import knight.arkham.objects.enemies.Koopa;
-import knight.arkham.objects.ItemDefinition;
-import knight.arkham.objects.Mushroom;
+import knight.arkham.objects.items.Flower;
+import knight.arkham.objects.items.ItemDefinition;
+import knight.arkham.objects.items.Mushroom;
 import knight.arkham.objects.structures.Brick;
 import knight.arkham.objects.structures.InteractiveStructure;
 import knight.arkham.objects.structures.QuestionBlock;
@@ -186,8 +187,13 @@ public class TileMapHelper {
         for (ItemDefinition item : itemsToSpawn) {
 
             if (item.classType == Mushroom.class) {
-                gameObjects.add(new Mushroom(item.bounds, world, atlas.findRegion("items")));
 
+                gameObjects.add(new Mushroom(item.bounds, world, atlas.findRegion("items")));
+                itemsToSpawn.clear();
+            }
+            else {
+
+                gameObjects.add(new Flower(item.bounds, world, atlas.findRegion("items")));
                 itemsToSpawn.clear();
             }
         }

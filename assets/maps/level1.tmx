@@ -6,7 +6,7 @@
  <objectgroup id="7" name="Blocks">
   <object id="8" name="question" x="416.004" y="320" width="15.4616" height="15.875">
    <properties>
-    <property name="mushroom" value=""/>
+    <property name="item" value=""/>
    </properties>
   </object>
   <object id="87" name="question" x="448.908" y="320" width="15.1338" height="15.8125"/>
@@ -15,12 +15,16 @@
   <object id="13" name="brick" x="400.063" y="320" width="15.9524" height="15.8125"/>
   <object id="14" name="brick" x="463.981" y="320" width="16.0194" height="15.966"/>
   <object id="17" name="brick" x="431.457" y="320" width="17.4497" height="15.8068"/>
-  <object id="79" name="question" x="1089" y="304.667" width="14.6667" height="15"/>
+  <object id="79" name="question" x="1089" y="304.667" width="14.6667" height="15">
+   <properties>
+    <property name="1-up" value=""/>
+   </properties>
+  </object>
   <object id="88" name="brick" x="1296" y="320" width="17.2121" height="15.8788"/>
   <object id="90" name="brick" x="1327.67" y="320" width="16" height="15.8788"/>
   <object id="91" name="question" x="1312.67" y="320" width="14.5455" height="15.7576">
    <properties>
-    <property name="mushroom" value=""/>
+    <property name="item" value=""/>
    </properties>
   </object>
   <object id="92" name="brick" x="1343.99" y="256" width="17.9185" height="15.9674"/>
@@ -32,12 +36,20 @@
   <object id="98" name="brick" x="1439.75" y="256" width="17.75" height="15.375"/>
   <object id="99" name="brick" x="1456" y="256" width="15.875" height="15.875"/>
   <object id="100" name="brick" x="1520" y="256" width="15.875" height="15.875"/>
-  <object id="104" name="brick" x="1568.33" y="320" width="15.875" height="15.875"/>
+  <object id="104" name="brick" x="1568.33" y="320" width="15.875" height="15.875">
+   <properties>
+    <property name="multiple-coins" value=""/>
+   </properties>
+  </object>
   <object id="105" name="brick" x="1663.67" y="320" width="15.875" height="15.875"/>
   <object id="106" name="brick" x="1680.33" y="320" width="15.875" height="15.875"/>
   <object id="107" name="question" x="1760" y="320" width="15.875" height="15.875"/>
   <object id="108" name="question" x="1808" y="320" width="15.875" height="15.875"/>
-  <object id="110" name="question" x="1808.67" y="256" width="15.875" height="15.875"/>
+  <object id="110" name="question" x="1808.67" y="256" width="15.875" height="15.875">
+   <properties>
+    <property name="item" value=""/>
+   </properties>
+  </object>
   <object id="109" name="question" x="1856" y="320" width="15.875" height="15.875"/>
   <object id="111" name="brick" x="1952.67" y="320" width="15.875" height="15.875"/>
   <object id="114" name="brick" x="1999.67" y="256" width="15.875" height="15.875"/>
@@ -51,7 +63,7 @@
   <object id="122" name="brick" x="2768.67" y="320" width="15.875" height="15.875"/>
   <object id="124" name="question" x="2784.33" y="320" width="15.875" height="15.875">
    <properties>
-    <property name="mushroom" value=""/>
+    <property name="item" value=""/>
    </properties>
   </object>
   <object id="123" name="brick" x="2800" y="320" width="15.875" height="15.875"/>
