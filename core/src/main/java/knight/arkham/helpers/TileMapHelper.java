@@ -23,6 +23,7 @@ import knight.arkham.objects.enemies.Enemy;
 import knight.arkham.objects.enemies.Goomba;
 import knight.arkham.objects.enemies.Koopa;
 import knight.arkham.objects.items.Flower;
+import knight.arkham.objects.items.GreenMushroom;
 import knight.arkham.objects.items.ItemDefinition;
 import knight.arkham.objects.items.Mushroom;
 import knight.arkham.objects.structures.Brick;
@@ -36,7 +37,6 @@ import static knight.arkham.helpers.Constants.*;
 import static knight.arkham.helpers.GameDataHelper.savePosition;
 
 public class TileMapHelper {
-
     private final Adventure game = Adventure.INSTANCE;
     public final TiledMap tiledMap;
     private final TextureAtlas atlas = new TextureAtlas("images/character.atlas");
@@ -191,9 +191,14 @@ public class TileMapHelper {
                 gameObjects.add(new Mushroom(item.bounds, world, atlas.findRegion("items")));
                 itemsToSpawn.clear();
             }
-            else {
+            else if (item.classType == Flower.class){
 
                 gameObjects.add(new Flower(item.bounds, world, atlas.findRegion("items")));
+                itemsToSpawn.clear();
+            }
+            else {
+
+                gameObjects.add(new GreenMushroom(item.bounds, world, atlas.findRegion("items")));
                 itemsToSpawn.clear();
             }
         }

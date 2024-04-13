@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.TileMapHelper;
 import knight.arkham.objects.items.Flower;
+import knight.arkham.objects.items.GreenMushroom;
 import knight.arkham.objects.items.ItemDefinition;
 import knight.arkham.objects.items.Mushroom;
 import knight.arkham.objects.Player;
@@ -23,6 +24,7 @@ public class QuestionBlock extends InteractiveStructure {
     private final Rectangle initialBounds;
     private final Sound bumpSound = loadSound("bump.wav");
     private final Sound spawnItemSound = loadSound("spawn.wav");
+    private final boolean isTheBlockHidden;
 
     public QuestionBlock(Rectangle bounds, MapObject mapObject, TileMapHelper mapHelper) {
         super(bounds, mapHelper.world, mapHelper.tiledMap, "coin.wav");
@@ -32,7 +34,8 @@ public class QuestionBlock extends InteractiveStructure {
         this.mapObject = mapObject;
         this.mapHelper = mapHelper;
 
-        if (mapObject.getProperties().containsKey("hidden"))
+        isTheBlockHidden = mapObject.getProperties().containsKey("hidden");
+        if (isTheBlockHidden)
             actualCell.setTile(null);
     }
 
@@ -63,8 +66,12 @@ public class QuestionBlock extends InteractiveStructure {
 
                 var itemBounds = new Rectangle(initialBounds.x, initialBounds.y + 16, initialBounds.width, initialBounds.height);
 
-                if (Player.isMarioBig)
+                if (isTheBlockHidden)
+                    mapHelper.setItemToSpawn(new ItemDefinition(itemBounds, GreenMushroom.class));
+
+                else if (Player.isMarioBig)
                     mapHelper.setItemToSpawn(new ItemDefinition(itemBounds, Flower.class));
+
                 else
                     mapHelper.setItemToSpawn(new ItemDefinition(itemBounds, Mushroom.class));
             }

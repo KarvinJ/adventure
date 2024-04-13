@@ -7,6 +7,7 @@ import knight.arkham.objects.items.Flower;
 import knight.arkham.objects.Player;
 import knight.arkham.objects.enemies.Goomba;
 import knight.arkham.objects.enemies.Koopa;
+import knight.arkham.objects.items.GreenMushroom;
 import knight.arkham.objects.structures.Brick;
 import knight.arkham.objects.items.Mushroom;
 import knight.arkham.objects.structures.QuestionBlock;
@@ -98,6 +99,13 @@ public class Box2DHelper {
             body.createFixture(circleFixtureDef).setUserData(box2DBody.userData);
         }
 
+        else if (box2DBody.userData instanceof GreenMushroom) {
+
+            var circleFixtureDef = createCircleFixtureDef(box2DBody);
+            circleFixtureDef.filter.categoryBits = GREEN_MUSHROOM_BIT;
+            body.createFixture(circleFixtureDef).setUserData(box2DBody.userData);
+        }
+
         else if (box2DBody.userData instanceof Flower) {
 
             var circleFixtureDef = createCircleFixtureDef(box2DBody);
@@ -151,7 +159,7 @@ public class Box2DHelper {
         fixtureDef.filter.categoryBits = PLAYER_BIT;
 
         fixtureDef.filter.maskBits = (short) (GROUND_BIT | BRICK_BIT | QUESTION_BLOCK_BIT |
-            FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT | MUSHROOM_BIT);
+            FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT | MUSHROOM_BIT | GREEN_MUSHROOM_BIT);
 
         fixtureDef.friction = 1;
 

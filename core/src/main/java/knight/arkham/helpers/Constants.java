@@ -16,4 +16,5 @@ public class Constants {
     public static final short PLAYER_HEAD_BIT = 512;
     public static final short MUSHROOM_BIT = 1024;
     public static final short FLOWER_BIT = 2048;
+    public static final short GREEN_MUSHROOM_BIT = 4096;
 }
