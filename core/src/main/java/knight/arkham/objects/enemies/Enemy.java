@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import knight.arkham.scenes.Hud;
 
 import static knight.arkham.helpers.AssetsHelper.loadSound;
 import static knight.arkham.helpers.Box2DHelper.getDrawBounds;
@@ -20,6 +21,8 @@ public abstract class Enemy {
     protected final int framesWidth;
     protected final int framesHeight;
     protected boolean isMovingRight;
+    protected boolean setToDestroy;
+    protected float animationTimer;
     protected final Sound hitSound = loadSound("stomp.wav");
 
     protected Enemy(Rectangle bounds, World world, TextureRegion region) {
@@ -36,14 +39,15 @@ public abstract class Enemy {
 
     protected abstract Body createObjectBody();
 
-    public abstract void hitByPlayer();
-
     protected abstract void childUpdate(float deltaTime);
 
     public void update(float deltaTime) {
 
         if (body.isActive())
             childUpdate(deltaTime);
+
+        if (getPixelPosition().y < 0)
+            setToDestroy = true;
     }
 
     public void draw(Batch batch) {
@@ -61,6 +65,14 @@ public abstract class Enemy {
 
     protected void applyLinearImpulse(Vector2 impulseDirection) {
         body.applyLinearImpulse(impulseDirection, body.getWorldCenter(), true);
+    }
+
+    public void hitByPlayer() {
+
+        hitSound.play();
+        setToDestroy = true;
+
+        Hud.addScore(100);
     }
 
     public abstract void childDispose();

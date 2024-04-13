@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
-import knight.arkham.scenes.Hud;
 
 import static knight.arkham.helpers.AnimationHelper.makeAnimation;
 import static knight.arkham.helpers.Box2DHelper.createBody;
@@ -17,8 +16,6 @@ import static knight.arkham.helpers.Box2DHelper.createBody;
 public class Koopa extends Enemy {
     private final Animation<TextureRegion> movingAnimation;
     private final TextureRegion hitRegion;
-    private float animationTimer;
-    private boolean setToDestroy;
     private boolean isDestroyed;
 
     public Koopa(Rectangle bounds, World world, TextureAtlas.AtlasRegion region, int totalFrames) {
@@ -70,9 +67,6 @@ public class Koopa extends Enemy {
             else if (!isMovingRight && body.getLinearVelocity().x >= -4)
                 applyLinearImpulse(new Vector2(-4, 0));
         }
-
-        if (getPixelPosition().y < 0)
-            setToDestroy = true;
     }
 
     @Override
@@ -93,14 +87,6 @@ public class Koopa extends Enemy {
             region.flip(true, false);
             isMovingRight = true;
         }
-    }
-
-    public void hitByPlayer() {
-
-        hitSound.play();
-        setToDestroy = true;
-
-        Hud.addScore(100);
     }
 
     @Override
