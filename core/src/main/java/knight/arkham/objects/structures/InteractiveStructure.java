@@ -15,6 +15,7 @@ public abstract class InteractiveStructure {
     protected final Fixture fixture;
     protected final Body body;
     private final TiledMap tiledMap;
+    protected final TiledMapTileLayer.Cell actualCell;
     protected final Sound collisionSound;
 
     public InteractiveStructure(Rectangle rectangle, World world, TiledMap map, String soundPath) {
@@ -24,8 +25,10 @@ public abstract class InteractiveStructure {
         tiledMap = map;
 
         fixture = createFixture();
-
         body = fixture.getBody();
+
+        actualCell = getBlockCellInTheTileMap();
+
         collisionSound = loadSound(soundPath);
     }
 
@@ -38,7 +41,7 @@ public abstract class InteractiveStructure {
         childDispose();
     }
 
-    protected TiledMapTileLayer.Cell getObjectCellInTheTileMap() {
+    protected TiledMapTileLayer.Cell getBlockCellInTheTileMap() {
 
         TiledMapTileLayer mapLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Blocks-Layer");
 

@@ -42,7 +42,7 @@ public class Brick extends InteractiveStructure {
 
             setDestroyBit();
 
-            getObjectCellInTheTileMap().setTile(null);
+            actualCell.setTile(null);
 
             breakBlockSound.play();
         }

@@ -17,7 +17,8 @@
   <object id="17" name="brick" x="431.457" y="320" width="17.4497" height="15.8068"/>
   <object id="79" name="question" x="1089" y="304.667" width="14.6667" height="15">
    <properties>
-    <property name="1-up" value=""/>
+    <property name="hidden" value=""/>
+    <property name="item" value=""/>
    </properties>
   </object>
   <object id="88" name="brick" x="1296" y="320" width="17.2121" height="15.8788"/>

@@ -31,6 +31,9 @@ public class QuestionBlock extends InteractiveStructure {
         tileSet = mapHelper.tiledMap.getTileSets().getTileSet("OverWorld");
         this.mapObject = mapObject;
         this.mapHelper = mapHelper;
+
+        if (mapObject.getProperties().containsKey("hidden"))
+            actualCell.setTile(null);
     }
 
     @Override
@@ -44,8 +47,10 @@ public class QuestionBlock extends InteractiveStructure {
     public void hitByPlayer() {
 
         int BLANK_COIN = 3;
+        int QUESTION_BLOCK = 5;
 
-        var actualCell = getObjectCellInTheTileMap();
+        if (actualCell.getTile() == null)
+            actualCell.setTile(tileSet.getTile(QUESTION_BLOCK));
 
         if (actualCell.getTile().getId() == BLANK_COIN)
             bumpSound.play();
