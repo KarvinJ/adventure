@@ -50,6 +50,29 @@ public abstract class Enemy {
             setToDestroy = true;
     }
 
+    protected void movement() {
+
+        if (isMovingRight && body.getLinearVelocity().x <= 4)
+            applyLinearImpulse(new Vector2(4, 0));
+
+        else if (!isMovingRight && body.getLinearVelocity().x >= -4)
+            applyLinearImpulse(new Vector2(-4, 0));
+    }
+
+    protected void flipRegionOnXAxis(TextureRegion region) {
+
+        //With this code most of the time if my enemy stop with a collision it will change direction automatically.
+        if ((body.getLinearVelocity().x < 0 || !isMovingRight) && region.isFlipX()) {
+
+            region.flip(true, false);
+            isMovingRight = false;
+        } else if ((body.getLinearVelocity().x > 0 || isMovingRight) && !region.isFlipX()) {
+
+            region.flip(true, false);
+            isMovingRight = true;
+        }
+    }
+
     public void draw(Batch batch) {
 
         Rectangle drawBounds = getDrawBounds(body.getPosition(), actualBounds);
