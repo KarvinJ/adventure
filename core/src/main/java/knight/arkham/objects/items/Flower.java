@@ -25,7 +25,7 @@ public class Flower extends GameObject {
 
     @Override
     protected Body createObjectBody() {
-        return createBody(new Box2DBody(actualBounds, 0, actualWorld, this));
+        return createBody(new Box2DBody(actualBounds, actualWorld, this));
     }
 
     private void destroyBody() {
@@ -33,6 +33,7 @@ public class Flower extends GameObject {
         actualWorld.destroyBody(body);
         isDestroyed = true;
     }
+
     @Override
     protected void childUpdate(float deltaTime) {
 

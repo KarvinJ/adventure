@@ -13,7 +13,7 @@ public class Box2DBody {
 
     public Box2DBody(Rectangle bounds, float density, World world, Object userData) {
         this.bounds = bounds;
-        this.bodyType = density > 0 ? BodyDef.BodyType.DynamicBody : BodyDef.BodyType.StaticBody;
+        this.bodyType = BodyDef.BodyType.DynamicBody;
         this.density = density;
         this.world = world;
         this.userData = userData;
