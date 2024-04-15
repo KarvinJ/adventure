@@ -23,25 +23,17 @@ public abstract class InteractiveStructure {
         actualBounds = rectangle;
         actualWorld = world;
         tiledMap = map;
+        collisionSound = loadSound(soundPath);
 
         fixture = createFixture();
         body = fixture.getBody();
 
         actualCell = getBlockCellInTheTileMap();
-
-        collisionSound = loadSound(soundPath);
     }
 
     protected abstract Fixture createFixture();
 
-    public abstract void childDispose();
-
-    public void dispose() {
-
-        childDispose();
-    }
-
-    protected TiledMapTileLayer.Cell getBlockCellInTheTileMap() {
+    private TiledMapTileLayer.Cell getBlockCellInTheTileMap() {
 
         TiledMapTileLayer mapLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Blocks-Layer");
 
@@ -50,5 +42,13 @@ public abstract class InteractiveStructure {
 
 //        Here I search for the cell by position.
         return mapLayer.getCell(positionX, positionY);
+    }
+
+    public abstract void childDispose();
+
+    public void dispose() {
+
+        collisionSound.dispose();
+        childDispose();
     }
 }
