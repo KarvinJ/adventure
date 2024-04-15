@@ -13,7 +13,7 @@ public abstract class InteractiveStructure {
     protected final Rectangle actualBounds;
     protected final World actualWorld;
     protected final Fixture fixture;
-    protected final Body body;
+    private final Body body;
     private final TiledMap tiledMap;
     protected final TiledMapTileLayer.Cell actualCell;
     protected final Sound collisionSound;
