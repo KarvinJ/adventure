@@ -8,13 +8,20 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
+import knight.arkham.scenes.Hud;
+
+import java.util.Objects;
 
 import static knight.arkham.helpers.AnimationHelper.makeAnimation;
 import static knight.arkham.helpers.Box2DHelper.createBody;
 
 public class Koopa extends Enemy {
+    private enum AnimationState {WALKING, SHELL, MOVING_SHELL}
+    private AnimationState currentState = AnimationState.WALKING;
+    private AnimationState previousState = AnimationState.WALKING;
     private final Animation<TextureRegion> movingAnimation;
     private final TextureRegion hitRegion;
+    private boolean hasBeenHit;
 
     public Koopa(Rectangle bounds, World world, TextureAtlas.AtlasRegion region, int totalFrames) {
         super(
@@ -25,7 +32,7 @@ public class Koopa extends Enemy {
         );
 
         movingAnimation = makeAnimation(region, framesWidth, framesHeight, 2, 0.2f, 0);
-        hitRegion = new TextureRegion(region, framesWidth * 2, 0,  framesWidth, framesHeight);
+        hitRegion = new TextureRegion(region, framesWidth * 2, 0, framesWidth, framesHeight);
     }
 
     @Override
@@ -39,25 +46,59 @@ public class Koopa extends Enemy {
     @Override
     protected void childUpdate(float deltaTime) {
 
-        animationTimer += deltaTime;
+        stateTimer += deltaTime;
 
         if (setToDestroy && !isDestroyed)
             destroyBody(hitRegion);
 
         else if (!isDestroyed) {
 
-            actualRegion = movingAnimation.getKeyFrame(animationTimer, true);
+            getAnimationRegion(deltaTime);
 
-            flipRegionOnXAxis(actualRegion);
-
-            movement();
+            if (currentState != AnimationState.SHELL)
+                movement();
         }
     }
 
+    private AnimationState getCurrentAnimationState() {
+
+        if (hasBeenHit)
+            return AnimationState.SHELL;
+        else
+            return AnimationState.WALKING;
+    }
+
+    private void getAnimationRegion(float deltaTime) {
+
+        currentState = getCurrentAnimationState();
+
+        if (Objects.requireNonNull(currentState) == AnimationState.SHELL)
+            actualRegion = hitRegion;
+        else
+            actualRegion = movingAnimation.getKeyFrame(stateTimer, true);
+
+
+        flipRegionOnXAxis(actualRegion);
+
+        stateTimer = currentState == previousState ? stateTimer + deltaTime : 0;
+        previousState = currentState;
+    }
+
+
+
     @Override
     public void draw(Batch batch) {
-        if (!isDestroyed || animationTimer < 1)
+        if (!isDestroyed || stateTimer < 1)
             super.draw(batch);
+    }
+
+    @Override
+    public void hitByPlayer() {
+
+        hitSound.play();
+        hasBeenHit = true;
+
+        Hud.addScore(100);
     }
 
     @Override

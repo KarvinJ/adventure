@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
+import knight.arkham.scenes.Hud;
 
 import static knight.arkham.helpers.AnimationHelper.makeAnimation;
 import static knight.arkham.helpers.Box2DHelper.createBody;
@@ -39,14 +40,14 @@ public class Goomba extends Enemy {
     @Override
     protected void childUpdate(float deltaTime) {
 
-        animationTimer += deltaTime;
+        stateTimer += deltaTime;
 
         if (setToDestroy && !isDestroyed)
             destroyBody(hitRegion);
 
         else if (!isDestroyed) {
 
-            actualRegion = movingAnimation.getKeyFrame(animationTimer, true);
+            actualRegion = movingAnimation.getKeyFrame(stateTimer, true);
 
             flipRegionOnXAxis(actualRegion);
 
@@ -56,8 +57,17 @@ public class Goomba extends Enemy {
 
     @Override
     public void draw(Batch batch) {
-        if (!isDestroyed || animationTimer < 1)
+        if (!isDestroyed || stateTimer < 1)
             super.draw(batch);
+    }
+
+    @Override
+    public void hitByPlayer() {
+
+        hitSound.play();
+        setToDestroy = true;
+
+        Hud.addScore(100);
     }
 
     @Override
