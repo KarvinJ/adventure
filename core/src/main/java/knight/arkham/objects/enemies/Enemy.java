@@ -22,6 +22,7 @@ public abstract class Enemy {
     protected final int framesHeight;
     protected boolean isMovingRight;
     protected boolean setToDestroy;
+    protected boolean isDestroyed;
     protected float animationTimer;
     protected final Sound hitSound = loadSound("stomp.wav");
 
@@ -39,6 +40,15 @@ public abstract class Enemy {
 
     protected abstract Body createObjectBody();
 
+    protected void destroyBody(TextureRegion hitRegion) {
+
+        actualWorld.destroyBody(body);
+        isDestroyed = true;
+
+        actualRegion = hitRegion;
+        animationTimer = 0;
+    }
+
     protected abstract void childUpdate(float deltaTime);
 
     public void update(float deltaTime) {
@@ -50,6 +60,8 @@ public abstract class Enemy {
             setToDestroy = true;
     }
 
+    public Vector2 getPixelPosition() {return body.getPosition().scl(PIXELS_PER_METER);}
+
     protected void movement() {
 
         if (isMovingRight && body.getLinearVelocity().x <= 4)
@@ -57,6 +69,17 @@ public abstract class Enemy {
 
         else if (!isMovingRight && body.getLinearVelocity().x >= -4)
             applyLinearImpulse(new Vector2(-4, 0));
+    }
+
+    private void applyLinearImpulse(Vector2 impulseDirection) {
+        body.applyLinearImpulse(impulseDirection, body.getWorldCenter(), true);
+    }
+
+    public void draw(Batch batch) {
+
+        Rectangle drawBounds = getDrawBounds(body.getPosition(), actualBounds.width, actualBounds.height);
+
+        batch.draw(actualRegion, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
     }
 
     protected void flipRegionOnXAxis(TextureRegion region) {
@@ -73,21 +96,8 @@ public abstract class Enemy {
         }
     }
 
-    public void draw(Batch batch) {
-
-        Rectangle drawBounds = getDrawBounds(body.getPosition(), actualBounds.width, actualBounds.height);
-
-        batch.draw(actualRegion, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
-    }
-
     public void changeDirection(){
         isMovingRight = !isMovingRight;
-    }
-
-    public Vector2 getPixelPosition() {return body.getPosition().scl(PIXELS_PER_METER);}
-
-    protected void applyLinearImpulse(Vector2 impulseDirection) {
-        body.applyLinearImpulse(impulseDirection, body.getWorldCenter(), true);
     }
 
     public void hitByPlayer() {

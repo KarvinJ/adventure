@@ -15,7 +15,6 @@ import static knight.arkham.helpers.Box2DHelper.createBody;
 public class Koopa extends Enemy {
     private final Animation<TextureRegion> movingAnimation;
     private final TextureRegion hitRegion;
-    private boolean isDestroyed;
 
     public Koopa(Rectangle bounds, World world, TextureAtlas.AtlasRegion region, int totalFrames) {
         super(
@@ -37,22 +36,13 @@ public class Koopa extends Enemy {
         );
     }
 
-    private void destroyBody() {
-
-        actualWorld.destroyBody(body);
-        isDestroyed = true;
-
-        actualRegion = hitRegion;
-        animationTimer = 0;
-    }
-
     @Override
     protected void childUpdate(float deltaTime) {
 
         animationTimer += deltaTime;
 
         if (setToDestroy && !isDestroyed)
-            destroyBody();
+            destroyBody(hitRegion);
 
         else if (!isDestroyed) {
 
