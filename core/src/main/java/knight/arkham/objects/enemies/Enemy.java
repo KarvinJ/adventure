@@ -75,7 +75,7 @@ public abstract class Enemy {
 
     public void draw(Batch batch) {
 
-        Rectangle drawBounds = getDrawBounds(body.getPosition(), actualBounds);
+        Rectangle drawBounds = getDrawBounds(body.getPosition(), actualBounds.width, actualBounds.height);
 
         batch.draw(actualRegion, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
     }

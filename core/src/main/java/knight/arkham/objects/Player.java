@@ -17,6 +17,7 @@ import static knight.arkham.helpers.AnimationHelper.makeAnimation;
 import static knight.arkham.helpers.AssetsHelper.loadSound;
 import static knight.arkham.helpers.Box2DHelper.createBody;
 import static knight.arkham.helpers.Constants.NOTHING_BIT;
+import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public class Player extends GameObject {
     public enum AnimationState {FALLING, JUMPING, STANDING, RUNNING, DYING, GROWING}
@@ -85,7 +86,6 @@ public class Player extends GameObject {
             new Box2DBody(actualBounds, 10, actualWorld, this)
         );
     }
-
 
     private void movement() {
 
@@ -165,6 +165,8 @@ public class Player extends GameObject {
             createLittleMarioBody();
     }
 
+    public Vector2 getPixelPosition() {return body.getPosition().scl(PIXELS_PER_METER);}
+
     private AnimationState getCurrentAnimationState() {
 
         if (isDead)
@@ -239,8 +241,6 @@ public class Player extends GameObject {
         }
     }
 
-    public Vector2 getWorldPosition() {return body.getPosition();}
-
     public void hitByEnemy() {
 
         if (isMarioBig) {
@@ -287,6 +287,8 @@ public class Player extends GameObject {
     public float getStateTimer() {
         return stateTimer;
     }
+
+    public Vector2 getWorldPosition() {return body.getPosition();}
 
     @Override
     public void dispose() {

@@ -282,13 +282,13 @@ public class Box2DHelper {
         return head;
     }
 
-    public static Rectangle getDrawBounds(Vector2 position, Rectangle bounds) {
+    public static Rectangle getDrawBounds(Vector2 position, float width, float height) {
 
         return new Rectangle(
-            position.x - (bounds.width / 2 / PIXELS_PER_METER),
-            position.y - (bounds.height / 2 / PIXELS_PER_METER),
-            bounds.width / PIXELS_PER_METER,
-            bounds.height / PIXELS_PER_METER
+            position.x - (width / 2 / PIXELS_PER_METER),
+            position.y - (height / 2 / PIXELS_PER_METER),
+            width / PIXELS_PER_METER,
+            height / PIXELS_PER_METER
         );
     }
 }
