@@ -6,8 +6,7 @@ import knight.arkham.objects.enemies.Enemy;
 import knight.arkham.objects.Player;
 import knight.arkham.objects.items.GreenMushroom;
 import knight.arkham.objects.items.Mushroom;
-import knight.arkham.objects.structures.Brick;
-import knight.arkham.objects.structures.QuestionBlock;
+import knight.arkham.objects.structures.InteractiveStructure;
 
 import static knight.arkham.helpers.Constants.*;
 
@@ -46,19 +45,12 @@ public class GameContactListener implements ContactListener {
                 break;
 
             case PLAYER_HEAD_BIT | BRICK_BIT:
-
-                if (fixtureA.getFilterData().categoryBits == PLAYER_HEAD_BIT)
-                    ((Brick) fixtureB.getUserData()).hitByPlayer();
-                else
-                    ((Brick) fixtureA.getUserData()).hitByPlayer();
-                break;
-
             case PLAYER_HEAD_BIT | QUESTION_BLOCK_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == PLAYER_HEAD_BIT)
-                    ((QuestionBlock) fixtureB.getUserData()).hitByPlayer();
+                    ((InteractiveStructure) fixtureB.getUserData()).hitByPlayer();
                 else
-                    ((QuestionBlock) fixtureA.getUserData()).hitByPlayer();
+                    ((InteractiveStructure) fixtureA.getUserData()).hitByPlayer();
                 break;
 
             case MUSHROOM_BIT | STOP_ENEMY_BIT:

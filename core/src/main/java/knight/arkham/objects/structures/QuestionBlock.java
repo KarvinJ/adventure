@@ -47,6 +47,7 @@ public class QuestionBlock extends InteractiveStructure {
         );
     }
 
+    @Override
     public void hitByPlayer() {
 
         int BLANK_COIN = 3;

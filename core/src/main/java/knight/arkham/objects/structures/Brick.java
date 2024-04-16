@@ -36,6 +36,7 @@ public class Brick extends InteractiveStructure {
         fixture.setFilterData(filter);
     }
 
+    @Override
     public void hitByPlayer() {
 
         if (Player.isMarioBig) {

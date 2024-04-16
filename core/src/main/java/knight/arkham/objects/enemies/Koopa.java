@@ -10,8 +10,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.scenes.Hud;
 
-import java.util.Objects;
-
 import static knight.arkham.helpers.AnimationHelper.makeAnimation;
 import static knight.arkham.helpers.Box2DHelper.createBody;
 
@@ -72,11 +70,14 @@ public class Koopa extends Enemy {
 
         currentState = getCurrentAnimationState();
 
-        if (Objects.requireNonNull(currentState) == AnimationState.SHELL)
+        if (currentState == AnimationState.SHELL)
             actualRegion = hitRegion;
+
+        else if (currentState == AnimationState.MOVING_SHELL)
+            stateTimer = 0;
+
         else
             actualRegion = movingAnimation.getKeyFrame(stateTimer, true);
-
 
         flipRegionOnXAxis(actualRegion);
 

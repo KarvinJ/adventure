@@ -33,6 +33,8 @@ public abstract class InteractiveStructure {
 
     protected abstract Fixture createFixture();
 
+    public abstract void hitByPlayer();
+
     private TiledMapTileLayer.Cell getBlockCellInTheTileMap() {
 
         TiledMapTileLayer mapLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Blocks-Layer");
