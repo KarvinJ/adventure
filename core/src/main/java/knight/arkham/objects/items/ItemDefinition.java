@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class ItemDefinition {
     public Rectangle bounds;
-    //    Utilizaré una clase generica, para poder recibir clases de cualquier tipo.
+    //   generic class.
     public Class<?> classType;
 
     public ItemDefinition(Rectangle bounds, Class<?> classType) {

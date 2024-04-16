@@ -15,7 +15,6 @@ import static knight.arkham.helpers.Box2DHelper.createBody;
 
 public class GreenMushroom extends Item {
     private boolean setToDestroy;
-    private boolean isDestroyed;
 
     public GreenMushroom(Rectangle bounds, World world, TextureAtlas.AtlasRegion region) {
         super(
@@ -28,11 +27,6 @@ public class GreenMushroom extends Item {
         return createBody(new Box2DBody(actualBounds, 2, actualWorld, this));
     }
 
-    private void destroyBody() {
-
-        actualWorld.destroyBody(body);
-        isDestroyed = true;
-    }
     @Override
     protected void childUpdate(float deltaTime) {
 
@@ -47,6 +41,12 @@ public class GreenMushroom extends Item {
     }
 
     @Override
+    public void draw(Batch batch) {
+        if (!isDestroyed)
+            super.draw(batch);
+    }
+
+    @Override
     public void powerUpPlayer(Player player) {
 
         setToDestroy = true;
@@ -54,11 +54,5 @@ public class GreenMushroom extends Item {
         player.firePlayer();
 
         Hud.addScore(500);
-    }
-
-    @Override
-    public void draw(Batch batch) {
-        if (!isDestroyed)
-            super.draw(batch);
     }
 }

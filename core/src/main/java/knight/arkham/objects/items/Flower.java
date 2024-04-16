@@ -14,7 +14,6 @@ import static knight.arkham.helpers.Box2DHelper.createBody;
 
 public class Flower extends Item {
     private boolean setToDestroy;
-    private boolean isDestroyed;
 
     public Flower(Rectangle bounds, World world, TextureAtlas.AtlasRegion region) {
         super(
@@ -25,12 +24,6 @@ public class Flower extends Item {
     @Override
     protected Body createObjectBody() {
         return createBody(new Box2DBody(actualBounds, actualWorld, this));
-    }
-
-    private void destroyBody() {
-
-        actualWorld.destroyBody(body);
-        isDestroyed = true;
     }
 
     @Override

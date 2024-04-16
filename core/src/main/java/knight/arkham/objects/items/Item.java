@@ -15,6 +15,7 @@ public abstract class Item {
     protected final Rectangle actualBounds;
     protected final World actualWorld;
     protected TextureRegion actualRegion;
+    protected boolean isDestroyed;
 
     protected Item(Rectangle bounds, World world, TextureRegion region) {
 
@@ -30,6 +31,12 @@ public abstract class Item {
     protected abstract void childUpdate(float deltaTime);
 
     public abstract void powerUpPlayer(Player player);
+
+    protected void destroyBody() {
+
+        actualWorld.destroyBody(body);
+        isDestroyed = true;
+    }
 
     public void update(float deltaTime) {
         childUpdate(deltaTime);
