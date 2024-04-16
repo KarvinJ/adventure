@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import knight.arkham.objects.Player;
-import knight.arkham.objects.enemies.Goomba;
+import knight.arkham.objects.enemies.Enemy;
 import knight.arkham.objects.enemies.Koopa;
 import knight.arkham.objects.items.Item;
 import knight.arkham.objects.structures.InteractiveStructure;
@@ -73,15 +73,13 @@ public class Box2DHelper {
             createPlayerBody(box2DBody, playerFixtureDef, body);
         }
 
-        else if (box2DBody.userData instanceof Goomba) {
+        else if (box2DBody.userData instanceof Enemy) {
 
             var enemyFixtureDef = createCircleFixtureDef(box2DBody);
-            createEnemyBody(box2DBody, enemyFixtureDef, body);
-        }
 
-        else if (box2DBody.userData instanceof Koopa) {
+            if (box2DBody.userData instanceof Koopa)
+                enemyFixtureDef = createEnemyBoxFixtureDef(box2DBody, shape);
 
-            var enemyFixtureDef = createEnemyBoxFixtureDef(box2DBody, shape);
             createEnemyBody(box2DBody, enemyFixtureDef, body);
         }
 
