@@ -22,10 +22,7 @@ import knight.arkham.objects.*;
 import knight.arkham.objects.enemies.Enemy;
 import knight.arkham.objects.enemies.Goomba;
 import knight.arkham.objects.enemies.Koopa;
-import knight.arkham.objects.items.Flower;
-import knight.arkham.objects.items.GreenMushroom;
-import knight.arkham.objects.items.ItemDefinition;
-import knight.arkham.objects.items.Mushroom;
+import knight.arkham.objects.items.*;
 import knight.arkham.objects.structures.Brick;
 import knight.arkham.objects.structures.InteractiveStructure;
 import knight.arkham.objects.structures.QuestionBlock;
@@ -44,9 +41,9 @@ public class TileMapHelper {
     private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final Player player;
-    private final Array<GameObject> gameObjects = new Array<>();
     private final Array<Enemy> enemies = new Array<>();
     private final Array<InteractiveStructure> structures = new Array<>();
+    private final Array<Item> items = new Array<>();
     private final Array<ItemDefinition> itemsToSpawn = new Array<>();
     private final Music music = loadMusic("mario_music.ogg");
     private float accumulator;
@@ -151,8 +148,8 @@ public class TileMapHelper {
 
             updateCameraPosition(camera);
 
-            for (GameObject gameObject : gameObjects)
-                gameObject.update(deltaTime);
+            for (Item item : items)
+                item.update(deltaTime);
 
             for (Enemy enemy : enemies) {
 
@@ -188,17 +185,17 @@ public class TileMapHelper {
 
             if (item.classType == Mushroom.class) {
 
-                gameObjects.add(new Mushroom(item.bounds, world, atlas.findRegion("items")));
+                items.add(new Mushroom(item.bounds, world, atlas.findRegion("items")));
                 itemsToSpawn.clear();
             }
             else if (item.classType == Flower.class){
 
-                gameObjects.add(new Flower(item.bounds, world, atlas.findRegion("items")));
+                items.add(new Flower(item.bounds, world, atlas.findRegion("items")));
                 itemsToSpawn.clear();
             }
             else {
 
-                gameObjects.add(new GreenMushroom(item.bounds, world, atlas.findRegion("items")));
+                items.add(new GreenMushroom(item.bounds, world, atlas.findRegion("items")));
                 itemsToSpawn.clear();
             }
         }
@@ -223,8 +220,8 @@ public class TileMapHelper {
 
                 player.draw(mapRenderer.getBatch());
 
-                for (GameObject gameObject : gameObjects)
-                    gameObject.draw(mapRenderer.getBatch());
+                for (Item item : items)
+                    item.draw(mapRenderer.getBatch());
 
                 for (Enemy enemy : enemies)
                     enemy.draw(mapRenderer.getBatch());
@@ -251,8 +248,8 @@ public class TileMapHelper {
         music.dispose();
         player.dispose();
 
-        for (GameObject gameObject : gameObjects)
-            gameObject.dispose();
+        for (Item item : items)
+            item.dispose();
 
         for (InteractiveStructure structure : structures)
             structure.dispose();

@@ -63,17 +63,17 @@ public class GameContactListener implements ContactListener {
             case MUSHROOM_BIT | PLAYER_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == MUSHROOM_BIT)
-                    ((Mushroom) fixtureA.getUserData()).growUpPlayer(((Player) fixtureB.getUserData()));
+                    ((Mushroom) fixtureA.getUserData()).powerUpPlayer(((Player) fixtureB.getUserData()));
                 else
-                    ((Mushroom) fixtureB.getUserData()).growUpPlayer(((Player) fixtureA.getUserData()));
+                    ((Mushroom) fixtureB.getUserData()).powerUpPlayer(((Player) fixtureA.getUserData()));
                 break;
 
             case GREEN_MUSHROOM_BIT | PLAYER_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == GREEN_MUSHROOM_BIT)
-                    ((GreenMushroom) fixtureA.getUserData()).lifeUpPlayer(((Player) fixtureB.getUserData()));
+                    ((GreenMushroom) fixtureA.getUserData()).powerUpPlayer(((Player) fixtureB.getUserData()));
                 else
-                    ((GreenMushroom) fixtureB.getUserData()).lifeUpPlayer(((Player) fixtureA.getUserData()));
+                    ((GreenMushroom) fixtureB.getUserData()).powerUpPlayer(((Player) fixtureA.getUserData()));
                 break;
 
             case FLOWER_BIT | PLAYER_BIT:

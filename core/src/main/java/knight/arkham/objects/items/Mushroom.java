@@ -8,13 +8,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
-import knight.arkham.objects.GameObject;
 import knight.arkham.objects.Player;
 import knight.arkham.scenes.Hud;
 
 import static knight.arkham.helpers.Box2DHelper.createBody;
 
-public class Mushroom extends GameObject {
+public class Mushroom extends Item {
     private boolean isMovingRight = true;
     private boolean setToDestroy;
     private boolean isDestroyed;
@@ -53,16 +52,7 @@ public class Mushroom extends GameObject {
     }
 
     @Override
-    public void draw(Batch batch) {
-        if (!isDestroyed)
-            super.draw(batch);
-    }
-
-    public void changeDirection() {
-        isMovingRight = !isMovingRight;
-    }
-
-    public void growUpPlayer(Player player) {
+    public void powerUpPlayer(Player player) {
 
         setToDestroy = true;
 
@@ -70,5 +60,15 @@ public class Mushroom extends GameObject {
             player.growPlayer();
 
         Hud.addScore(500);
+    }
+
+    @Override
+    public void draw(Batch batch) {
+        if (!isDestroyed)
+            super.draw(batch);
+    }
+
+    public void changeDirection() {
+        isMovingRight = !isMovingRight;
     }
 }

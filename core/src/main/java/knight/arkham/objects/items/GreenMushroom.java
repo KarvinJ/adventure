@@ -8,13 +8,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
-import knight.arkham.objects.GameObject;
 import knight.arkham.objects.Player;
 import knight.arkham.scenes.Hud;
 
 import static knight.arkham.helpers.Box2DHelper.createBody;
 
-public class GreenMushroom extends GameObject {
+public class GreenMushroom extends Item {
     private boolean setToDestroy;
     private boolean isDestroyed;
 
@@ -48,18 +47,18 @@ public class GreenMushroom extends GameObject {
     }
 
     @Override
-    public void draw(Batch batch) {
-        if (!isDestroyed)
-            super.draw(batch);
-    }
-
-//    fails when mario is big.
-    public void lifeUpPlayer(Player player) {
+    public void powerUpPlayer(Player player) {
 
         setToDestroy = true;
 
         player.firePlayer();
 
         Hud.addScore(500);
+    }
+
+    @Override
+    public void draw(Batch batch) {
+        if (!isDestroyed)
+            super.draw(batch);
     }
 }
