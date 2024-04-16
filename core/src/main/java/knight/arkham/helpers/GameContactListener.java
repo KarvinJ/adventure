@@ -1,10 +1,9 @@
 package knight.arkham.helpers;
 
 import com.badlogic.gdx.physics.box2d.*;
-import knight.arkham.objects.items.Flower;
 import knight.arkham.objects.enemies.Enemy;
 import knight.arkham.objects.Player;
-import knight.arkham.objects.items.GreenMushroom;
+import knight.arkham.objects.items.Item;
 import knight.arkham.objects.items.Mushroom;
 import knight.arkham.objects.structures.InteractiveStructure;
 
@@ -52,36 +51,20 @@ public class GameContactListener implements ContactListener {
                     ((InteractiveStructure) fixtureA.getUserData()).hitByPlayer();
                 break;
 
-            case MUSHROOM_BIT | STOP_ENEMY_BIT:
+            case ITEM_BIT | STOP_ENEMY_BIT:
 
-                if (fixtureA.getFilterData().categoryBits == MUSHROOM_BIT)
+                if (fixtureA.getFilterData().categoryBits == ITEM_BIT)
                     ((Mushroom) fixtureA.getUserData()).changeDirection();
                 else
                     ((Mushroom) fixtureB.getUserData()).changeDirection();
                 break;
 
-            case MUSHROOM_BIT | PLAYER_BIT:
+            case PLAYER_BIT | ITEM_BIT  :
 
-                if (fixtureA.getFilterData().categoryBits == MUSHROOM_BIT)
-                    ((Mushroom) fixtureA.getUserData()).powerUpPlayer(((Player) fixtureB.getUserData()));
+                if (fixtureA.getFilterData().categoryBits == ITEM_BIT)
+                    ((Item) fixtureA.getUserData()).powerUpPlayer(((Player) fixtureB.getUserData()));
                 else
-                    ((Mushroom) fixtureB.getUserData()).powerUpPlayer(((Player) fixtureA.getUserData()));
-                break;
-
-            case GREEN_MUSHROOM_BIT | PLAYER_BIT:
-
-                if (fixtureA.getFilterData().categoryBits == GREEN_MUSHROOM_BIT)
-                    ((GreenMushroom) fixtureA.getUserData()).powerUpPlayer(((Player) fixtureB.getUserData()));
-                else
-                    ((GreenMushroom) fixtureB.getUserData()).powerUpPlayer(((Player) fixtureA.getUserData()));
-                break;
-
-            case FLOWER_BIT | PLAYER_BIT:
-
-                if (fixtureA.getFilterData().categoryBits == FLOWER_BIT)
-                    ((Flower) fixtureA.getUserData()).powerUpPlayer(((Player) fixtureB.getUserData()));
-                else
-                    ((Flower) fixtureB.getUserData()).powerUpPlayer(((Player) fixtureA.getUserData()));
+                    ((Item) fixtureB.getUserData()).powerUpPlayer(((Player) fixtureA.getUserData()));
                 break;
         }
     }
