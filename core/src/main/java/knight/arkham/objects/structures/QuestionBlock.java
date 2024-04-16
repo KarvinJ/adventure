@@ -9,7 +9,6 @@ import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.TileMapHelper;
 import knight.arkham.objects.items.Flower;
 import knight.arkham.objects.items.GreenMushroom;
-import knight.arkham.objects.items.ItemDefinition;
 import knight.arkham.objects.items.Mushroom;
 import knight.arkham.objects.Player;
 import knight.arkham.scenes.Hud;
@@ -68,13 +67,14 @@ public class QuestionBlock extends InteractiveStructure {
                 var itemBounds = new Rectangle(initialBounds.x, initialBounds.y + 16, initialBounds.width, initialBounds.height);
 
                 if (isTheBlockHidden)
-                    mapHelper.setItemToSpawn(new ItemDefinition(itemBounds, GreenMushroom.class));
+                    mapHelper.itemsToSpawn.put(GreenMushroom.class, itemBounds);
 
                 else if (Player.isMarioBig)
-                    mapHelper.setItemToSpawn(new ItemDefinition(itemBounds, Flower.class));
+                    mapHelper.itemsToSpawn.put(Flower.class, itemBounds);
 
                 else
-                    mapHelper.setItemToSpawn(new ItemDefinition(itemBounds, Mushroom.class));
+                    mapHelper.itemsToSpawn.put(Mushroom.class, itemBounds);
+
             }
             else {
 
