@@ -53,6 +53,7 @@ public class GreenMushroom extends GameObject {
             super.draw(batch);
     }
 
+//    fails when mario is big.
     public void lifeUpPlayer(Player player) {
 
         setToDestroy = true;

@@ -8,9 +8,8 @@ import knight.arkham.objects.Player;
 import knight.arkham.objects.enemies.Goomba;
 import knight.arkham.objects.enemies.Koopa;
 import knight.arkham.objects.items.GreenMushroom;
-import knight.arkham.objects.structures.Brick;
 import knight.arkham.objects.items.Mushroom;
-import knight.arkham.objects.structures.QuestionBlock;
+import knight.arkham.objects.structures.InteractiveStructure;
 
 import static knight.arkham.helpers.Constants.*;
 
@@ -22,11 +21,8 @@ public class Box2DHelper {
 
         FixtureDef fixtureDef = createBoxFixtureDef(box2DBody, shape);
 
-        if (box2DBody.userData instanceof Brick)
-            fixtureDef.filter.categoryBits = BRICK_BIT;
-
-        else if (box2DBody.userData instanceof QuestionBlock)
-            fixtureDef.filter.categoryBits = QUESTION_BLOCK_BIT;
+        if (box2DBody.userData instanceof InteractiveStructure)
+            fixtureDef.filter.categoryBits = BLOCK_BIT;
 
         else
             fixtureDef.filter.categoryBits = STOP_ENEMY_BIT;
@@ -158,7 +154,7 @@ public class Box2DHelper {
 
         fixtureDef.filter.categoryBits = PLAYER_BIT;
 
-        fixtureDef.filter.maskBits = (short) (GROUND_BIT | BRICK_BIT | QUESTION_BLOCK_BIT |
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | BLOCK_BIT |
             FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT | MUSHROOM_BIT | GREEN_MUSHROOM_BIT);
 
         fixtureDef.friction = 1;
@@ -206,7 +202,7 @@ public class Box2DHelper {
 
         fixtureDef.filter.categoryBits = PLAYER_BIT;
 
-        fixtureDef.filter.maskBits = (short) (GROUND_BIT | BRICK_BIT | QUESTION_BLOCK_BIT |
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | BLOCK_BIT |
             FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT | MUSHROOM_BIT  | FLOWER_BIT);
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
@@ -232,7 +228,7 @@ public class Box2DHelper {
 
         fixtureDef.filter.categoryBits = ENEMY_BIT;
 
-        fixtureDef.filter.maskBits = (short) (GROUND_BIT | ENEMY_BIT | PLAYER_BIT | STOP_ENEMY_BIT | BRICK_BIT | QUESTION_BLOCK_BIT);
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | ENEMY_BIT | PLAYER_BIT | STOP_ENEMY_BIT | BLOCK_BIT);
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
 

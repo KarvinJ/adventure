@@ -44,8 +44,7 @@ public class GameContactListener implements ContactListener {
                 ((Enemy) fixtureB.getUserData()).changeDirection();
                 break;
 
-            case PLAYER_HEAD_BIT | BRICK_BIT:
-            case PLAYER_HEAD_BIT | QUESTION_BLOCK_BIT:
+            case PLAYER_HEAD_BIT | BLOCK_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == PLAYER_HEAD_BIT)
                     ((InteractiveStructure) fixtureB.getUserData()).hitByPlayer();
