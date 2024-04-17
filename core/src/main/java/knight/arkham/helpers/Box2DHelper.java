@@ -63,7 +63,7 @@ public class Box2DHelper {
 
     public static Body createBody(Box2DBody box2DBody) {
 
-        PolygonShape shape = new PolygonShape();
+        var shape = new PolygonShape();
 
         Body body = createBox2DBodyByType(box2DBody);
 
@@ -92,7 +92,7 @@ public class Box2DHelper {
 
         else {
 
-            FixtureDef fixtureDef = createBoxFixtureDef(box2DBody, shape);
+            var fixtureDef = createBoxFixtureDef(box2DBody, shape);
 
             fixtureDef.filter.categoryBits = GROUND_BIT;
             body.createFixture(fixtureDef);
