@@ -74,7 +74,6 @@ public class QuestionBlock extends InteractiveStructure {
 
                 else
                     mapHelper.itemsToSpawn.put(Mushroom.class, itemBounds);
-
             }
             else {
 
