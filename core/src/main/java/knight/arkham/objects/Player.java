@@ -25,18 +25,22 @@ public class Player extends GameObject {
     private AnimationState previousState = AnimationState.STANDING;
     private final TextureRegion idleRegion;
     private final TextureRegion bigPlayerIdleRegion;
+    private final TextureRegion flowerPowerIdleRegion;
     private final TextureRegion jumpRegion;
     private final TextureRegion bigPlayerJumpRegion;
+    private final TextureRegion flowerPowerJumpRegion;
     private final TextureRegion dyingRegion;
     private final Animation<TextureRegion> growingAnimation;
     private final Animation<TextureRegion> runningAnimation;
     private final Animation<TextureRegion> bigPlayerRunningAnimation;
+    private final Animation<TextureRegion> flowerPowerRunningAnimation;
     private float stateTimer;
     private float invincibilityTimer;
     private float deadTimer;
     private boolean isMovingRight;
     private boolean isDead;
     public static boolean isMarioBig;
+    public static boolean hasMarioFirePower;
     private boolean shouldStartGrowingAnimation;
     private boolean isTimeToDefineBigMarioBody;
     private boolean isTimeToDefineLittleMarioBody;
@@ -64,6 +68,7 @@ public class Player extends GameObject {
         Array<TextureRegion> growingFrames = new Array<>();
 
         bigPlayerIdleRegion = new TextureRegion(atlas.findRegion("big-mario"), 0, 0,  framesWidth, 32);
+        flowerPowerIdleRegion = new TextureRegion(atlas.findRegion("flower-mario"), 0, 0,  framesWidth, 32);
 
         growingFrames.add(bigPlayerIdleRegion);
         growingFrames.add(new TextureRegion(atlas.findRegion("big-mario"), framesWidth * 8, 0,  framesWidth, 32));
@@ -74,9 +79,21 @@ public class Player extends GameObject {
 
         growingFrames.clear();
 
-        bigPlayerRunningAnimation = makeAnimation(atlas.findRegion("big-mario"), framesWidth, 32, 4, 0.1f, 1);
+        bigPlayerRunningAnimation = makeAnimation(
+            atlas.findRegion("big-mario"), framesWidth, 32, 4, 0.1f, 1
+        );
 
-        bigPlayerJumpRegion = new TextureRegion(atlas.findRegion("big-mario"), framesWidth * 5, 0, framesWidth, 32);
+        bigPlayerJumpRegion = new TextureRegion(
+            atlas.findRegion("big-mario"), framesWidth * 5, 0, framesWidth, 32
+        );
+
+        flowerPowerRunningAnimation = makeAnimation(
+            atlas.findRegion("flower-mario"), framesWidth, 32, 4, 0.1f, 1
+        );
+
+        flowerPowerJumpRegion = new TextureRegion(
+            atlas.findRegion("flower-mario"), framesWidth * 5, 0, framesWidth, 32
+        );
     }
 
     @Override
@@ -195,7 +212,15 @@ public class Player extends GameObject {
         switch (actualState) {
 
             case JUMPING:
-                actualRegion = isMarioBig ? bigPlayerJumpRegion : jumpRegion;
+
+                if (isMarioBig && !hasMarioFirePower)
+                    actualRegion = bigPlayerJumpRegion;
+
+                else if (hasMarioFirePower && isMarioBig)
+                    actualRegion = flowerPowerJumpRegion;
+
+                else
+                    actualRegion = jumpRegion;
                 break;
 
             case GROWING:
@@ -207,8 +232,16 @@ public class Player extends GameObject {
                 break;
 
             case RUNNING:
-                actualRegion = isMarioBig ? bigPlayerRunningAnimation.getKeyFrame(stateTimer, true) :
-                    runningAnimation.getKeyFrame(stateTimer, true);
+
+                if (isMarioBig && !hasMarioFirePower)
+                    actualRegion = bigPlayerRunningAnimation.getKeyFrame(stateTimer, true);
+
+                else if (hasMarioFirePower && isMarioBig)
+                    actualRegion = flowerPowerRunningAnimation.getKeyFrame(stateTimer, true);
+
+                else
+                    actualRegion = runningAnimation.getKeyFrame(stateTimer, true);
+
                 break;
 
             case DYING:
@@ -218,7 +251,15 @@ public class Player extends GameObject {
             case FALLING:
             case STANDING:
             default:
-                actualRegion = isMarioBig ? bigPlayerIdleRegion : idleRegion;
+
+                if (isMarioBig && !hasMarioFirePower)
+                    actualRegion = bigPlayerIdleRegion;
+
+                else if (hasMarioFirePower && isMarioBig)
+                    actualRegion = flowerPowerIdleRegion;
+
+                else
+                    actualRegion = idleRegion;
         }
 
         flipRegionOnXAxis(actualRegion);
@@ -277,6 +318,7 @@ public class Player extends GameObject {
 
     public void firePlayer() {
 
+        hasMarioFirePower = true;
         powerUpSound.play();
     }
 

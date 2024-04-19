@@ -65,11 +65,16 @@ public abstract class Enemy {
     protected void movement(float speed) {
 
         if (isMovingRight && body.getLinearVelocity().x <= speed)
-            body.setLinearVelocity(speed,0);
+            applyLinearImpulse(new Vector2(speed, 0));
 
         else if (!isMovingRight && body.getLinearVelocity().x >= -speed)
-            body.setLinearVelocity(-speed,0);
+            applyLinearImpulse(new Vector2(-speed, 0));
     }
+
+    protected void applyLinearImpulse(Vector2 impulseDirection) {
+        body.applyLinearImpulse(impulseDirection, body.getWorldCenter(), true);
+    }
+
 
     public void draw(Batch batch) {
 
