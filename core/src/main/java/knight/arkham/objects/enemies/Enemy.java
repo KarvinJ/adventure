@@ -64,14 +64,10 @@ public abstract class Enemy {
     protected void movement() {
 
         if (isMovingRight && body.getLinearVelocity().x <= 4)
-            applyLinearImpulse(new Vector2(4, 0));
+            body.setLinearVelocity(4,0);
 
         else if (!isMovingRight && body.getLinearVelocity().x >= -4)
-            applyLinearImpulse(new Vector2(-4, 0));
-    }
-
-    private void applyLinearImpulse(Vector2 impulseDirection) {
-        body.applyLinearImpulse(impulseDirection, body.getWorldCenter(), true);
+            body.setLinearVelocity(-4,0);
     }
 
     public void draw(Batch batch) {

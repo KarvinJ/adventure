@@ -19,7 +19,7 @@ public class Koopa extends Enemy {
     private AnimationState previousState = AnimationState.WALKING;
     private final Animation<TextureRegion> movingAnimation;
     private final TextureRegion hitRegion;
-    private boolean hasBeenHit;
+    private final TextureRegion recoveringRegion;
 
     public Koopa(Rectangle bounds, World world, TextureAtlas.AtlasRegion region, int totalFrames) {
         super(
@@ -31,6 +31,7 @@ public class Koopa extends Enemy {
 
         movingAnimation = makeAnimation(region, framesWidth, framesHeight, 2, 0.4f, 0);
         hitRegion = new TextureRegion(region, framesWidth * 2, 0, framesWidth, framesHeight);
+        recoveringRegion = new TextureRegion(region, framesWidth * 3, 0, framesWidth, framesHeight);
     }
 
     @Override
@@ -51,30 +52,26 @@ public class Koopa extends Enemy {
 
         else if (!isDestroyed) {
 
-            getAnimationRegion(deltaTime);
+            setAnimationRegion(deltaTime);
 
-            if (currentState != AnimationState.SHELL)
+            if (currentState ==  AnimationState.WALKING)
                 movement();
+
+            else if (currentState == AnimationState.MOVING_SHELL)
+                body.setLinearVelocity(4, 0);
         }
     }
 
-    private AnimationState getCurrentAnimationState() {
+    private void setAnimationRegion(float deltaTime) {
 
-        if (hasBeenHit)
-            return AnimationState.SHELL;
-        else
-            return AnimationState.WALKING;
-    }
+        if (currentState == AnimationState.SHELL && stateTimer > 5 && stateTimer < 8)
+            actualRegion = recoveringRegion;
 
-    private void getAnimationRegion(float deltaTime) {
+        else if (currentState == AnimationState.SHELL && stateTimer > 8)
+            currentState = AnimationState.WALKING;
 
-        currentState = getCurrentAnimationState();
-
-        if (currentState == AnimationState.SHELL)
+        else if (currentState == AnimationState.SHELL || currentState == AnimationState.MOVING_SHELL)
             actualRegion = hitRegion;
-
-        else if (currentState == AnimationState.MOVING_SHELL)
-            stateTimer = 0;
 
         else
             actualRegion = movingAnimation.getKeyFrame(stateTimer, true);
@@ -85,8 +82,6 @@ public class Koopa extends Enemy {
         previousState = currentState;
     }
 
-
-
     @Override
     public void draw(Batch batch) {
         if (!isDestroyed || stateTimer < 1)
@@ -96,9 +91,15 @@ public class Koopa extends Enemy {
     @Override
     public void hitByPlayer() {
 
-        hitSound.play();
-        hasBeenHit = true;
+        if (currentState == AnimationState.WALKING) {
 
+            currentState = AnimationState.SHELL;
+            stateTimer = 0;
+        }
+        else
+            currentState = AnimationState.MOVING_SHELL;
+
+        hitSound.play();
         Hud.addScore(100);
     }
 
