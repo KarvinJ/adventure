@@ -24,16 +24,16 @@ public class Player extends GameObject {
     private AnimationState actualState = AnimationState.STANDING;
     private AnimationState previousState = AnimationState.STANDING;
     private final TextureRegion idleRegion;
-    private final TextureRegion bigPlayerIdleRegion;
-    private final TextureRegion flowerPowerIdleRegion;
+    private final TextureRegion bigIdleRegion;
+    private final TextureRegion flowerIdleRegion;
     private final TextureRegion jumpRegion;
-    private final TextureRegion bigPlayerJumpRegion;
-    private final TextureRegion flowerPowerJumpRegion;
+    private final TextureRegion bigJumpRegion;
+    private final TextureRegion flowerJumpRegion;
     private final TextureRegion dyingRegion;
     private final Animation<TextureRegion> growingAnimation;
     private final Animation<TextureRegion> runningAnimation;
-    private final Animation<TextureRegion> bigPlayerRunningAnimation;
-    private final Animation<TextureRegion> flowerPowerRunningAnimation;
+    private final Animation<TextureRegion> bigRunningAnimation;
+    private final Animation<TextureRegion> flowerRunningAnimation;
     private float stateTimer;
     private float invincibilityTimer;
     private float deadTimer;
@@ -63,35 +63,37 @@ public class Player extends GameObject {
         jumpRegion = new TextureRegion(atlas.findRegion("little-mario"), framesWidth * 5, 0, framesWidth, framesHeight);
         dyingRegion = new TextureRegion(atlas.findRegion("little-mario"), framesWidth * 6, 0, framesWidth, framesHeight);
 
-        runningAnimation = makeAnimation(atlas.findRegion("little-mario"), framesWidth, framesHeight, 4, 0.1f, 1);
+        runningAnimation = makeAnimation(
+            atlas.findRegion("little-mario"), framesWidth, framesHeight, 4, 0.1f, 1
+        );
 
         Array<TextureRegion> growingFrames = new Array<>();
 
-        bigPlayerIdleRegion = new TextureRegion(atlas.findRegion("big-mario"), 0, 0,  framesWidth, 32);
-        flowerPowerIdleRegion = new TextureRegion(atlas.findRegion("flower-mario"), 0, 0,  framesWidth, 32);
+        bigIdleRegion = new TextureRegion(atlas.findRegion("big-mario"), 0, 0,  framesWidth, 32);
+        flowerIdleRegion = new TextureRegion(atlas.findRegion("flower-mario"), 0, 0,  framesWidth, 32);
 
-        growingFrames.add(bigPlayerIdleRegion);
+        growingFrames.add(bigIdleRegion);
         growingFrames.add(new TextureRegion(atlas.findRegion("big-mario"), framesWidth * 8, 0,  framesWidth, 32));
-        growingFrames.add(bigPlayerIdleRegion);
+        growingFrames.add(bigIdleRegion);
         growingFrames.add(new TextureRegion(atlas.findRegion("big-mario"), framesWidth * 8, 0,  framesWidth, 32));
 
         growingAnimation = new Animation<>(0.2f, growingFrames);
 
         growingFrames.clear();
 
-        bigPlayerRunningAnimation = makeAnimation(
+        bigRunningAnimation = makeAnimation(
             atlas.findRegion("big-mario"), framesWidth, 32, 4, 0.1f, 1
         );
 
-        bigPlayerJumpRegion = new TextureRegion(
+        bigJumpRegion = new TextureRegion(
             atlas.findRegion("big-mario"), framesWidth * 5, 0, framesWidth, 32
         );
 
-        flowerPowerRunningAnimation = makeAnimation(
+        flowerRunningAnimation = makeAnimation(
             atlas.findRegion("flower-mario"), framesWidth, 32, 4, 0.1f, 1
         );
 
-        flowerPowerJumpRegion = new TextureRegion(
+        flowerJumpRegion = new TextureRegion(
             atlas.findRegion("flower-mario"), framesWidth * 5, 0, framesWidth, 32
         );
     }
@@ -214,10 +216,10 @@ public class Player extends GameObject {
             case JUMPING:
 
                 if (isMarioBig && !hasMarioFirePower)
-                    actualRegion = bigPlayerJumpRegion;
+                    actualRegion = bigJumpRegion;
 
                 else if (hasMarioFirePower && isMarioBig)
-                    actualRegion = flowerPowerJumpRegion;
+                    actualRegion = flowerJumpRegion;
 
                 else
                     actualRegion = jumpRegion;
@@ -234,10 +236,10 @@ public class Player extends GameObject {
             case RUNNING:
 
                 if (isMarioBig && !hasMarioFirePower)
-                    actualRegion = bigPlayerRunningAnimation.getKeyFrame(stateTimer, true);
+                    actualRegion = bigRunningAnimation.getKeyFrame(stateTimer, true);
 
                 else if (hasMarioFirePower && isMarioBig)
-                    actualRegion = flowerPowerRunningAnimation.getKeyFrame(stateTimer, true);
+                    actualRegion = flowerRunningAnimation.getKeyFrame(stateTimer, true);
 
                 else
                     actualRegion = runningAnimation.getKeyFrame(stateTimer, true);
@@ -253,10 +255,10 @@ public class Player extends GameObject {
             default:
 
                 if (isMarioBig && !hasMarioFirePower)
-                    actualRegion = bigPlayerIdleRegion;
+                    actualRegion = bigIdleRegion;
 
                 else if (hasMarioFirePower && isMarioBig)
-                    actualRegion = flowerPowerIdleRegion;
+                    actualRegion = flowerIdleRegion;
 
                 else
                     actualRegion = idleRegion;
