@@ -24,9 +24,9 @@ public class GameContactListener implements ContactListener {
             case PLAYER_BIT | ENEMY_HEAD_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == ENEMY_HEAD_BIT)
-                    ((Enemy) fixtureA.getUserData()).hitByPlayer();
+                    ((Enemy) fixtureA.getUserData()).hitByPlayer(((Player) fixtureB.getUserData()));
                 else
-                    ((Enemy) fixtureB.getUserData()).hitByPlayer();
+                    ((Enemy) fixtureB.getUserData()).hitByPlayer(((Player) fixtureA.getUserData()));
                 break;
 
             case PLAYER_BIT | ENEMY_BIT:

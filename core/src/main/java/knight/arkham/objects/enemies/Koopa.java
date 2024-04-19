@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
+import knight.arkham.objects.Player;
 import knight.arkham.scenes.Hud;
 
 import static knight.arkham.helpers.AnimationHelper.makeAnimation;
@@ -55,10 +56,12 @@ public class Koopa extends Enemy {
             setAnimationRegion(deltaTime);
 
             if (currentState ==  AnimationState.WALKING)
-                movement();
+                movement(4);
 
-            else if (currentState == AnimationState.MOVING_SHELL)
-                body.setLinearVelocity(4, 0);
+            else if (currentState == AnimationState.MOVING_SHELL) {
+
+                movement(8);
+            }
         }
     }
 
@@ -89,15 +92,21 @@ public class Koopa extends Enemy {
     }
 
     @Override
-    public void hitByPlayer() {
+    public void hitByPlayer(Player player) {
 
         if (currentState == AnimationState.WALKING) {
 
             currentState = AnimationState.SHELL;
             stateTimer = 0;
         }
-        else
+        else {
+
             currentState = AnimationState.MOVING_SHELL;
+
+            boolean isPlayerBehindTheEnemy = player.getPixelPosition().x > getPixelPosition().x;
+
+            isMovingRight = !isPlayerBehindTheEnemy;
+        }
 
         hitSound.play();
         Hud.addScore(100);

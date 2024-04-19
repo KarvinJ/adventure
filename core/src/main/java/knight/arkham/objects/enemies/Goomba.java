@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
+import knight.arkham.objects.Player;
 import knight.arkham.scenes.Hud;
 
 import static knight.arkham.helpers.AnimationHelper.makeAnimation;
@@ -51,7 +52,7 @@ public class Goomba extends Enemy {
 
             flipRegionOnXAxis(actualRegion);
 
-            movement();
+            movement(4);
         }
     }
 
@@ -62,7 +63,7 @@ public class Goomba extends Enemy {
     }
 
     @Override
-    public void hitByPlayer() {
+    public void hitByPlayer(Player userData) {
 
         hitSound.play();
         setToDestroy = true;

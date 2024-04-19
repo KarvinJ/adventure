@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import knight.arkham.objects.Player;
 
 import static knight.arkham.helpers.AssetsHelper.loadSound;
 import static knight.arkham.helpers.Box2DHelper.getDrawBounds;
@@ -61,13 +62,13 @@ public abstract class Enemy {
 
     public Vector2 getPixelPosition() {return body.getPosition().scl(PIXELS_PER_METER);}
 
-    protected void movement() {
+    protected void movement(float speed) {
 
-        if (isMovingRight && body.getLinearVelocity().x <= 4)
-            body.setLinearVelocity(4,0);
+        if (isMovingRight && body.getLinearVelocity().x <= speed)
+            body.setLinearVelocity(speed,0);
 
-        else if (!isMovingRight && body.getLinearVelocity().x >= -4)
-            body.setLinearVelocity(-4,0);
+        else if (!isMovingRight && body.getLinearVelocity().x >= -speed)
+            body.setLinearVelocity(-speed,0);
     }
 
     public void draw(Batch batch) {
@@ -95,7 +96,7 @@ public abstract class Enemy {
         isMovingRight = !isMovingRight;
     }
 
-    public abstract void hitByPlayer();
+    public abstract void hitByPlayer(Player userData);
 
     public abstract void childDispose();
 
