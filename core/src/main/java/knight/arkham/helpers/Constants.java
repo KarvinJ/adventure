@@ -9,9 +9,10 @@ public class Constants {
     public static final short STOP_ENEMY_BIT = 4;
     public static final short DESTROYED_BIT = 8;
     public static final short BLOCK_BIT = 16;
-    public static final short ENEMY_BIT = 32;
+    public static final short GOOMBA_BIT = 32;
     public static final short ENEMY_HEAD_BIT = 64;
     public static final short FINISH_BIT = 128;
     public static final short PLAYER_HEAD_BIT = 256;
     public static final short ITEM_BIT = 512;
+    public static final short KOOPA_BIT = 1024;
 }

@@ -63,7 +63,21 @@ public class Goomba extends Enemy {
     }
 
     @Override
+    public void collisionWithEnemy() {
+
+        isMovingRight = !isMovingRight;
+    }
+
+    @Override
     public void hitByPlayer(Player userData) {
+
+        hitSound.play();
+        setToDestroy = true;
+
+        Hud.addScore(100);
+    }
+
+    public void hitByKoopa() {
 
         hitSound.play();
         setToDestroy = true;

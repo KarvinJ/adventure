@@ -92,6 +92,11 @@ public class Koopa extends Enemy {
     }
 
     @Override
+    public void collisionWithEnemy() {
+
+    }
+
+    @Override
     public void hitByPlayer(Player player) {
 
         if (currentState == AnimationState.WALKING) {

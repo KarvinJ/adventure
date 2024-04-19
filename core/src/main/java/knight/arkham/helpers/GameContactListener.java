@@ -3,6 +3,7 @@ package knight.arkham.helpers;
 import com.badlogic.gdx.physics.box2d.*;
 import knight.arkham.objects.enemies.Enemy;
 import knight.arkham.objects.Player;
+import knight.arkham.objects.enemies.Goomba;
 import knight.arkham.objects.items.Item;
 import knight.arkham.objects.items.Mushroom;
 import knight.arkham.objects.structures.InteractiveStructure;
@@ -29,7 +30,8 @@ public class GameContactListener implements ContactListener {
                     ((Enemy) fixtureB.getUserData()).hitByPlayer(((Player) fixtureA.getUserData()));
                 break;
 
-            case PLAYER_BIT | ENEMY_BIT:
+            case PLAYER_BIT | GOOMBA_BIT:
+            case PLAYER_BIT | KOOPA_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == PLAYER_BIT)
                     ((Player) fixtureA.getUserData()).hitByEnemy();
@@ -37,10 +39,10 @@ public class GameContactListener implements ContactListener {
                     ((Player) fixtureB.getUserData()).hitByEnemy();
                 break;
 
-            case ENEMY_BIT:
+            case GOOMBA_BIT:
 
-                ((Enemy) fixtureA.getUserData()).changeDirection();
-                ((Enemy) fixtureB.getUserData()).changeDirection();
+                ((Goomba) fixtureA.getUserData()).collisionWithEnemy();
+                ((Goomba) fixtureB.getUserData()).collisionWithEnemy();
                 break;
 
             case PLAYER_HEAD_BIT | BLOCK_BIT:
@@ -57,6 +59,14 @@ public class GameContactListener implements ContactListener {
                     ((Mushroom) fixtureA.getUserData()).changeDirection();
                 else
                     ((Mushroom) fixtureB.getUserData()).changeDirection();
+                break;
+
+            case KOOPA_BIT | GOOMBA_BIT:
+
+                if (fixtureA.getFilterData().categoryBits == GOOMBA_BIT)
+                    ((Goomba) fixtureA.getUserData()).hitByKoopa();
+                else
+                    ((Goomba) fixtureB.getUserData()).hitByKoopa();
                 break;
 
             case PLAYER_BIT | ITEM_BIT  :

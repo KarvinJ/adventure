@@ -136,7 +136,7 @@ public class Box2DHelper {
         fixtureDef.filter.categoryBits = PLAYER_BIT;
 
         fixtureDef.filter.maskBits = (short) (GROUND_BIT | BLOCK_BIT |
-            FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT | ITEM_BIT);
+            FINISH_BIT | GOOMBA_BIT | ENEMY_HEAD_BIT | ITEM_BIT | KOOPA_BIT);
 
         fixtureDef.friction = 1;
 
@@ -184,7 +184,7 @@ public class Box2DHelper {
         fixtureDef.filter.categoryBits = PLAYER_BIT;
 
         fixtureDef.filter.maskBits = (short) (GROUND_BIT | BLOCK_BIT |
-            FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT | ITEM_BIT);
+            FINISH_BIT | GOOMBA_BIT | ENEMY_HEAD_BIT | ITEM_BIT | KOOPA_BIT);
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
 
@@ -207,9 +207,12 @@ public class Box2DHelper {
 
     private static void createEnemyBody(Box2DBody box2DBody, FixtureDef fixtureDef, Body body) {
 
-        fixtureDef.filter.categoryBits = ENEMY_BIT;
+        fixtureDef.filter.categoryBits = GOOMBA_BIT;
 
-        fixtureDef.filter.maskBits = (short) (GROUND_BIT | ENEMY_BIT | PLAYER_BIT | STOP_ENEMY_BIT | BLOCK_BIT);
+        if (box2DBody.userData instanceof Koopa)
+            fixtureDef.filter.categoryBits = KOOPA_BIT;
+
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | GOOMBA_BIT | PLAYER_BIT | STOP_ENEMY_BIT | BLOCK_BIT | KOOPA_BIT);
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
 

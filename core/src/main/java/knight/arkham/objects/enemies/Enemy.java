@@ -97,9 +97,7 @@ public abstract class Enemy {
         }
     }
 
-    public void changeDirection(){
-        isMovingRight = !isMovingRight;
-    }
+    public abstract void collisionWithEnemy();
 
     public abstract void hitByPlayer(Player userData);
 
