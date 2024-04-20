@@ -15,4 +15,5 @@ public class Constants {
     public static final short PLAYER_HEAD_BIT = 256;
     public static final short ITEM_BIT = 512;
     public static final short KOOPA_BIT = 1024;
+    public static final short FIRE_BIT = 2048;
 }

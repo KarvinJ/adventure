@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -33,7 +34,6 @@ import java.util.Map;
 import static knight.arkham.helpers.AssetsHelper.loadMusic;
 import static knight.arkham.helpers.CameraController.controlCameraPosition;
 import static knight.arkham.helpers.Constants.*;
-import static knight.arkham.helpers.GameDataHelper.savePosition;
 
 public class TileMapHelper {
     private final Adventure game = Adventure.INSTANCE;
@@ -59,7 +59,6 @@ public class TileMapHelper {
         world.setContactListener(new GameContactListener());
 
         player = new Player(new Rectangle(150, 40, 32, 16), world, atlas, 8);
-        savePosition(player.getWorldPosition());
 
         tiledMap = new TmxMapLoader().load(mapFilePath);
         mapRenderer = setupMap(tiledMap);
@@ -133,6 +132,19 @@ public class TileMapHelper {
         camera.update();
     }
 
+    private void shootFire(){
+
+        var playerPosition = player.getPixelPosition();
+
+        var fireBounds = new Rectangle(playerPosition.x + 10, playerPosition.y, 8, 8);
+
+        Body fireBody = Box2DHelper.createFireBody(new Box2DBody(fireBounds, 2, world, null));
+
+        var impulseDirection = new Vector2(4, 0);
+
+        fireBody.applyLinearImpulse(impulseDirection, fireBody.getWorldCenter(), true);
+    }
+
     public void update(float deltaTime, OrthographicCamera camera) {
 
         if (player.getActualState() == Player.AnimationState.DYING)
@@ -147,6 +159,9 @@ public class TileMapHelper {
         else {
 
             player.update(deltaTime);
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.C))
+                shootFire();
 
             updateCameraPosition(camera);
 
@@ -163,7 +178,7 @@ public class TileMapHelper {
                 enemy.update(deltaTime);
             }
 
-            initializeItems2();
+            initializeItems();
 
             doPhysicsTimeStep(deltaTime);
         }
@@ -181,7 +196,7 @@ public class TileMapHelper {
         }
     }
 
-    private void initializeItems2() {
+    private void initializeItems() {
 
         for (Map.Entry<Class<?>, Rectangle> entry : itemsToSpawn.entrySet()) {
 

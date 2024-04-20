@@ -331,7 +331,6 @@ public class Player extends GameObject {
     }
 
     public void extraLive() {
-
         powerUpSound.play();
     }
 

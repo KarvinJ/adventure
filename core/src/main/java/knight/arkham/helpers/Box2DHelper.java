@@ -61,6 +61,25 @@ public class Box2DHelper {
         return fixtureDef;
     }
 
+    public static Body createFireBody(Box2DBody box2DBody) {
+
+        PolygonShape shape = new PolygonShape();
+
+        FixtureDef fixtureDef = createBoxFixtureDef(box2DBody, shape);
+
+        fixtureDef.filter.categoryBits = FIRE_BIT;
+
+        fixtureDef.restitution = 1;
+
+        Body body = createBox2DBodyByType(box2DBody);
+
+        body.createFixture(fixtureDef);
+
+        shape.dispose();
+
+        return body;
+    }
+
     public static Body createBody(Box2DBody box2DBody) {
 
         var shape = new PolygonShape();
