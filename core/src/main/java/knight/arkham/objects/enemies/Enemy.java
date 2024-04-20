@@ -90,14 +90,15 @@ public abstract class Enemy {
 
             region.flip(true, false);
             isMovingRight = false;
-        } else if ((body.getLinearVelocity().x > 0 || isMovingRight) && !region.isFlipX()) {
+        }
+        else if ((body.getLinearVelocity().x > 0 || isMovingRight) && !region.isFlipX()) {
 
             region.flip(true, false);
             isMovingRight = true;
         }
     }
 
-    public abstract void collisionWithEnemy();
+    public abstract void changeDirection();
 
     public abstract void hitByPlayer(Player userData);
 

@@ -50,9 +50,7 @@ public class GreenMushroom extends Item {
     public void powerUpPlayer(Player player) {
 
         setToDestroy = true;
-
-        player.firePlayer();
-
+        player.extraLive();
         Hud.addScore(500);
     }
 }

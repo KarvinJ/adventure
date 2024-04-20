@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import knight.arkham.objects.enemies.Enemy;
 import knight.arkham.objects.Player;
 import knight.arkham.objects.enemies.Goomba;
+import knight.arkham.objects.enemies.Koopa;
 import knight.arkham.objects.items.Item;
 import knight.arkham.objects.items.Mushroom;
 import knight.arkham.objects.structures.InteractiveStructure;
@@ -41,8 +42,8 @@ public class GameContactListener implements ContactListener {
 
             case GOOMBA_BIT:
 
-                ((Goomba) fixtureA.getUserData()).collisionWithEnemy();
-                ((Goomba) fixtureB.getUserData()).collisionWithEnemy();
+                ((Goomba) fixtureA.getUserData()).changeDirection();
+                ((Goomba) fixtureB.getUserData()).changeDirection();
                 break;
 
             case PLAYER_HEAD_BIT | BLOCK_BIT:
@@ -59,6 +60,14 @@ public class GameContactListener implements ContactListener {
                     ((Mushroom) fixtureA.getUserData()).changeDirection();
                 else
                     ((Mushroom) fixtureB.getUserData()).changeDirection();
+                break;
+
+            case KOOPA_BIT | STOP_ENEMY_BIT:
+
+                if (fixtureA.getFilterData().categoryBits == KOOPA_BIT)
+                    ((Koopa) fixtureA.getUserData()).changeDirection();
+                else
+                    ((Koopa) fixtureB.getUserData()).changeDirection();
                 break;
 
             case KOOPA_BIT | GOOMBA_BIT:

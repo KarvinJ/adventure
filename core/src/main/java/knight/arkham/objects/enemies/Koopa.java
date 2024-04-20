@@ -58,10 +58,8 @@ public class Koopa extends Enemy {
             if (currentState ==  AnimationState.WALKING)
                 movement(4);
 
-            else if (currentState == AnimationState.MOVING_SHELL) {
-
+            else if (currentState == AnimationState.MOVING_SHELL)
                 movement(8);
-            }
         }
     }
 
@@ -92,8 +90,8 @@ public class Koopa extends Enemy {
     }
 
     @Override
-    public void collisionWithEnemy() {
-
+    public void changeDirection() {
+        isMovingRight = !isMovingRight;
     }
 
     @Override

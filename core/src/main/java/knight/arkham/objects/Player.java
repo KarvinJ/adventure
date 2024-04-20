@@ -59,6 +59,10 @@ public class Player extends GameObject {
             )
         );
 
+        //I initialized this here, because of a bug when mario dies. For some reason if my player dies when is big,
+        // this variable stay with the value true, and for that reason I initialized the variable here.
+        isMarioBig = false;
+
         idleRegion = new TextureRegion(atlas.findRegion("little-mario"), 0, 0,  framesWidth, framesHeight);
         jumpRegion = new TextureRegion(atlas.findRegion("little-mario"), framesWidth * 5, 0, framesWidth, framesHeight);
         dyingRegion = new TextureRegion(atlas.findRegion("little-mario"), framesWidth * 6, 0, framesWidth, framesHeight);
@@ -292,6 +296,7 @@ public class Player extends GameObject {
            powerDownSound.play();
            isMarioBig = false;
            invincibilityTimer = 0;
+           hasMarioFirePower = false;
         }
         //Don't know if this is the best option to manage the invincibility of my player. But it works well.
         else if (invincibilityTimer > 1.5f){
@@ -321,6 +326,11 @@ public class Player extends GameObject {
     public void firePlayer() {
 
         hasMarioFirePower = true;
+        powerUpSound.play();
+    }
+
+    public void extraLive() {
+
         powerUpSound.play();
     }
 
