@@ -20,6 +20,7 @@ import static knight.arkham.helpers.Constants.NOTHING_BIT;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public class Player extends GameObject {
+
     public enum AnimationState {FALLING, JUMPING, STANDING, RUNNING, DYING, GROWING}
     private AnimationState actualState = AnimationState.STANDING;
     private AnimationState previousState = AnimationState.STANDING;

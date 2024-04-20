@@ -10,12 +10,13 @@ import com.badlogic.gdx.physics.box2d.World;
 import static knight.arkham.helpers.Box2DHelper.getDrawBounds;
 
 public abstract class GameObject {
-    public Body body;
+
     protected final Rectangle actualBounds;
     protected final World actualWorld;
     protected TextureRegion actualRegion;
     protected final int framesWidth;
     protected final int framesHeight;
+    public Body body;
 
     protected GameObject(Rectangle bounds, World world, TextureRegion region) {
 

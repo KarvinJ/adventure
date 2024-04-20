@@ -98,7 +98,7 @@ public class TileMapHelper {
                     if (mapObject.getName().equals("question"))
                         structures.add(new QuestionBlock(mapRectangle, mapObject, this));
                     else
-                        structures.add(new Brick(mapRectangle, world, tiledMap));
+                        structures.add(new Brick(mapRectangle, world, tiledMap, mapObject));
                     break;
 
                 case "Enemy-Stopper":

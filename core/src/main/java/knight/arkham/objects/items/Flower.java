@@ -13,6 +13,7 @@ import knight.arkham.scenes.Hud;
 import static knight.arkham.helpers.Box2DHelper.createBody;
 
 public class Flower extends Item {
+
     private boolean setToDestroy;
 
     public Flower(Rectangle bounds, World world, TextureAtlas.AtlasRegion region) {

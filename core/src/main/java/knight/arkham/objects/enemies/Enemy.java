@@ -14,6 +14,7 @@ import static knight.arkham.helpers.Box2DHelper.getDrawBounds;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public abstract class Enemy {
+
     public Body body;
     protected final Rectangle actualBounds;
     protected final World actualWorld;

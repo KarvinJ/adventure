@@ -17,6 +17,7 @@ import static knight.arkham.helpers.AssetsHelper.loadSound;
 import static knight.arkham.helpers.Box2DHelper.createStaticFixture;
 
 public class QuestionBlock extends InteractiveStructure {
+
     private final TiledMapTileSet tileSet;
     private final MapObject mapObject;
     private final TileMapHelper mapHelper;

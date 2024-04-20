@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class Box2DBody {
+
     public Rectangle bounds;
     public BodyDef.BodyType bodyType;
     public float density;

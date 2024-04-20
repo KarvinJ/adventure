@@ -5,6 +5,7 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.math.Vector2;
 
 public class GameDataHelper {
+
     private static final String dataFilename = "Adventure";
 
     public static void savePosition(Vector2 position) {

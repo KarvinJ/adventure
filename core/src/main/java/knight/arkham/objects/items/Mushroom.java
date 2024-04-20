@@ -14,6 +14,7 @@ import knight.arkham.scenes.Hud;
 import static knight.arkham.helpers.Box2DHelper.createBody;
 
 public class Mushroom extends Item {
+
     private boolean isMovingRight = true;
     private boolean setToDestroy;
 

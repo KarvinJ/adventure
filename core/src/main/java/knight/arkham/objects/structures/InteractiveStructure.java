@@ -10,13 +10,14 @@ import static knight.arkham.helpers.AssetsHelper.loadSound;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public abstract class InteractiveStructure {
+
     protected final Rectangle actualBounds;
     protected final World actualWorld;
+    private final TiledMap tiledMap;
+    protected final Sound collisionSound;
     protected final Fixture fixture;
     private final Body body;
-    private final TiledMap tiledMap;
     protected final TiledMapTileLayer.Cell actualCell;
-    protected final Sound collisionSound;
 
     public InteractiveStructure(Rectangle rectangle, World world, TiledMap map, String soundPath) {
 

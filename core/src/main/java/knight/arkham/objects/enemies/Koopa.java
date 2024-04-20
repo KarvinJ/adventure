@@ -15,6 +15,7 @@ import static knight.arkham.helpers.AnimationHelper.makeAnimation;
 import static knight.arkham.helpers.Box2DHelper.createBody;
 
 public class Koopa extends Enemy {
+
     private enum AnimationState {WALKING, SHELL, MOVING_SHELL}
     private AnimationState currentState = AnimationState.WALKING;
     private AnimationState previousState = AnimationState.WALKING;

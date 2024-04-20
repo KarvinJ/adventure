@@ -8,6 +8,7 @@ import knight.arkham.helpers.TileMapHelper;
 import knight.arkham.scenes.Hud;
 
 public class GameScreen extends ScreenAdapter {
+
     private final Adventure game;
     private final OrthographicCamera camera;
     private final TileMapHelper mapHelper;
@@ -22,7 +23,6 @@ public class GameScreen extends ScreenAdapter {
         mapHelper = new TileMapHelper("maps/level1.tmx");
 
         hud = new Hud();
-
     }
 
     @Override

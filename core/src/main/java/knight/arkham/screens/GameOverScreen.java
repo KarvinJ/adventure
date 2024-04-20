@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import knight.arkham.Adventure;
 
 public class GameOverScreen extends ScreenAdapter {
+
     private final Adventure game = Adventure.INSTANCE;
     private final Stage stage;
 

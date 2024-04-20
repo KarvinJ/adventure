@@ -14,6 +14,7 @@ import knight.arkham.scenes.Hud;
 import static knight.arkham.helpers.Box2DHelper.createBody;
 
 public class GreenMushroom extends Item {
+
     private boolean setToDestroy;
 
     public GreenMushroom(Rectangle bounds, World world, TextureAtlas.AtlasRegion region) {

@@ -19,6 +19,7 @@ import static knight.arkham.helpers.Box2DHelper.createBody;
 import static knight.arkham.helpers.Constants.NOTHING_BIT;
 
 public class Goomba extends Enemy {
+
     private final Animation<TextureRegion> movingAnimation;
     private final TextureRegion hitRegion;
 

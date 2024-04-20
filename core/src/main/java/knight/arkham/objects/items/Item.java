@@ -11,6 +11,7 @@ import knight.arkham.objects.Player;
 import static knight.arkham.helpers.Box2DHelper.getDrawBounds;
 
 public abstract class Item {
+
     public Body body;
     protected final Rectangle actualBounds;
     protected final World actualWorld;

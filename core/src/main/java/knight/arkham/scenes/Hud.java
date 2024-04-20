@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class Hud {
+
     public final Stage stage;
     private static Label scoreLabel;
     private static Label coinLabel;
@@ -33,6 +34,7 @@ public class Hud {
         countDownLabel = new Label("400", new Label.LabelStyle(new BitmapFont(),Color.WHITE));
         scoreLabel = new Label("0", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         coinLabel = new Label("x 0", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
         Label timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         Label levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         Label worldLabel = new Label("World", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
