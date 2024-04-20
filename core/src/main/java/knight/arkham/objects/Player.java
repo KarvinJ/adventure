@@ -21,8 +21,8 @@ import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public class Player extends GameObject {
 
-    public enum AnimationState {FALLING, JUMPING, STANDING, RUNNING, DYING, GROWING}
-    private AnimationState actualState = AnimationState.STANDING;
+    public enum AnimationState {FALLING, JUMPING, STANDING, RUNNING, DYING, GROWING, CROUCH}
+    private AnimationState currentState = AnimationState.STANDING;
     private AnimationState previousState = AnimationState.STANDING;
     private final TextureRegion idleRegion;
     private final TextureRegion bigIdleRegion;
@@ -30,6 +30,8 @@ public class Player extends GameObject {
     private final TextureRegion jumpRegion;
     private final TextureRegion bigJumpRegion;
     private final TextureRegion flowerJumpRegion;
+    private final TextureRegion bigCrouchRegion;
+    private final TextureRegion flowerCrouchRegion;
     private final TextureRegion dyingRegion;
     private final Animation<TextureRegion> growingAnimation;
     private final Animation<TextureRegion> runningAnimation;
@@ -101,6 +103,14 @@ public class Player extends GameObject {
         flowerJumpRegion = new TextureRegion(
             atlas.findRegion("flower-mario"), framesWidth * 5, 0, framesWidth, 32
         );
+
+        bigCrouchRegion = new TextureRegion(
+            atlas.findRegion("big-mario"), framesWidth * 6, 0, framesWidth, 32
+        );
+
+        flowerCrouchRegion = new TextureRegion(
+            atlas.findRegion("flower-mario"), framesWidth * 6, 0, framesWidth, 32
+        );
     }
 
     @Override
@@ -116,7 +126,7 @@ public class Player extends GameObject {
         if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 12)
             applyLinearImpulse(new Vector2(6, 0));
 
-        else if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -12)
+        if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -12)
             applyLinearImpulse(new Vector2(-6, 0));
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && body.getLinearVelocity().y == 0) {
@@ -175,7 +185,7 @@ public class Player extends GameObject {
 
                 isDead = false;
                 deadTimer = 0;
-                actualState = AnimationState.STANDING;
+                currentState = AnimationState.STANDING;
             }
         }
 
@@ -196,6 +206,9 @@ public class Player extends GameObject {
         if (isDead)
             return AnimationState.DYING;
 
+        else if ((isMarioBig || hasMarioFirePower) && Gdx.input.isKeyPressed(Input.Keys.S))
+            return AnimationState.CROUCH;
+
         else if (shouldStartGrowingAnimation)
             return AnimationState.GROWING;
 
@@ -214,9 +227,9 @@ public class Player extends GameObject {
 
     private void getAnimationRegion(float deltaTime) {
 
-        actualState = getCurrentAnimationState();
+        currentState = getCurrentAnimationState();
 
-        switch (actualState) {
+        switch (currentState) {
 
             case JUMPING:
 
@@ -228,6 +241,16 @@ public class Player extends GameObject {
 
                 else
                     actualRegion = jumpRegion;
+                break;
+
+            case CROUCH:
+
+                if (isMarioBig && !hasMarioFirePower)
+                    actualRegion = bigCrouchRegion;
+
+                else if (hasMarioFirePower && isMarioBig)
+                    actualRegion = flowerCrouchRegion;
+
                 break;
 
             case GROWING:
@@ -271,8 +294,8 @@ public class Player extends GameObject {
 
         flipRegionOnXAxis(actualRegion);
 
-        stateTimer = actualState == previousState ? stateTimer + deltaTime : 0;
-        previousState = actualState;
+        stateTimer = currentState == previousState ? stateTimer + deltaTime : 0;
+        previousState = currentState;
     }
 
     private void flipRegionOnXAxis(TextureRegion region) {
@@ -334,8 +357,8 @@ public class Player extends GameObject {
         powerUpSound.play();
     }
 
-    public AnimationState getActualState() {
-        return actualState;
+    public AnimationState getCurrentState() {
+        return currentState;
     }
 
     public float getStateTimer() {

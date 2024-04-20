@@ -126,7 +126,7 @@ public class TileMapHelper {
         if (Gdx.input.isKeyJustPressed(Input.Keys.F5))
             isDebugCamera = !isDebugCamera;
 
-        if (!isDebugCamera && player.getPixelPosition().x > 145)
+        if (!isDebugCamera && player.getPixelPosition().x > 145 && player.getCurrentState() != Player.AnimationState.DYING)
             camera.position.set(player.getWorldPosition().x, 7, 0);
 
         camera.update();
@@ -147,10 +147,10 @@ public class TileMapHelper {
 
     public void update(float deltaTime, OrthographicCamera camera) {
 
-        if (player.getActualState() == Player.AnimationState.DYING)
+        if (player.getCurrentState() == Player.AnimationState.DYING)
             music.pause();
 
-        if (player.getActualState() == Player.AnimationState.DYING && player.getStateTimer() > 2.6f)
+        if (player.getCurrentState() == Player.AnimationState.DYING && player.getStateTimer() > 2.6f)
             isGameOver = true;
 
         if (isGameOver)
