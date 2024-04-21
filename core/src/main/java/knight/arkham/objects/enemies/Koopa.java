@@ -20,8 +20,8 @@ import static knight.arkham.helpers.Constants.NOTHING_BIT;
 
 public class Koopa extends Enemy {
 
-    private enum AnimationState {WALKING, SHELL, MOVING_SHELL}
-    private AnimationState currentState = AnimationState.WALKING;
+    public enum AnimationState {WALKING, SHELL, MOVING_SHELL}
+    public AnimationState currentState = AnimationState.WALKING;
     private AnimationState previousState = AnimationState.WALKING;
     private final Animation<TextureRegion> movingAnimation;
     private final TextureRegion hitRegion;

@@ -81,10 +81,20 @@ public class GameContactListener implements ContactListener {
 
             case KOOPA_BIT | GOOMBA_BIT:
 
-                if (fixtureA.getFilterData().categoryBits == GOOMBA_BIT)
-                    ((Goomba) fixtureA.getUserData()).hitByItem();
-                else
-                    ((Goomba) fixtureB.getUserData()).hitByItem();
+                if (fixtureA.getFilterData().categoryBits == GOOMBA_BIT) {
+
+                    if (((Koopa) fixtureB.getUserData()).currentState == Koopa.AnimationState.MOVING_SHELL)
+                        ((Goomba) fixtureA.getUserData()).hitByItem();
+                    else
+                        ((Goomba) fixtureA.getUserData()).changeDirection();
+                }
+                else {
+
+                    if (((Koopa) fixtureA.getUserData()).currentState == Koopa.AnimationState.MOVING_SHELL)
+                        ((Goomba) fixtureB.getUserData()).hitByItem();
+                    else
+                        ((Goomba) fixtureB.getUserData()).changeDirection();
+                }
                 break;
 
             case PLAYER_BIT | ITEM_BIT  :

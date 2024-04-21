@@ -120,9 +120,7 @@
  <objectgroup id="8" name="Enemies">
   <object id="25" name="goomba" x="433.333" y="367.957" width="32" height="16"/>
   <object id="38" name="turtle" x="1811.61" y="358.409" width="32" height="25"/>
-  <object id="150" name="turtle" x="567.61" y="358.409" width="32" height="25"/>
   <object id="28" name="goomba" x="750" y="367.667" width="32" height="16"/>
-  <object id="149" name="goomba" x="620" y="367" width="32" height="16"/>
   <object id="35" name="goomba" x="911.705" y="368.167" width="32" height="16"/>
   <object id="37" name="goomba" x="946.372" y="367.712" width="32" height="16"/>
   <object id="128" name="goomba" x="1435.53" y="239.473" width="32" height="16"/>
