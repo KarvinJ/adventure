@@ -231,7 +231,7 @@ public class Box2DHelper {
         if (box2DBody.userData instanceof Koopa)
             fixtureDef.filter.categoryBits = KOOPA_BIT;
 
-        fixtureDef.filter.maskBits = (short) (GROUND_BIT | GOOMBA_BIT | PLAYER_BIT | STOP_ENEMY_BIT | BLOCK_BIT | KOOPA_BIT);
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | GOOMBA_BIT | PLAYER_BIT | STOP_ENEMY_BIT | BLOCK_BIT | KOOPA_BIT | FIRE_BIT);
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
 

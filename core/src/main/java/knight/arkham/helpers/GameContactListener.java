@@ -40,6 +40,15 @@ public class GameContactListener implements ContactListener {
                     ((Player) fixtureB.getUserData()).hitByEnemy();
                 break;
 
+            case FIRE_BIT | GOOMBA_BIT:
+            case FIRE_BIT | KOOPA_BIT:
+
+                if (fixtureB.getFilterData().categoryBits == FIRE_BIT)
+                    ((Enemy) fixtureA.getUserData()).hitByItem();
+                else
+                    ((Enemy) fixtureB.getUserData()).hitByItem();
+                break;
+
             case GOOMBA_BIT:
 
                 ((Goomba) fixtureA.getUserData()).changeDirection();
@@ -73,9 +82,9 @@ public class GameContactListener implements ContactListener {
             case KOOPA_BIT | GOOMBA_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == GOOMBA_BIT)
-                    ((Goomba) fixtureA.getUserData()).hitByKoopa();
+                    ((Goomba) fixtureA.getUserData()).hitByItem();
                 else
-                    ((Goomba) fixtureB.getUserData()).hitByKoopa();
+                    ((Goomba) fixtureB.getUserData()).hitByItem();
                 break;
 
             case PLAYER_BIT | ITEM_BIT  :

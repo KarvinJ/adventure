@@ -68,12 +68,6 @@ public class Goomba extends Enemy {
     }
 
     @Override
-    public void changeDirection() {
-
-        isMovingRight = !isMovingRight;
-    }
-
-    @Override
     public void hitByPlayer(Player userData) {
 
         hitSound.play();
@@ -82,7 +76,13 @@ public class Goomba extends Enemy {
         Hud.addScore(100);
     }
 
-    public void hitByKoopa() {
+    @Override
+    public void childDispose() {
+        hitRegion.getTexture().dispose();
+    }
+
+    @Override
+    public void hitByItem() {
 
         hitSound.play();
         Hud.addScore(100);
@@ -97,10 +97,5 @@ public class Goomba extends Enemy {
         shouldFlipYRegion = true;
 
         applyLinearImpulse(new Vector2(0, 140));
-    }
-
-    @Override
-    public void childDispose() {
-        hitRegion.getTexture().dispose();
     }
 }

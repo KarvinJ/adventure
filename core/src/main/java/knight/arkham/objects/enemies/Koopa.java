@@ -5,7 +5,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.objects.Player;
@@ -13,6 +16,7 @@ import knight.arkham.scenes.Hud;
 
 import static knight.arkham.helpers.AnimationHelper.makeAnimation;
 import static knight.arkham.helpers.Box2DHelper.createBody;
+import static knight.arkham.helpers.Constants.NOTHING_BIT;
 
 public class Koopa extends Enemy {
 
@@ -91,11 +95,6 @@ public class Koopa extends Enemy {
     }
 
     @Override
-    public void changeDirection() {
-        isMovingRight = !isMovingRight;
-    }
-
-    @Override
     public void hitByPlayer(Player player) {
 
         if (currentState == AnimationState.WALKING) {
@@ -119,5 +118,26 @@ public class Koopa extends Enemy {
     @Override
     public void childDispose() {
         hitRegion.getTexture().dispose();
+    }
+
+    @Override
+    public void hitByItem() {
+
+        hitSound.play();
+        Hud.addScore(100);
+
+        Filter filter = new Filter();
+
+        filter.maskBits = NOTHING_BIT;
+
+        for (Fixture fixture : body.getFixtureList())
+            fixture.setFilterData(filter);
+
+        currentState = AnimationState.SHELL;
+        stateTimer = 0;
+
+        shouldFlipYRegion = true;
+
+        applyLinearImpulse(new Vector2(0, 140));
     }
 }

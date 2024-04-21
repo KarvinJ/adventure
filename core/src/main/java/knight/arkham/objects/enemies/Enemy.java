@@ -100,9 +100,13 @@ public abstract class Enemy {
         }
     }
 
-    public abstract void changeDirection();
+    public void changeDirection() {
+        isMovingRight = !isMovingRight;
+    }
 
     public abstract void hitByPlayer(Player userData);
+
+    public abstract void hitByItem();
 
     public abstract void childDispose();
 
