@@ -21,6 +21,10 @@ public class Hud {
 
     public Hud() {
 
+        //Setting this here, because of the web build. Since I'm not disposing of hud I need to always set this values to 0
+        score = 0;
+        coins = 0;
+
         Viewport viewport = new FitViewport(300, 300);
 
         stage = new Stage(viewport);

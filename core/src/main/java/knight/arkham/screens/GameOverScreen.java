@@ -62,6 +62,6 @@ public class GameOverScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        stage.dispose();
+//        stage.dispose();
     }
 }
