@@ -123,17 +123,17 @@ public class Player extends GameObject {
 
     private void movement() {
 
-        if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 12)
-            applyLinearImpulse(new Vector2(6, 0));
-
-        if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -12)
-            applyLinearImpulse(new Vector2(-6, 0));
-
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && body.getLinearVelocity().y == 0) {
 
             applyLinearImpulse(new Vector2(0, 144));
 //            jumpSound.play();
         }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 12)
+            applyLinearImpulse(new Vector2(6, 0));
+
+        if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -12)
+            applyLinearImpulse(new Vector2(-6, 0));
     }
 
     private void createBigMarioBody() {

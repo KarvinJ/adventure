@@ -138,12 +138,12 @@ public class TileMapHelper {
 
         float fireballPosition = playerPosition.x - 10;
 
-        var impulseDirection = new Vector2(-6, 0);
+        var impulseDirection = new Vector2(-8, 0);
 
         if (player.isMovingRight) {
 
             fireballPosition = playerPosition.x + 10;
-            impulseDirection.x = 6;
+            impulseDirection.x = 8;
         }
 
         var fireBounds = new Rectangle(fireballPosition, playerPosition.y, 8, 8);

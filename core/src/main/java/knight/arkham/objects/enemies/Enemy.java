@@ -57,9 +57,6 @@ public abstract class Enemy {
 
         if (body.isActive())
             childUpdate(deltaTime);
-
-        if (getPixelPosition().y < 0)
-            setToDestroy = true;
     }
 
     public Vector2 getPixelPosition() {return body.getPosition().scl(PIXELS_PER_METER);}
