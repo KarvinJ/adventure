@@ -57,7 +57,7 @@ public class Goomba extends Enemy {
 
             flipRegionOnXAxis(actualRegion);
 
-            movement(3);
+            movement(4);
         }
     }
 
