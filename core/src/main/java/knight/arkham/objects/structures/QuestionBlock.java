@@ -70,7 +70,7 @@ public class QuestionBlock extends InteractiveStructure {
                 if (isTheBlockHidden)
                     mapHelper.itemsToSpawn.put(GreenMushroom.class, itemBounds);
 
-                else if (Player.isMarioBig)
+                else if (Player.isPlayerBig)
                     mapHelper.itemsToSpawn.put(Flower.class, itemBounds);
 
                 else

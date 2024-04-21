@@ -68,7 +68,7 @@ public class Brick extends InteractiveStructure {
             }
         }
 
-        else if (Player.isMarioBig) {
+        else if (Player.isPlayerBig) {
 
             setDestroyBit();
 

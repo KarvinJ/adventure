@@ -40,10 +40,10 @@ public class Player extends GameObject {
     private float stateTimer;
     private float invincibilityTimer;
     private float deadTimer;
-    private boolean isMovingRight;
+    public boolean isMovingRight;
     private boolean isDead;
-    public static boolean isMarioBig;
-    public static boolean hasMarioFirePower;
+    public static boolean isPlayerBig;
+    public boolean hasFirePower;
     private boolean shouldStartGrowingAnimation;
     private boolean isTimeToDefineBigMarioBody;
     private boolean isTimeToDefineLittleMarioBody;
@@ -64,7 +64,7 @@ public class Player extends GameObject {
 
         //I initialized this here, because of a bug when mario dies. For some reason if my player dies when is big,
         // this variable stay with the value true, and for that reason I initialized the variable here.
-        isMarioBig = false;
+        isPlayerBig = false;
 
         idleRegion = new TextureRegion(atlas.findRegion("little-mario"), 0, 0,  framesWidth, framesHeight);
         jumpRegion = new TextureRegion(atlas.findRegion("little-mario"), framesWidth * 5, 0, framesWidth, framesHeight);
@@ -206,7 +206,7 @@ public class Player extends GameObject {
         if (isDead)
             return AnimationState.DYING;
 
-        else if ((isMarioBig || hasMarioFirePower) && Gdx.input.isKeyPressed(Input.Keys.S))
+        else if ((isPlayerBig || hasFirePower) && Gdx.input.isKeyPressed(Input.Keys.S))
             return AnimationState.CROUCH;
 
         else if (shouldStartGrowingAnimation)
@@ -233,10 +233,10 @@ public class Player extends GameObject {
 
             case JUMPING:
 
-                if (isMarioBig && !hasMarioFirePower)
+                if (isPlayerBig && !hasFirePower)
                     actualRegion = bigJumpRegion;
 
-                else if (hasMarioFirePower && isMarioBig)
+                else if (hasFirePower && isPlayerBig)
                     actualRegion = flowerJumpRegion;
 
                 else
@@ -245,10 +245,10 @@ public class Player extends GameObject {
 
             case CROUCH:
 
-                if (isMarioBig && !hasMarioFirePower)
+                if (isPlayerBig && !hasFirePower)
                     actualRegion = bigCrouchRegion;
 
-                else if (hasMarioFirePower && isMarioBig)
+                else if (hasFirePower && isPlayerBig)
                     actualRegion = flowerCrouchRegion;
 
                 break;
@@ -263,10 +263,10 @@ public class Player extends GameObject {
 
             case RUNNING:
 
-                if (isMarioBig && !hasMarioFirePower)
+                if (isPlayerBig && !hasFirePower)
                     actualRegion = bigRunningAnimation.getKeyFrame(stateTimer, true);
 
-                else if (hasMarioFirePower && isMarioBig)
+                else if (hasFirePower && isPlayerBig)
                     actualRegion = flowerRunningAnimation.getKeyFrame(stateTimer, true);
 
                 else
@@ -282,10 +282,10 @@ public class Player extends GameObject {
             case STANDING:
             default:
 
-                if (isMarioBig && !hasMarioFirePower)
+                if (isPlayerBig && !hasFirePower)
                     actualRegion = bigIdleRegion;
 
-                else if (hasMarioFirePower && isMarioBig)
+                else if (hasFirePower && isPlayerBig)
                     actualRegion = flowerIdleRegion;
 
                 else
@@ -314,13 +314,13 @@ public class Player extends GameObject {
 
     public void hitByEnemy() {
 
-        if (isMarioBig) {
+        if (isPlayerBig) {
 
            isTimeToDefineLittleMarioBody = true;
            powerDownSound.play();
-           isMarioBig = false;
+           isPlayerBig = false;
            invincibilityTimer = 0;
-           hasMarioFirePower = false;
+           hasFirePower = false;
         }
         //Don't know if this is the best option to manage the invincibility of my player. But it works well.
         else if (invincibilityTimer > 1.5f){
@@ -342,14 +342,14 @@ public class Player extends GameObject {
     public void growPlayer() {
 
         shouldStartGrowingAnimation = true;
-        isMarioBig = true;
+        isPlayerBig = true;
         isTimeToDefineBigMarioBody = true;
         powerUpSound.play();
     }
 
     public void firePlayer() {
 
-        hasMarioFirePower = true;
+        hasFirePower = true;
         powerUpSound.play();
     }
 

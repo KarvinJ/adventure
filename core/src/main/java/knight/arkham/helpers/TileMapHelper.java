@@ -45,7 +45,7 @@ public class TileMapHelper {
     private final Array<Enemy> enemies = new Array<>();
     private final Array<InteractiveStructure> structures = new Array<>();
     private final Array<Item> items = new Array<>();
-    private final Array<FireBall> fireBalls = new Array<>();
+    private final Array<Fireball> fireBalls = new Array<>();
     public final HashMap<Class<?>, Rectangle> itemsToSpawn = new HashMap<>();
     private final Music music = loadMusic("mario_music.ogg");
     private float accumulator;
@@ -136,11 +136,19 @@ public class TileMapHelper {
 
         var playerPosition = player.getPixelPosition();
 
-        var fireBounds = new Rectangle(playerPosition.x + 10, playerPosition.y, 8, 8);
+        float fireballPosition = playerPosition.x - 10;
 
-        var fireBall = new FireBall(fireBounds, world);
+        var impulseDirection = new Vector2(-6, 0);
 
-        var impulseDirection = new Vector2(4, 0);
+        if (player.isMovingRight) {
+
+            fireballPosition = playerPosition.x + 10;
+            impulseDirection.x = 6;
+        }
+
+        var fireBounds = new Rectangle(fireballPosition, playerPosition.y, 8, 8);
+
+        var fireBall = new Fireball(fireBounds, world);
 
         fireBall.body.applyLinearImpulse(impulseDirection, fireBall.body.getWorldCenter(), true);
 
@@ -162,7 +170,7 @@ public class TileMapHelper {
 
             player.update(deltaTime);
 
-            if (Gdx.input.isKeyJustPressed(Input.Keys.C))
+            if (player.hasFirePower && Gdx.input.isKeyJustPressed(Input.Keys.C))
                 shootFire();
 
             updateCameraPosition(camera);
@@ -170,7 +178,7 @@ public class TileMapHelper {
             for (Item item : items)
                 item.update(deltaTime);
 
-            for (FireBall fireBall : fireBalls)
+            for (Fireball fireBall : fireBalls)
                 fireBall.update(deltaTime);
 
             for (Enemy enemy : enemies) {
@@ -246,7 +254,7 @@ public class TileMapHelper {
                 for (Enemy enemy : enemies)
                     enemy.draw(mapRenderer.getBatch());
 
-                for (FireBall fireBall : fireBalls)
+                for (Fireball fireBall : fireBalls)
                     fireBall.draw(mapRenderer.getBatch());
 
                 mapRenderer.getBatch().end();

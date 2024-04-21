@@ -1,7 +1,7 @@
 package knight.arkham.helpers;
 
 import com.badlogic.gdx.physics.box2d.*;
-import knight.arkham.objects.FireBall;
+import knight.arkham.objects.Fireball;
 import knight.arkham.objects.enemies.Enemy;
 import knight.arkham.objects.Player;
 import knight.arkham.objects.enemies.Goomba;
@@ -47,12 +47,12 @@ public class GameContactListener implements ContactListener {
                 if (fixtureB.getFilterData().categoryBits == FIRE_BIT) {
 
                     ((Enemy) fixtureA.getUserData()).hitByItem();
-                    ((FireBall) fixtureB.getUserData()).collisionWithEnemy();
+                    ((Fireball) fixtureB.getUserData()).collisionWithEnemy();
                 }
                 else {
 
                     ((Enemy) fixtureB.getUserData()).hitByItem();
-                    ((FireBall) fixtureA.getUserData()).collisionWithEnemy();
+                    ((Fireball) fixtureA.getUserData()).collisionWithEnemy();
                 }
                 break;
 

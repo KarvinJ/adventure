@@ -10,13 +10,13 @@ import knight.arkham.helpers.Box2DBody;
 
 import static knight.arkham.helpers.Box2DHelper.createFireBody;
 
-public class FireBall extends GameObject {
+public class Fireball extends GameObject {
 
     private boolean setToDestroy;
     private boolean isDestroyed;
     private float stateTimer;
 
-    public FireBall(Rectangle bounds, World world) {
+    public Fireball(Rectangle bounds, World world) {
         super(bounds, world, new TextureRegion(new Texture("images/fireball.png")));
     }
 
@@ -41,7 +41,7 @@ public class FireBall extends GameObject {
         if (setToDestroy && !isDestroyed)
             destroyBody();
 
-        if (stateTimer > 0.8f)
+        if (stateTimer > 0.5f)
             setToDestroy = true;
     }
 
