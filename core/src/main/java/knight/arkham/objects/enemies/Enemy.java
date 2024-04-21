@@ -24,6 +24,7 @@ public abstract class Enemy {
     protected boolean isMovingRight;
     protected boolean setToDestroy;
     protected boolean isDestroyed;
+    protected boolean shouldFlipYRegion;
     protected float stateTimer;
     protected final Sound hitSound = loadSound("stomp.wav");
 
@@ -89,12 +90,12 @@ public abstract class Enemy {
         //With this code most of the time if my enemy stop with a collision it will change direction automatically.
         if ((body.getLinearVelocity().x < 0 || !isMovingRight) && region.isFlipX()) {
 
-            region.flip(true, false);
+            region.flip(true, shouldFlipYRegion);
             isMovingRight = false;
         }
         else if ((body.getLinearVelocity().x > 0 || isMovingRight) && !region.isFlipX()) {
 
-            region.flip(true, false);
+            region.flip(true, shouldFlipYRegion);
             isMovingRight = true;
         }
     }

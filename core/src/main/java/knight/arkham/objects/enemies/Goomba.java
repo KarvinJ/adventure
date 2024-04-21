@@ -94,6 +94,8 @@ public class Goomba extends Enemy {
         for (Fixture fixture : body.getFixtureList())
             fixture.setFilterData(filter);
 
+        shouldFlipYRegion = true;
+
         applyLinearImpulse(new Vector2(0, 140));
     }
 
