@@ -69,11 +69,11 @@ public class Box2DHelper {
 
         fixtureDef.filter.categoryBits = FIRE_BIT;
 
-        fixtureDef.restitution = 1;
+        fixtureDef.restitution = 1.5f;
 
         Body body = createBox2DBodyByType(box2DBody);
 
-        body.createFixture(fixtureDef);
+        body.createFixture(fixtureDef).setUserData(box2DBody.userData);
 
         shape.dispose();
 

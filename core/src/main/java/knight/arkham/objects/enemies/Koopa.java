@@ -61,7 +61,7 @@ public class Koopa extends Enemy {
             setAnimationRegion(deltaTime);
 
             if (currentState ==  AnimationState.WALKING)
-                movement(4);
+                movement(3);
 
             else if (currentState == AnimationState.MOVING_SHELL)
                 movement(8);

@@ -14,7 +14,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -46,6 +45,7 @@ public class TileMapHelper {
     private final Array<Enemy> enemies = new Array<>();
     private final Array<InteractiveStructure> structures = new Array<>();
     private final Array<Item> items = new Array<>();
+    private final Array<FireBall> fireBalls = new Array<>();
     public final HashMap<Class<?>, Rectangle> itemsToSpawn = new HashMap<>();
     private final Music music = loadMusic("mario_music.ogg");
     private float accumulator;
@@ -132,17 +132,19 @@ public class TileMapHelper {
         camera.update();
     }
 
-    private void shootFire(){
+    private void shootFire() {
 
         var playerPosition = player.getPixelPosition();
 
         var fireBounds = new Rectangle(playerPosition.x + 10, playerPosition.y, 8, 8);
 
-        Body fireBody = Box2DHelper.createFireBody(new Box2DBody(fireBounds, 2, world, null));
+        var fireBall = new FireBall(fireBounds, world);
 
         var impulseDirection = new Vector2(4, 0);
 
-        fireBody.applyLinearImpulse(impulseDirection, fireBody.getWorldCenter(), true);
+        fireBall.body.applyLinearImpulse(impulseDirection, fireBall.body.getWorldCenter(), true);
+
+        fireBalls.add(fireBall);
     }
 
     public void update(float deltaTime, OrthographicCamera camera) {
@@ -167,6 +169,9 @@ public class TileMapHelper {
 
             for (Item item : items)
                 item.update(deltaTime);
+
+            for (FireBall fireBall : fireBalls)
+                fireBall.update(deltaTime);
 
             for (Enemy enemy : enemies) {
 
@@ -240,6 +245,9 @@ public class TileMapHelper {
 
                 for (Enemy enemy : enemies)
                     enemy.draw(mapRenderer.getBatch());
+
+                for (FireBall fireBall : fireBalls)
+                    fireBall.draw(mapRenderer.getBatch());
 
                 mapRenderer.getBatch().end();
             }
