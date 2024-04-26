@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="240" height="26" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="151">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="240" height="26" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="152">
  <tileset firstgid="1" source="tileset/OverWorld.tsx"/>
  <tileset firstgid="65" source="tileset/Nature_environment_01.tsx"/>
  <tileset firstgid="1765" source="tileset/Castle.tsx"/>
