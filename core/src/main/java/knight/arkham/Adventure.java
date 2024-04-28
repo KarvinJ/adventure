@@ -7,7 +7,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import knight.arkham.screens.GameScreen;
 
+import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
+
 public class Adventure extends Game {
+
     public static Adventure INSTANCE;
     public OrthographicCamera camera;
     public Viewport viewport;
@@ -15,7 +18,6 @@ public class Adventure extends Game {
     public int screenHeight;
 
     public Adventure() {
-
         INSTANCE = this;
     }
 
@@ -27,11 +29,11 @@ public class Adventure extends Game {
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
 
-        viewport = new FitViewport(screenWidth / 16f, screenHeight / 16f, camera);
+        viewport = new FitViewport(screenWidth / PIXELS_PER_METER, screenHeight / PIXELS_PER_METER, camera);
 
         camera.zoom -= 0.7f;
 
-        camera.position.set(screenWidth / 2f / 16f, screenHeight / 2f / 16f, 0);
+        camera.position.set(screenWidth / 2f / PIXELS_PER_METER, screenHeight / 2f / PIXELS_PER_METER, 0);
 
         setScreen(new GameScreen());
     }

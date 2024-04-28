@@ -29,8 +29,6 @@ public abstract class Item {
 
     protected abstract Body createObjectBody();
 
-    protected abstract void childUpdate(float deltaTime);
-
     public abstract void powerUpPlayer(Player player);
 
     protected void destroyBody() {
@@ -38,6 +36,8 @@ public abstract class Item {
         actualWorld.destroyBody(body);
         isDestroyed = true;
     }
+
+    protected abstract void childUpdate(float deltaTime);
 
     public void update(float deltaTime) {
         childUpdate(deltaTime);

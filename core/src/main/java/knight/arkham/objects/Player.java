@@ -37,7 +37,6 @@ public class Player extends GameObject {
     private final Animation<TextureRegion> runningAnimation;
     private final Animation<TextureRegion> bigRunningAnimation;
     private final Animation<TextureRegion> flowerRunningAnimation;
-    private float stateTimer;
     private float invincibilityTimer;
     private float deadTimer;
     public boolean isMovingRight;
@@ -47,7 +46,6 @@ public class Player extends GameObject {
     private boolean shouldStartGrowingAnimation;
     private boolean isTimeToDefineBigMarioBody;
     private boolean isTimeToDefineLittleMarioBody;
-    private final Sound jumpSound = loadSound("coin.wav");
     private final Sound deathSound = loadSound("mariodie.wav");
     private final Sound powerUpSound = loadSound("powerup.wav");
     private final Sound powerDownSound = loadSound("powerdown.wav");
@@ -123,17 +121,18 @@ public class Player extends GameObject {
 
     private void movement() {
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && body.getLinearVelocity().y == 0) {
-
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && body.getLinearVelocity().y == 0)
             applyLinearImpulse(new Vector2(0, 144));
-//            jumpSound.play();
-        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 12)
             applyLinearImpulse(new Vector2(6, 0));
 
         if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -12)
             applyLinearImpulse(new Vector2(-6, 0));
+    }
+
+    private void applyLinearImpulse(Vector2 impulseDirection) {
+        body.applyLinearImpulse(impulseDirection, body.getWorldCenter(), true);
     }
 
     private void createBigMarioBody() {
@@ -369,7 +368,6 @@ public class Player extends GameObject {
 
     @Override
     public void dispose() {
-        jumpSound.dispose();
         powerUpSound.dispose();
         deathSound.dispose();
         super.dispose();

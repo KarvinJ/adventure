@@ -9,14 +9,12 @@ import knight.arkham.scenes.Hud;
 
 public class GameScreen extends ScreenAdapter {
 
-    private final Adventure game;
+    private final Adventure game = Adventure.INSTANCE;
     private final OrthographicCamera camera;
     private final TileMapHelper mapHelper;
     private final Hud hud;
 
     public GameScreen() {
-
-        game = Adventure.INSTANCE;
 
         camera = game.camera;
 

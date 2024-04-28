@@ -14,7 +14,6 @@ public class Fireball extends GameObject {
 
     private boolean setToDestroy;
     private boolean isDestroyed;
-    private float stateTimer;
 
     public Fireball(Rectangle bounds, World world) {
         super(bounds, world, new TextureRegion(new Texture("images/fireball.png")));

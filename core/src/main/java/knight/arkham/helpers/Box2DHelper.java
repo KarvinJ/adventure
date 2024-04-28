@@ -48,7 +48,7 @@ public class Box2DHelper {
         return box2DBody.world.createBody(bodyDef);
     }
 
-    private static FixtureDef createEnemyBoxFixtureDef(Box2DBody box2DBody, PolygonShape shape) {
+    private static FixtureDef createKoopaBoxFixtureDef(Box2DBody box2DBody, PolygonShape shape) {
 
         //Since I want that my player to be rendered with a 32 px width, but I want that his collisions fixture to be of 16,
         // I got to create a new method just for my player or any other object with this case.
@@ -97,7 +97,7 @@ public class Box2DHelper {
             var enemyFixtureDef = createCircleFixtureDef(box2DBody);
 
             if (box2DBody.userData instanceof Koopa)
-                enemyFixtureDef = createEnemyBoxFixtureDef(box2DBody, shape);
+                enemyFixtureDef = createKoopaBoxFixtureDef(box2DBody, shape);
 
             createEnemyBody(box2DBody, enemyFixtureDef, body);
         }
