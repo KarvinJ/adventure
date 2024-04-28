@@ -38,7 +38,6 @@ public class Player extends GameObject {
     private final Animation<TextureRegion> bigRunningAnimation;
     private final Animation<TextureRegion> flowerRunningAnimation;
     private float invincibilityTimer;
-    private float deadTimer;
     public boolean isMovingRight;
     private boolean isDead;
     public static boolean isPlayerBig;
@@ -175,18 +174,6 @@ public class Player extends GameObject {
 
         if (!isDead)
             movement();
-
-        else {
-
-            deadTimer += deltaTime;
-
-            if (deadTimer >= 4) {
-
-                isDead = false;
-                deadTimer = 0;
-                currentState = AnimationState.STANDING;
-            }
-        }
 
         if (getPixelPosition().y < -10)
             isDead = true;
