@@ -1,7 +1,6 @@
 package knight.arkham;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -26,8 +25,8 @@ public class Adventure extends Game {
 
         camera = new OrthographicCamera();
 
-        screenWidth = Gdx.graphics.getWidth();
-        screenHeight = Gdx.graphics.getHeight();
+        screenWidth = 960;
+        screenHeight = 720;
 
         viewport = new FitViewport(screenWidth / PIXELS_PER_METER, screenHeight / PIXELS_PER_METER, camera);
 
