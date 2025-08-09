@@ -18,7 +18,6 @@ public abstract class GameObject {
     protected float stateTimer;
     public Body body;
 
-
     protected GameObject(Rectangle bounds, World world, TextureRegion region) {
 
         actualBounds = bounds;

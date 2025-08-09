@@ -31,7 +31,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static knight.arkham.helpers.AssetsHelper.loadMusic;
-import static knight.arkham.helpers.CameraController.controlCameraPosition;
 import static knight.arkham.helpers.Constants.*;
 
 public class TileMapHelper {
@@ -119,15 +118,36 @@ public class TileMapHelper {
         );
     }
 
-    public void updateCameraPosition(OrthographicCamera camera) {
+    public static void controlCameraPosition(OrthographicCamera camera) {
 
-        controlCameraPosition(camera);
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+            camera.position.x += 0.1f;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
+            camera.position.x -= 0.1f;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.UP))
+            camera.position.y += 0.1f;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
+            camera.position.y -= 0.1f;
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F3))
+            camera.zoom += 0.1f;
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F4))
+            camera.zoom -= 0.1f;
+    }
+
+    public void updateCameraPosition(OrthographicCamera camera) {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F5))
             isDebugCamera = !isDebugCamera;
 
         if (!isDebugCamera && player.getPixelPosition().x > 145 && player.getCurrentState() != Player.AnimationState.DYING)
             camera.position.set(player.getWorldPosition().x, 7, 0);
+
+        controlCameraPosition(camera);
 
         camera.update();
     }
