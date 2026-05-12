@@ -118,16 +118,18 @@ public class Player extends GameObject {
         );
     }
 
-    private void movement() {
+    private void movement(float deltaTime) {
+
+        float playerSpeed = 350;
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && body.getLinearVelocity().y == 0)
             applyLinearImpulse(new Vector2(0, 144));
 
-        if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 12)
-            applyLinearImpulse(new Vector2(6, 0));
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 10)
+            applyLinearImpulse(new Vector2(playerSpeed * deltaTime, 0));
 
-        if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -12)
-            applyLinearImpulse(new Vector2(-6, 0));
+        if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -10)
+            applyLinearImpulse(new Vector2(-playerSpeed * deltaTime, 0));
     }
 
     private void applyLinearImpulse(Vector2 impulseDirection) {
@@ -173,7 +175,7 @@ public class Player extends GameObject {
         invincibilityTimer += deltaTime;
 
         if (!isDead)
-            movement();
+            movement(deltaTime);
 
         if (getPixelPosition().y < -10)
             isDead = true;
