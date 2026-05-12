@@ -1,0 +1,59 @@
+package knight.nameless.mario.objects.structures;
+
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.World;
+
+import static knight.nameless.mario.helpers.AssetsHelper.loadSound;
+import static knight.nameless.mario.helpers.Constants.PIXELS_PER_METER;
+
+public abstract class InteractiveStructure {
+
+    protected final Rectangle actualBounds;
+    protected final World actualWorld;
+    private final TiledMap tiledMap;
+    protected final Sound collisionSound;
+    protected final Fixture fixture;
+    private final Body body;
+    protected final TiledMapTileLayer.Cell actualCell;
+
+    public InteractiveStructure(Rectangle rectangle, World world, TiledMap map, String soundPath) {
+
+        actualBounds = rectangle;
+        actualWorld = world;
+        tiledMap = map;
+        collisionSound = loadSound(soundPath);
+
+        fixture = createFixture();
+        body = fixture.getBody();
+
+        actualCell = getBlockCellInTheTileMap();
+    }
+
+    protected abstract Fixture createFixture();
+
+    public abstract void hitByPlayer();
+
+    private TiledMapTileLayer.Cell getBlockCellInTheTileMap() {
+
+        TiledMapTileLayer mapLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Blocks-Layer");
+
+        int positionX = (int) (body.getPosition().x * PIXELS_PER_METER / 16);
+        int positionY = (int) (body.getPosition().y * PIXELS_PER_METER / 16);
+
+//        Here I search for the cell by position.
+        return mapLayer.getCell(positionX, positionY);
+    }
+
+    public abstract void childDispose();
+
+    public void dispose() {
+
+        collisionSound.dispose();
+        childDispose();
+    }
+}
