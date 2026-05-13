@@ -1,4 +1,4 @@
-package knight.nameless.mario.scenes;
+package knight.nameless.mario.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;

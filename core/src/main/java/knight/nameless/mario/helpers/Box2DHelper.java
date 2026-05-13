@@ -145,7 +145,7 @@ public class Box2DHelper {
         fixtureDef.shape = shape;
         fixtureDef.density = box2DBody.density;
 
-//        shape.dispose(); // avoid crash on android 
+//        shape.dispose(); // avoid crash on android
 
         return fixtureDef;
     }

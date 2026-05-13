@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.nameless.mario.helpers.Box2DBody;
 import knight.nameless.mario.objects.Player;
-import knight.nameless.mario.scenes.Hud;
+import knight.nameless.mario.ui.Hud;
 
 import static knight.nameless.mario.helpers.AnimationHelper.makeAnimation;
 import static knight.nameless.mario.helpers.Box2DHelper.createBody;

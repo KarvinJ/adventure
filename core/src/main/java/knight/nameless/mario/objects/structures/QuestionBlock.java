@@ -11,7 +11,7 @@ import knight.nameless.mario.objects.Player;
 import knight.nameless.mario.objects.items.Flower;
 import knight.nameless.mario.objects.items.GreenMushroom;
 import knight.nameless.mario.objects.items.Mushroom;
-import knight.nameless.mario.scenes.Hud;
+import knight.nameless.mario.ui.Hud;
 
 import static knight.nameless.mario.helpers.AssetsHelper.loadSound;
 import static knight.nameless.mario.helpers.Box2DHelper.createStaticFixture;
