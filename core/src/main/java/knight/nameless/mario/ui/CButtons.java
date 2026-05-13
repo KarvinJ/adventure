@@ -13,6 +13,8 @@ public class CButtons extends Table {
     private final float controllerWidth;
     private float buttonSize;
     private final TextureAtlas atlas;
+    private  ImageButton rightBtn;
+    private  ImageButton leftBtn;
 
     public CButtons(float controllerWidth, float controllerHeight) {
 
@@ -49,13 +51,7 @@ public class CButtons extends Table {
         add(fireButton).width(fireButtonSize).height(fireButtonSize).expandX().right().padRight(controllerWidth * 0.025f);
     }
 
-    public void makeMoveButtons() {
-
-        buttonSize = controllerWidth * 0.1f;
-        defaults().pad(buttonSize * 0.075f);
-
-        ImageButton leftBtn = makeButton("LeftBtn", "LeftBtnDown");
-        add(leftBtn).width(buttonSize).height(buttonSize);
+    public void touchLeft() {
 
         leftBtn.addListener(new ClickListener() {
             @Override
@@ -65,8 +61,17 @@ public class CButtons extends Table {
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
+    }
 
-        ImageButton rightBtn = makeButton("RightBtn", "RightBtnDown");
+    public void makeMoveButtons() {
+
+        buttonSize = controllerWidth * 0.1f;
+        defaults().pad(buttonSize * 0.075f);
+
+        leftBtn = makeButton("LeftBtn", "LeftBtnDown");
+        add(leftBtn).width(buttonSize).height(buttonSize);
+
+        rightBtn = makeButton("RightBtn", "RightBtnDown");
         add(rightBtn).width(buttonSize).height(buttonSize).padLeft(100);
 
         rightBtn.addListener(new ClickListener() {

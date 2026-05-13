@@ -65,8 +65,8 @@ public class GameScreen extends ScreenAdapter {
 
         mapHelper.draw(camera);
 
-        stage.act(deltaTime);
-        stage.draw();
+//        stage.act(deltaTime);
+//        stage.draw();
 
         hud.update(deltaTime);
         hud.stage.draw();
