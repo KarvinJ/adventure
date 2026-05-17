@@ -68,9 +68,9 @@ public class GameScreen extends ScreenAdapter {
         camera = game.camera;
 
         world = new World(new Vector2(0, -40), true);
-        world.setContactListener(new knight.nameless.mario.helpers.GameContactListener());
+        world.setContactListener(new GameContactListener());
 
-        player = new knight.nameless.mario.objects.Player(new Rectangle(150, 40, 32, 16), world, atlas, 8);
+        player = new Player(new Rectangle(150, 40, 32, 16), world, atlas, 8);
 
         tiledMap = new TmxMapLoader().load("maps/level1.tmx");
         mapRenderer = setupMap(tiledMap);
