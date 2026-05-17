@@ -31,7 +31,7 @@ public class Goomba extends Enemy {
             )
         );
 
-        movingAnimation = makeAnimation(region, framesWidth, framesHeight, 2, 0.2f, 0);
+        movingAnimation = makeAnimation(region, framesWidth, 2, 0.2f, 0);
         hitRegion = new TextureRegion(region, framesWidth * 2, 0,  framesWidth, framesHeight);
     }
 

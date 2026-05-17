@@ -71,7 +71,7 @@ public class Player extends GameObject {
         dyingRegion = new TextureRegion(atlas.findRegion("little-mario"), framesWidth * 6, 0, framesWidth, framesHeight);
 
         runningAnimation = makeAnimation(
-            atlas.findRegion("little-mario"), framesWidth, framesHeight, 4, 0.1f, 1
+            atlas.findRegion("little-mario"), framesWidth, 4, 0.1f, 1
         );
 
         Array<TextureRegion> growingFrames = new Array<>();
@@ -89,7 +89,7 @@ public class Player extends GameObject {
         growingFrames.clear();
 
         bigRunningAnimation = makeAnimation(
-            atlas.findRegion("big-mario"), framesWidth, 32, 4, 0.1f, 1
+            atlas.findRegion("big-mario"), framesWidth,  4, 0.1f, 1
         );
 
         bigJumpRegion = new TextureRegion(
@@ -97,7 +97,7 @@ public class Player extends GameObject {
         );
 
         flowerRunningAnimation = makeAnimation(
-            atlas.findRegion("flower-mario"), framesWidth, 32, 4, 0.1f, 1
+            atlas.findRegion("flower-mario"), framesWidth, 4, 0.1f, 1
         );
 
         flowerJumpRegion = new TextureRegion(
